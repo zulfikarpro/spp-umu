@@ -42,7 +42,7 @@ export default {
   methods: {
     postlogin () {
       if (this.email === 'test' && this.password === '123') {
-        this.$router.push('/hello')
+        this.$router.push('/beranda')
       } else {
         alert('email dan password salah')
       }
