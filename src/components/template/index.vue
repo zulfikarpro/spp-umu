@@ -1,5 +1,5 @@
 <template>
-<div >
+<div id="template">
 <top></top>
 <mid></mid>
 <bot></bot>

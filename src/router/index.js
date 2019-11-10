@@ -5,10 +5,12 @@ import Login from '@/components/logon/login'
 import Admin from '@/components/template'
 import StudentIndex from '@/components/student'
 import StudentList from '@/components/student/student-list'
+import BillingIndex from '@/components/billing/'
+import BillingList from '@/components/billing/billing-list'
 
 Vue.use(Router)
 
-export default new Router({
+const routerVue = new Router({
   mode: 'history',
   routes: [
     {
@@ -38,15 +40,32 @@ export default new Router({
           name: 'beranda'
         },
         {
-          path: '/admin/siswa',
+          path: 'siswa',
           component: StudentIndex,
           name: 'student',
-          redirect: '/admin/siswa/listSiswa',
+          redirect: 'siswa/listSiswa',
           children: [
             {
-              path: '/admin/siswa/listSiswa',
+              path: 'listSiswa',
               component: StudentList,
               name: 'studentList'
+            }
+          ]
+        },
+        {
+          path: 'billing',
+          component: BillingIndex,
+          name: 'billing',
+          redirect: 'billing/listTagihan',
+          children: [
+            {
+              path: '/admin/tagihan/listTagihan/:id',
+              name: 'billingList',
+              component: BillingList
+            },
+            {
+              path: '/admin/tagihan/listTagihan/',
+              redirect: '/admin/tagihan'
             }
           ]
         }
@@ -54,3 +73,5 @@ export default new Router({
     }
   ]
 })
+
+export default routerVue

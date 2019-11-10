@@ -1,34 +1,46 @@
 <template>
-<div class="container-fluid mt-3">
-<div class="mx-3">
-<div class="float-right">
-  <button @click="tempExcel">Template Excel</button>
-  <button @click="uploadExcel">Upload Excel
-    <input type="file" style="display:none" ref="fileExcel" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" @change="uploadpick">
-  </button>
-  </div>
-<vuetable ref="vuetable"
-          :query-params="queryParams"
-          :api-url="url"
-          :fields="fields"
-          :sortOrder="sortOrder"
-          :css="css.table"
-          :append-params="appendParams"
-          :load-on-start="false"
-          pagination-path=""
-          data-path="content"
-          noDataTemplate=""
-          @vuetable:pagination-data="onPaginationData"
-        >
-      <div slot="actions" slot-scope="props">
-      <button @click="onActionClicked('tagihan', props.rowData)">Tagihan</button>
-      </div>
-      </vuetable>
-      <div style="clear:both;"></div>
-      <vuetable-pagination  ref="pagination" :css="css.pagination" style="float:right;"
-      @vuetable-pagination:change-page="onChangePage"
-    ></vuetable-pagination>
-</div>
+<div class="container-fluid">
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <p class="h2"> Informasi Siswa </p>
+            <ul class="list-group">
+            <li class="list-group-item">Tahun Ajaran: {{ billingData.tahunAkademik }}</li>
+            <li class="list-group-item">Nim: {{ billingData.nim }}</li>
+            <li class="list-group-item">Nama Siswa: {{ billingData.name }}</li>
+            <li class="list-group-item">Tanggal Lahir: {{ billingData.tglLahir }}</li>
+            <li class="list-group-item">Jurusan: {{ billingData.jurusan }}</li>
+            <li class="list-group-item">Jenjang: {{ billingData.tingkatan }}</li>
+            </ul>
+        </div>
+        <div class="col-md-8">
+            <div class="mx-3">
+            <div class="float-right">
+            <button @click="tempExcel">Template Excel</button>
+            <button @click="uploadExcel">Upload Excel
+                <input type="file" style="display:none" ref="fileExcel" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" @change="uploadpick">
+            </button>
+            </div>
+            <vuetable ref="vuetable"
+                    :query-params="queryParams"
+                    :api-url="url"
+                    :fields="fields"
+                    :sortOrder="sortOrder"
+                    :css="css.table"
+                    :append-params="appendParams"
+                    :load-on-start="false"
+                    pagination-path=""
+                    data-path="content"
+                    noDataTemplate=""
+                    @vuetable:pagination-data="onPaginationData"
+                    >
+                </vuetable>
+                <div style="clear:both;"></div>
+                <vuetable-pagination  ref="pagination" :css="css.pagination" style="float:right;"
+                @vuetable-pagination:change-page="onChangePage"
+                ></vuetable-pagination>
+            </div>
+        </div>
+    </div>
 </div>
 </template>
 
@@ -38,15 +50,17 @@ import VuetablePagination from
   'vuetable-2/src/components/VuetablePagination'
 import NProgress from 'nprogress'
 import axios from 'axios'
+import moment from 'moment'
 
 export default {
-  name: 'studentList',
+  name: 'billingList',
   components: {
     Vuetable,
     VuetablePagination
   },
   data () {
     return {
+      billingData: {},
       appendParams: {},
       url: '',
       queryParams: {
@@ -87,59 +101,63 @@ export default {
       fields: [
         {
           name: 'name',
-          title: 'Nama Siswa',
+          title: 'Tagihan',
           sortField: 'name'
         },
         {
-          name: 'nim',
-          title: 'Nim',
+          name: 'idJnsTagihan',
+          title: 'Jenis Tagihan',
+          sortField: 'idJnsTagihan'
+        },
+        {
+          name: 'periode',
+          title: 'Periode',
           sortField: 'nim'
         },
         {
-          name: 'tglLahir',
-          title: 'Tanggal Lahir',
-          sortField: 'tglLahir'
+          name: 'amount',
+          title: 'Amount',
+          sortField: 'amount'
         },
         {
-          name: 'tingkatan',
-          title: 'Tingkatan',
-          sortField: 'tingkatan'
+          name: 'jumlahTerbayar',
+          title: 'Terbayar',
+          sortField: 'jumlahTerbayar'
         },
         {
-          name: 'fakultas',
-          title: 'Fakultas',
-          sortField: 'fakultas'
+          name: 'jumlahTerhutang',
+          title: 'Sisa Tunggakan',
+          sortField: 'jumlahTerhutang'
         },
         {
-          name: 'peminatan',
-          title: 'Peminatan',
-          sortField: 'peminatan'
+          name: 'jatuhTempo',
+          title: 'Jatuh Tempo',
+          sortField: 'jatuhTempo',
+          callback: 'tableTempo|YYYY-MM-DD'
         },
         {
-          name: 'tahunAkademik',
-          title: 'Tahun Akademik',
-          sortField: 'tahunakademik'
-        },
-        {
-          name: 'statusMasuk',
-          title: 'Status Masuk',
-          sortField: 'statusMasuk'
-        },
-        '__slot:actions'
+          name: 'status',
+          title: 'Status',
+          sortField: 'status',
+          callback: 'tableStatus'
+        }
       ]
     }
   },
   computed: {
-    indexUploadSiswa () {
-      return this.$store.state.indexUploadSiswa
+    oneStudent () {
+      return this.$store.state.oneStudent
+    },
+    indexUploadTagihan () {
+      return this.$store.state.indexUploadTagihan
     }
   },
   watch: {
-    'indexUploadSiswa': function () {
-      if (this.$store.state.uploadSiswaData.success === true) {
-        alert(this.$store.state.uploadSiswaData.message)
+    'indexUploadTagihan': function () {
+      if (this.$store.state.uploadTagihanData.success === true) {
+        alert(this.$store.state.uploadTagihanData.message)
       } else {
-        alert(this.$store.state.uploadSiswaData.message)
+        alert(this.$store.state.uploadTagihanData.message)
       }
       NProgress.done()
       this.$refs.vuetable.refresh()
@@ -148,10 +166,11 @@ export default {
   methods: {
     init () {
       const baseUrl = window.location.origin
-      this.url = baseUrl + '/umu-spp/siswa/getdata'
+      this.url = baseUrl + '/umu-spp/tagihan/getdata'
       this.appendParams = {
-        idAkademi: 1
+        idSiswa: this.$route.params.id
       }
+      this.billingData = this.oneStudent
     },
     getSortParam: function (sortOrder) {
       this.loaded = false
@@ -172,13 +191,15 @@ export default {
       paginationData.to = paginationData.from * paginationData.numberOfElements - 1
       this.$refs.pagination.setPaginationData(paginationData)
     },
-    onActionClicked (action, data) {
-      switch (action) {
-        case 'tagihan':
-          this.$store.dispatch('getStudentLocal', data)
-          this.$router.push({ path: `/admin/tagihan/listTagihan/${data.idSiswa}` })
-          break
-      }
+    tableTempo (value) {
+      return (value === null)
+        ? ''
+        : moment(value).format('DD/MM/YYYY')
+    },
+    tableStatus (value) {
+      return (value === 'open')
+        ? 'Lunas'
+        : 'Belum Lunas'
     },
     uploadExcel () {
       this.$refs.fileExcel.click()
@@ -193,7 +214,7 @@ export default {
         this.file = dataexcel
         var reader = new FileReader()
         reader.readAsDataURL(val.target.files[0])
-        this.$store.dispatch('excelUploadSiswa', this.file)
+        this.$store.dispatch('excelUploadTagihan', [this.$route.params.id, this.file])
       } else {
         this.failedMsg = 'Tipe Excel harus xlsx/xls'
         alert('Tipe Excel harus xlsx/xls')
@@ -208,14 +229,17 @@ export default {
       NProgress.start()
       axios({
         method: 'GET',
-        url: baseUrl + '/umu-spp/siswa/excel/template',
+        url: baseUrl + '/umu-spp/tagihan/excel/template',
+        params: {
+          idAkademi: 1
+        },
         responseType: 'blob'
       }).then((response) => {
         let userAgent = navigator.userAgent
         let url = window.URL.createObjectURL(new Blob([response.data]))
         let link = document.createElement('a')
         link.href = url
-        link.setAttribute('download', 'siswa.xlsx')
+        link.setAttribute('download', 'tagihan.xlsx')
         if (userAgent.includes('Firefox')) {
           document.body.appendChild(link)
           link.click()
@@ -233,6 +257,8 @@ export default {
   },
   mounted () {
     this.init()
+    // this.$nextTick(() => {
+    // })
   }
 }
 </script>

@@ -11,13 +11,13 @@
   <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item active">
-        <a class="nav-link mx-1 navText" href="#">Home</a>
+        <router-link to="/admin/beranda" class="nav-link mx-1 navText">Home</router-link>
       </li>
       <li class="nav-item">
         <a class="nav-link mx-1 navText" href="#">Informasi Kampus</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mx-1 navText" href="#">Kemahasiswaan</a>
+        <router-link to="/admin/siswa" class="nav-link mx-1 navText">Kemahasiswaan</router-link>
       </li>
       <li class="nav-item">
         <a class="nav-link mx-1 navText" href="#">Pembayaran</a>
