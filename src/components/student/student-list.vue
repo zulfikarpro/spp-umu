@@ -175,7 +175,6 @@ export default {
     onActionClicked (action, data) {
       switch (action) {
         case 'tagihan':
-          this.$store.dispatch('getStudentLocal', data)
           this.$router.push({ path: `/admin/tagihan/listTagihan/${data.idSiswa}` })
           break
       }

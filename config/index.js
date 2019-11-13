@@ -34,6 +34,10 @@ module.exports = {
       '/umu-spp/tagihan/excel/upload': {
         target: 'http://localhost:10015',
         changeOrigin: true
+      },
+      '/umu-spp/siswa/getSiswa': {
+        target: 'http://localhost:10015',
+        changeOrigin: true
       }
     },
 

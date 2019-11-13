@@ -14,7 +14,7 @@
         </div>
         <div class="col-md-8">
             <div class="mx-3">
-            <div class="float-right">
+            <div class="float-right mb-3">
             <button @click="tempExcel">Template Excel</button>
             <button @click="uploadExcel">Upload Excel
                 <input type="file" style="display:none" ref="fileExcel" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" @change="uploadpick">
@@ -145,11 +145,11 @@ export default {
     }
   },
   computed: {
-    oneStudent () {
-      return this.$store.state.oneStudent
-    },
     indexUploadTagihan () {
       return this.$store.state.indexUploadTagihan
+    },
+    indexSiswaData () {
+      return this.$store.state.indexSiswaData
     }
   },
   watch: {
@@ -161,6 +161,11 @@ export default {
       }
       NProgress.done()
       this.$refs.vuetable.refresh()
+    },
+    'indexSiswaData': function () {
+      NProgress.start()
+      this.billingData = this.$store.state.oneStudentData.data
+      NProgress.done()
     }
   },
   methods: {
@@ -170,7 +175,7 @@ export default {
       this.appendParams = {
         idSiswa: this.$route.params.id
       }
-      this.billingData = this.oneStudent
+      this.$store.dispatch('getStudentOne', this.$route.params.id)
     },
     getSortParam: function (sortOrder) {
       this.loaded = false

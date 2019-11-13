@@ -8,10 +8,16 @@ let baseUrl = window.location.origin
 
 export const state = {
   oneStudent: {},
+  // Tagihan
+  indexUploadTagihan: 0,
+  uploadTagihanData: {},
+  // end Tagihan
+  // Siswa
   indexUploadSiswa: 0,
   uploadSiswaData: {},
-  indexUploadTagihan: 0,
-  uploadTagihanData: {}
+  indexSiswaData: 0,
+  oneStudentData: {}
+  // end Siswa
 }
 
 export const mutations = {
@@ -29,6 +35,12 @@ export const mutations = {
   },
   respUploadTagihan (state, resp) {
     state.uploadTagihanData = resp
+  },
+  countGetStudent (state) {
+    state.indexSiswaData++
+  },
+  respGetStudent (state, resp) {
+    state.oneStudentData = resp
   }
 }
 
@@ -48,6 +60,13 @@ export const actions = {
       .then((response) => {
         commit('countUploadTagihan')
         commit('respUploadTagihan', response.data)
+      })
+  },
+  getStudentOne ({commit}, x) {
+    return Axios.get(baseUrl + '/umu-spp/siswa/getSiswa?idSiswa=' + x)
+      .then((response) => {
+        commit('countGetStudent')
+        commit('respGetStudent', response.data)
       })
   }
 }
