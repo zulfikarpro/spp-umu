@@ -8,9 +8,12 @@ import StudentList from '@/components/student/student-list'
 import BillingIndex from '@/components/billing/'
 import BillingList from '@/components/billing/billing-list'
 
+import mode from '../prodProperties'
+
 Vue.use(Router)
 
 const routerVue = new Router({
+  base: mode,
   mode: 'history',
   routes: [
     {

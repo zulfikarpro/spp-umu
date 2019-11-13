@@ -1,8 +1,11 @@
 'use strict'
+
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
+let mode = require('./prodProperties')
+let mode2 = mode.mode
 
 module.exports = {
   dev: {
@@ -74,12 +77,12 @@ module.exports = {
 
   build: {
     // Template for index.html
-    index: path.resolve(__dirname, '../dist/index.html'),
+    index: path.resolve(__dirname, '../' + mode2 + '/index.html'),
 
     // Paths
-    assetsRoot: path.resolve(__dirname, '../dist'),
+    assetsRoot: path.resolve(__dirname, '../' + mode2 + '/'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: '/' + mode2 + '/',
 
     /**
      * Source Maps
