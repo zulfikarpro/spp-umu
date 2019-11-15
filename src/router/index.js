@@ -9,10 +9,9 @@ import BillingIndex from '@/components/billing/'
 import BillingList from '@/components/billing/billing-list'
 
 import mode from '../prodProperties'
-
 Vue.use(Router)
 
-const routerVue = new Router({
+export default new Router({
   base: mode,
   mode: 'history',
   routes: [
@@ -23,13 +22,11 @@ const routerVue = new Router({
     },
     {
       path: '*',
-      name: 'other',
-      redirect: '/login'
+      redirect: { name: 'login' }
     },
     {
       path: '/',
-      name: 'umu',
-      redirect: '/login'
+      redirect: { name: 'login' }
     },
     {
       path: '/admin',
@@ -76,5 +73,3 @@ const routerVue = new Router({
     }
   ]
 })
-
-export default routerVue
