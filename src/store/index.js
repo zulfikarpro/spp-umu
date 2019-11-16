@@ -4,14 +4,21 @@ import Axios from 'axios'
 import VueAxios from 'vue-axios'
 
 Vue.use(Vuex, VueAxios, Axios)
-let baseUrl = window.location.origin
+
+// Production URI
+let baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
+
+// Development URI
+// let baseUrl = window.location.origin
 
 export const state = {
   oneStudent: {},
+
   // Tagihan
   indexUploadTagihan: 0,
   uploadTagihanData: {},
   // end Tagihan
+
   // Siswa
   indexUploadSiswa: 0,
   uploadSiswaData: {},

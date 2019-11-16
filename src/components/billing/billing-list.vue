@@ -170,7 +170,8 @@ export default {
   },
   methods: {
     init () {
-      const baseUrl = window.location.origin
+      // const baseUrl = window.location.origin
+      const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
       this.url = baseUrl + '/umu-spp/tagihan/getdata'
       this.appendParams = {
         idSiswa: this.$route.params.id
@@ -229,7 +230,8 @@ export default {
       }
     },
     tempExcel () {
-      const baseUrl = window.location.origin
+      // const baseUrl = window.location.origin
+      const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
       NProgress.configure({ showSpinner: false })
       NProgress.start()
       axios({

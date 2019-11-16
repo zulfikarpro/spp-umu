@@ -35,14 +35,14 @@ export default {
   name: 'login',
   data () {
     return {
-      email: '',
-      password: ''
+      email: 'test',
+      password: '123'
     }
   },
   methods: {
     postlogin () {
       if (this.email === 'test' && this.password === '123') {
-        this.$router.push('/beranda')
+        this.$router.push('admin/beranda')
       } else {
         alert('email dan password salah')
       }
