@@ -7,6 +7,7 @@
     <input type="file" style="display:none" ref="fileExcel" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" @change="uploadpick">
   </button>
   </div>
+<div class="table-responsive">
 <vuetable ref="vuetable"
           :query-params="queryParams"
           :api-url="url"
@@ -24,6 +25,7 @@
       <button @click="onActionClicked('tagihan', props.rowData)">Tagihan</button>
       </div>
       </vuetable>
+      </div>
       <div style="clear:both;"></div>
       <vuetable-pagination  ref="pagination" :css="css.pagination" style="float:right;"
       @vuetable-pagination:change-page="onChangePage"
@@ -109,6 +111,11 @@ export default {
           name: 'fakultas',
           title: 'Fakultas',
           sortField: 'fakultas'
+        },
+        {
+          name: 'jurusan',
+          title: 'Jurusan',
+          sortField: 'jurusan'
         },
         {
           name: 'peminatan',

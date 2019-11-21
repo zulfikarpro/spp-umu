@@ -14,34 +14,34 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      // '/umu-spp/siswa/getdata': {
-      //   target: 'http://localhost:10015',
-      //   changeOrigin: true
-      // },
-      // '/umu-spp/siswa/excel/template': {
-      //   target: 'http://localhost:10015',
-      //   changeOrigin: true
-      // },
-      // '/umu-spp/siswa/excel/upload': {
-      //   target: 'http://localhost:10015',
-      //   changeOrigin: true
-      // },
-      // '/umu-spp/tagihan/getdata': {
-      //   target: 'http://localhost:10015',
-      //   changeOrigin: true
-      // },
-      // '/umu-spp/tagihan/excel/template': {
-      //   target: 'http://localhost:10015',
-      //   changeOrigin: true
-      // },
-      // '/umu-spp/tagihan/excel/upload': {
-      //   target: 'http://localhost:10015',
-      //   changeOrigin: true
-      // },
-      // '/umu-spp/siswa/getSiswa': {
-      //   target: 'http://localhost:10015',
-      //   changeOrigin: true
-      // }
+      '/umu-spp/siswa/getdata': {
+        target: 'http://localhost:10015',
+        changeOrigin: true
+      },
+      '/umu-spp/siswa/excel/template': {
+        target: 'http://localhost:10015',
+        changeOrigin: true
+      },
+      '/umu-spp/siswa/excel/upload': {
+        target: 'http://localhost:10015',
+        changeOrigin: true
+      },
+      '/umu-spp/tagihan/getdata': {
+        target: 'http://localhost:10015',
+        changeOrigin: true
+      },
+      '/umu-spp/tagihan/excel/template': {
+        target: 'http://localhost:10015',
+        changeOrigin: true
+      },
+      '/umu-spp/tagihan/excel/upload': {
+        target: 'http://localhost:10015',
+        changeOrigin: true
+      },
+      '/umu-spp/siswa/getSiswa': {
+        target: 'http://localhost:10015',
+        changeOrigin: true
+      }
     },
 
     // Various Dev Server settings

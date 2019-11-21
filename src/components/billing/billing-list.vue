@@ -20,6 +20,7 @@
                 <input type="file" style="display:none" ref="fileExcel" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" @change="uploadpick">
             </button>
             </div>
+            <div class="table-responsive">
             <vuetable ref="vuetable"
                     :query-params="queryParams"
                     :api-url="url"
@@ -39,6 +40,7 @@
                 @vuetable-pagination:change-page="onChangePage"
                 ></vuetable-pagination>
             </div>
+            </div>
         </div>
     </div>
 </div>
@@ -50,7 +52,7 @@ import VuetablePagination from
   'vuetable-2/src/components/VuetablePagination'
 import NProgress from 'nprogress'
 import axios from 'axios'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 export default {
   name: 'billingList',
@@ -105,9 +107,9 @@ export default {
           sortField: 'name'
         },
         {
-          name: 'idJnsTagihan',
+          name: 'jnsTagihan',
           title: 'Jenis Tagihan',
-          sortField: 'idJnsTagihan'
+          sortField: 'jnsTagihan'
         },
         {
           name: 'periode',
@@ -200,10 +202,10 @@ export default {
     tableTempo (value) {
       return (value === null)
         ? ''
-        : moment(value).format('DD/MM/YYYY')
+        : dayjs(value).format('DD/MM/YYYY')
     },
     tableStatus (value) {
-      return (value === 'open')
+      return (value === 'close')
         ? 'Lunas'
         : 'Belum Lunas'
     },
