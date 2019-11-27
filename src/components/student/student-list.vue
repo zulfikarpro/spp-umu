@@ -144,11 +144,12 @@ export default {
   watch: {
     'indexUploadSiswa': function () {
       if (this.$store.state.uploadSiswaData.success === true) {
-        alert("Berhasil: " + this.$store.state.uploadSiswaData.data.inserted + "\n" + "Total data: " + this.$store.state.uploadSiswaData.data.total)
+        alert('Berhasil: ' + this.$store.state.uploadSiswaData.data.inserted + '\n' + 'Total data: ' + this.$store.state.uploadSiswaData.data.total)
       } else {
         alert(this.$store.state.uploadSiswaData.message)
       }
       NProgress.done()
+      this.$refs.fileExcel.value = '' // Reset Input File
       this.$refs.vuetable.refresh()
     }
   },

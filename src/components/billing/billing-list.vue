@@ -157,11 +157,12 @@ export default {
   watch: {
     'indexUploadTagihan': function () {
       if (this.$store.state.uploadTagihanData.success === true) {
-        alert("Berhasil: " + this.$store.state.uploadTagihanData.data.inserted + "\n" + "Total data: " + this.$store.state.uploadTagihanData.data.total)
+        alert('Berhasil: ' + this.$store.state.uploadTagihanData.data.inserted + '\n' + 'Total data: ' + this.$store.state.uploadTagihanData.data.total)
       } else {
         alert(this.$store.state.uploadTagihanData.message)
       }
       NProgress.done()
+      this.$refs.fileExcel.value = '' // Reset Input File
       this.$refs.vuetable.refresh()
     },
     'indexSiswaData': function () {
