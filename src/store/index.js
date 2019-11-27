@@ -62,8 +62,8 @@ export const actions = {
         commit('respUploadSiswa', response.data)
       })
   },
-  excelUploadTagihan ({commit}, [x, y]) {
-    return Axios.post(baseUrl + '/umu-spp/tagihan/excel/upload?idSiswa=' + x, y)
+  excelUploadTagihan ({commit}, [x, y, z]) {
+    return Axios.post(baseUrl + '/umu-spp/tagihan/excel/upload?idSiswa=' + x + '&idAkademi=' + z, y)
       .then((response) => {
         commit('countUploadTagihan')
         commit('respUploadTagihan', response.data)

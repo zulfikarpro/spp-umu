@@ -144,7 +144,7 @@ export default {
   watch: {
     'indexUploadSiswa': function () {
       if (this.$store.state.uploadSiswaData.success === true) {
-        alert(this.$store.state.uploadSiswaData.message)
+        alert("Berhasil: " + this.$store.state.uploadSiswaData.data.inserted + "\n" + "Total data: " + this.$store.state.uploadSiswaData.data.total)
       } else {
         alert(this.$store.state.uploadSiswaData.message)
       }

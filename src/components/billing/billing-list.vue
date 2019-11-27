@@ -157,7 +157,7 @@ export default {
   watch: {
     'indexUploadTagihan': function () {
       if (this.$store.state.uploadTagihanData.success === true) {
-        alert(this.$store.state.uploadTagihanData.message)
+        alert("Berhasil: " + this.$store.state.uploadTagihanData.data.inserted + "\n" + "Total data: " + this.$store.state.uploadTagihanData.data.total)
       } else {
         alert(this.$store.state.uploadTagihanData.message)
       }
@@ -222,7 +222,7 @@ export default {
         this.file = dataexcel
         var reader = new FileReader()
         reader.readAsDataURL(val.target.files[0])
-        this.$store.dispatch('excelUploadTagihan', [this.$route.params.id, this.file])
+        this.$store.dispatch('excelUploadTagihan', [this.$route.params.id, this.file, 1])
       } else {
         this.failedMsg = 'Tipe Excel harus xlsx/xls'
         alert('Tipe Excel harus xlsx/xls')
