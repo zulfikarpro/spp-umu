@@ -7,6 +7,8 @@ import StudentIndex from '@/components/student'
 import StudentList from '@/components/student/student-list'
 import BillingIndex from '@/components/billing/'
 import BillingList from '@/components/billing/billing-list'
+import AcademyIndex from '@/components/academy/'
+import academyPage from '@/components/academy/academy-page'
 
 import mode from '../prodProperties'
 Vue.use(Router)
@@ -49,6 +51,19 @@ export default new Router({
               path: 'listSiswa',
               component: StudentList,
               name: 'studentList'
+            }
+          ]
+        },
+        {
+          path: 'akademi',
+          component: AcademyIndex,
+          name: 'academy',
+          redirect: 'akademi/pageAkademi',
+          children: [
+            {
+              path: 'pageAkademi',
+              component: academyPage,
+              name: 'academyPage'
             }
           ]
         },

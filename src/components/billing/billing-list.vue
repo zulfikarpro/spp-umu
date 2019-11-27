@@ -51,7 +51,6 @@ import Vuetable from 'vuetable-2'
 import VuetablePagination from
   'vuetable-2/src/components/VuetablePagination'
 import NProgress from 'nprogress'
-import axios from 'axios'
 import dayjs from 'dayjs'
 
 export default {
@@ -152,6 +151,9 @@ export default {
     },
     indexSiswaData () {
       return this.$store.state.indexSiswaData
+    },
+    indexTemplateTagihan () {
+      return this.$store.state.indexTemplateTagihan
     }
   },
   watch: {
@@ -167,7 +169,11 @@ export default {
     },
     'indexSiswaData': function () {
       NProgress.start()
-      this.billingData = this.$store.state.oneStudentData.data
+      this.billingData = this.$store.state.oneSiswaData.data
+      NProgress.done()
+    },
+    'indexTemplateTagihan': function () {
+      this.$refs.vuetable.refresh()
       NProgress.done()
     }
   },
@@ -179,7 +185,7 @@ export default {
       this.appendParams = {
         idSiswa: this.$route.params.id
       }
-      this.$store.dispatch('getStudentOne', this.$route.params.id)
+      this.$store.dispatch('getSiswaOne', this.$route.params.id)
     },
     getSortParam: function (sortOrder) {
       this.loaded = false
@@ -233,36 +239,9 @@ export default {
       }
     },
     tempExcel () {
-      // const baseUrl = window.location.origin
-      const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
       NProgress.configure({ showSpinner: false })
       NProgress.start()
-      axios({
-        method: 'GET',
-        url: baseUrl + '/umu-spp/tagihan/excel/template',
-        params: {
-          idAkademi: 1
-        },
-        responseType: 'blob'
-      }).then((response) => {
-        let userAgent = navigator.userAgent
-        let url = window.URL.createObjectURL(new Blob([response.data]))
-        let link = document.createElement('a')
-        link.href = url
-        link.setAttribute('download', 'tagihan.xlsx')
-        if (userAgent.includes('Firefox')) {
-          document.body.appendChild(link)
-          link.click()
-          setTimeout(function () {
-            window.URL.revokeObjectURL(url)
-          }, 100)
-        } else {
-          link.click()
-          window.URL.revokeObjectURL(url)
-        }
-      })
-      this.$refs.vuetable.refresh()
-      NProgress.done()
+      this.$store.dispatch('excelTemplateTagihan')
     }
   },
   mounted () {

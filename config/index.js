@@ -41,6 +41,10 @@ module.exports = {
       '/umu-spp/siswa/getSiswa': {
         target: 'http://localhost:10015',
         changeOrigin: true
+      },
+      '/umu-spp/akademi/getAkademi': {
+        target: 'http://localhost:10015',
+        changeOrigin: true
       }
     },
 

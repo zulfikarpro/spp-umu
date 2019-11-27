@@ -12,25 +12,29 @@ let baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + '
 // let baseUrl = window.location.origin
 
 export const state = {
-  oneStudent: {},
 
   // Tagihan
   indexUploadTagihan: 0,
   uploadTagihanData: {},
+  indexTemplateTagihan: 0,
   // end Tagihan
 
   // Siswa
   indexUploadSiswa: 0,
   uploadSiswaData: {},
   indexSiswaData: 0,
-  oneStudentData: {}
+  oneSiswaData: {},
+  indexTemplateSiswa: 0,
   // end Siswa
+
+  // Akademi
+  indexAkademiData: 0,
+  oneAkademiData: {}
+  // end Akademi
+
 }
 
 export const mutations = {
-  getStudent (state, resp) {
-    state.oneStudent = resp
-  },
   countUploadSiswa (state) {
     state.indexUploadSiswa++
   },
@@ -43,18 +47,27 @@ export const mutations = {
   respUploadTagihan (state, resp) {
     state.uploadTagihanData = resp
   },
-  countGetStudent (state) {
+  countGetSiswa (state) {
     state.indexSiswaData++
   },
-  respGetStudent (state, resp) {
-    state.oneStudentData = resp
+  respGetSiswa (state, resp) {
+    state.oneSiswaData = resp
+  },
+  countTemplateSiswa (state) {
+    state.indexTemplateSiswa++
+  },
+  countTemplateTagihan (state) {
+    state.indexTemplateTagihan++
+  },
+  countGetAkademi (state) {
+    state.indexAkademiData++
+  },
+  respGetAkademi (state, resp) {
+    state.oneAkademiData = resp
   }
 }
 
 export const actions = {
-  getStudentLocal ({commit}, x) {
-    commit('getStudent', x)
-  },
   excelUploadSiswa ({commit}, x) {
     return Axios.post(baseUrl + '/umu-spp/siswa/excel/upload?idAkademi=1', x)
       .then((response) => {
@@ -69,11 +82,69 @@ export const actions = {
         commit('respUploadTagihan', response.data)
       })
   },
-  getStudentOne ({commit}, x) {
+  getSiswaOne ({commit}, x) {
     return Axios.get(baseUrl + '/umu-spp/siswa/getSiswa?idSiswa=' + x)
       .then((response) => {
-        commit('countGetStudent')
-        commit('respGetStudent', response.data)
+        commit('countGetSiswa')
+        commit('respGetSiswa', response.data)
+      })
+  },
+  excelTemplateSiswa ({commit}) {
+    return Axios({
+      method: 'GET',
+      url: baseUrl + '/umu-spp/siswa/excel/template',
+      responseType: 'blob'
+    }).then((response) => {
+      let userAgent = navigator.userAgent
+      let url = window.URL.createObjectURL(new Blob([response.data]))
+      let link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', 'siswa.xlsx')
+      if (userAgent.includes('Firefox')) {
+        document.body.appendChild(link)
+        link.click()
+        setTimeout(function () {
+          window.URL.revokeObjectURL(url)
+        }, 100)
+      } else {
+        link.click()
+        window.URL.revokeObjectURL(url)
+      }
+      commit('countTemplateSiswa')
+    })
+  },
+  excelTemplateTagihan ({commit}) {
+    return Axios({
+      method: 'GET',
+      url: baseUrl + '/umu-spp/tagihan/excel/template',
+      params: {
+        idAkademi: 1
+      },
+      responseType: 'blob'
+    }).then((response) => {
+      let userAgent = navigator.userAgent
+      let url = window.URL.createObjectURL(new Blob([response.data]))
+      let link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', 'tagihan.xlsx')
+      if (userAgent.includes('Firefox')) {
+        document.body.appendChild(link)
+        link.click()
+        setTimeout(function () {
+          window.URL.revokeObjectURL(url)
+        }, 100)
+      } else {
+        link.click()
+        window.URL.revokeObjectURL(url)
+      }
+      commit('countTemplateTagihan')
+    })
+  },
+  getAkademiOne ({commit}, x) {
+    return Axios.get(baseUrl + '/umu-spp/akademi/getAkademi?idAkademi=' + x)
+      .then((response) => {
+        commit('countGetAkademi')
+        commit('respGetAkademi', response.data)
       })
   }
 }

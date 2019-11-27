@@ -39,7 +39,6 @@ import Vuetable from 'vuetable-2'
 import VuetablePagination from
   'vuetable-2/src/components/VuetablePagination'
 import NProgress from 'nprogress'
-import axios from 'axios'
 
 export default {
   name: 'studentList',
@@ -139,6 +138,9 @@ export default {
   computed: {
     indexUploadSiswa () {
       return this.$store.state.indexUploadSiswa
+    },
+    indexTemplateSiswa () {
+      return this.$store.state.indexTemplateSiswa
     }
   },
   watch: {
@@ -151,6 +153,10 @@ export default {
       NProgress.done()
       this.$refs.fileExcel.value = '' // Reset Input File
       this.$refs.vuetable.refresh()
+    },
+    'indexTemplateSiswa': function () {
+      this.$refs.vuetable.refresh()
+      NProgress.done()
     }
   },
   methods: {
@@ -211,33 +217,9 @@ export default {
       }
     },
     tempExcel () {
-      const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
-      // const baseUrl = window.location.origin
       NProgress.configure({ showSpinner: false })
       NProgress.start()
-      axios({
-        method: 'GET',
-        url: baseUrl + '/umu-spp/siswa/excel/template',
-        responseType: 'blob'
-      }).then((response) => {
-        let userAgent = navigator.userAgent
-        let url = window.URL.createObjectURL(new Blob([response.data]))
-        let link = document.createElement('a')
-        link.href = url
-        link.setAttribute('download', 'siswa.xlsx')
-        if (userAgent.includes('Firefox')) {
-          document.body.appendChild(link)
-          link.click()
-          setTimeout(function () {
-            window.URL.revokeObjectURL(url)
-          }, 100)
-        } else {
-          link.click()
-          window.URL.revokeObjectURL(url)
-        }
-      })
-      this.$refs.vuetable.refresh()
-      NProgress.done()
+      this.$store.dispatch('excelTemplateSiswa')
     }
   },
   mounted () {
