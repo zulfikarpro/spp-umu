@@ -117,7 +117,7 @@ export default {
         },
         {
           name: 'amount',
-          title: 'Amount',
+          title: 'Total Tagihan',
           sortField: 'amount'
         },
         {

@@ -48,6 +48,7 @@ export default {
   },
   data () {
     return {
+      paraf: '',
       appendParams: {},
       url: '',
       queryParams: {
@@ -146,9 +147,16 @@ export default {
   watch: {
     'indexUploadSiswa': function () {
       if (this.$store.state.uploadSiswaData.success === true) {
-        alert('Berhasil: ' + this.$store.state.uploadSiswaData.data.inserted + '\n' + 'Total data: ' + this.$store.state.uploadSiswaData.data.total)
-      } else {
         alert(this.$store.state.uploadSiswaData.message)
+      } else {
+        alert(this.$store.state.uploadSiswaData.message + '\n')
+        this.paraf = this.$store.state.uploadSiswaData.data
+        let url = window.URL.createObjectURL(new Blob([this.paraf], {type: 'text/txt'}))
+        let link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', 'siswaFail.txt')
+        link.click()
+        window.URL.revokeObjectURL(url)
       }
       NProgress.done()
       this.$refs.fileExcel.value = '' // Reset Input File
