@@ -90,7 +90,8 @@ export default {
         {
           name: 'name',
           title: 'Nama Siswa',
-          sortField: 'name'
+          sortField: 'name',
+          callback: 'nameFunc'
         },
         {
           name: 'nim',
@@ -194,6 +195,13 @@ export default {
       paginationData.from = paginationData.number * paginationData.size + 1
       paginationData.to = paginationData.from * paginationData.numberOfElements - 1
       this.$refs.pagination.setPaginationData(paginationData)
+    },
+    nameFunc(value) {
+      let namaValue = value.toLowerCase().split(' ')
+      for(let i = 0; i < namaValue.length; i++){
+        namaValue[i] = namaValue[i].charAt(0).toUpperCase() + namaValue[i].substring(1)
+      }
+      return namaValue.join(' ')
     },
     onActionClicked (action, data) {
       switch (action) {
