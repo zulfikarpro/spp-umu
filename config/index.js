@@ -45,6 +45,14 @@ module.exports = {
       '/umu-spp/akademi/getAkademi': {
         target: 'http://localhost:10015',
         changeOrigin: true
+      },
+      '/umu-spp/tagihan/getAllTagihan': {
+        target: 'http://localhost:10015',
+        changeOrigin: true
+      },
+      '/umu-spp/akademi/updateData': {
+        target: 'http://localhost:10015',
+        changeOrigin: true
       }
     },
 

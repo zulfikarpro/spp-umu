@@ -7,8 +7,10 @@ import StudentIndex from '@/components/student'
 import StudentList from '@/components/student/student-list'
 import BillingIndex from '@/components/billing/'
 import BillingList from '@/components/billing/billing-list'
+import BillingView from '@/components/billing/billing-view'
 import AcademyIndex from '@/components/academy/'
 import academyPage from '@/components/academy/academy-page'
+import academyEdit from '@/components/academy/academy-edit'
 
 import mode from '../prodProperties'
 Vue.use(Router)
@@ -64,23 +66,29 @@ export default new Router({
               path: 'pageAkademi',
               component: academyPage,
               name: 'academyPage'
+            },
+            {
+              path: 'editAkademi',
+              component: academyEdit,
+              name: 'academyEdit'
             }
           ]
         },
         {
-          path: 'billing',
+          path: 'tagihan',
           component: BillingIndex,
           name: 'billing',
-          redirect: 'billing/listTagihan',
+          redirect: 'tagihan/listTagihan',
           children: [
             {
-              path: '/admin/tagihan/listTagihan/:id',
+              path: 'listTagihan',
               name: 'billingList',
               component: BillingList
             },
             {
-              path: '/admin/tagihan/listTagihan/',
-              redirect: '/admin/tagihan'
+              path: 'viewTagihan/:id',
+              name: 'billingView',
+              component: BillingView
             }
           ]
         }

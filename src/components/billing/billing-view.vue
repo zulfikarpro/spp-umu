@@ -1,7 +1,20 @@
 <template>
 <div class="container-fluid">
-            <div class="mx-3 mt-3">
-            <div class="float-right mb-3">
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <p class="h2"> Informasi Siswa </p>
+            <ul class="list-group">
+            <li class="list-group-item">Tahun Ajaran: {{ billingData.tahunAkademik }}</li>
+            <li class="list-group-item">Nim: {{ billingData.nim }}</li>
+            <li class="list-group-item">Nama Siswa: {{ billingData.name }}</li>
+            <li class="list-group-item">Tanggal Lahir: {{ billingData.tglLahir }}</li>
+            <li class="list-group-item">Jurusan: {{ billingData.jurusan }}</li>
+            <li class="list-group-item">Jenjang: {{ billingData.tingkatan }}</li>
+            </ul>
+        </div>
+        <div class="col-md-8">
+            <div class="mx-3">
+            <div class="float-right mb-3 d-none">
             <button @click="tempExcel">Template Excel</button>
             <button @click="uploadExcel">Upload Excel
                 <input type="file" style="display:none" ref="fileExcel" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" @change="uploadpick">
@@ -28,6 +41,8 @@
                 ></vuetable-pagination>
             </div>
             </div>
+        </div>
+    </div>
 </div>
 </template>
 
@@ -36,10 +51,9 @@ import Vuetable from 'vuetable-2'
 import VuetablePagination from
   'vuetable-2/src/components/VuetablePagination'
 import NProgress from 'nprogress'
-// import dayjs from 'dayjs'
 
 export default {
-  name: 'billingList',
+  name: 'billingView',
   components: {
     Vuetable,
     VuetablePagination
@@ -165,15 +179,9 @@ export default {
   watch: {
     'indexUploadTagihan': function () {
       if (this.$store.state.uploadTagihanData.success === true) {
-        alert(this.$store.state.uploadTagihanData.message)
+        alert('Berhasil: ' + this.$store.state.uploadTagihanData.data.inserted + '\n' + 'Total data: ' + this.$store.state.uploadTagihanData.data.total)
       } else {
-        alert(this.$store.state.uploadTagihanData.message + '\n')
-        let url = window.URL.createObjectURL(new Blob([this.$store.state.uploadTagihanData.data], {type: 'text/txt'}))
-        let link = document.createElement('a')
-        link.href = url
-        link.setAttribute('download', 'tagihanFail.txt')
-        link.click()
-        window.URL.revokeObjectURL(url)
+        alert(this.$store.state.uploadTagihanData.message)
       }
       NProgress.done()
       this.$refs.fileExcel.value = '' // Reset Input File
@@ -193,7 +201,11 @@ export default {
     init () {
       // const baseUrl = window.location.origin
       const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
-      this.url = baseUrl + '/umu-spp/tagihan/getAllTagihan'
+      this.url = baseUrl + '/umu-spp/tagihan/getdata'
+      this.appendParams = {
+        idSiswa: this.$route.params.id
+      }
+      this.$store.dispatch('getSiswaOne', this.$route.params.id)
     },
     getSortParam: function (sortOrder) {
       this.loaded = false
@@ -213,18 +225,6 @@ export default {
       paginationData.from = paginationData.number * paginationData.size + 1
       paginationData.to = paginationData.from * paginationData.numberOfElements - 1
       this.$refs.pagination.setPaginationData(paginationData)
-    },
-    tableTempo (value) {
-      if (value !== null) {
-        // let dateChunk = value.split('-');
-        // return dayjs(dateChunk[2] + '-' + dateChunk[1] + '-' + dateChunk[0]).format('dd-mm-yyyy');
-        return value
-      } else {
-        return ''
-      }
-      // return (value === null)
-      //   ? ''
-      //   : dayjs(value).format("dd-MM-yyyy")
     },
     tableTanggal (value) {
       return (value === null)
@@ -249,7 +249,7 @@ export default {
         this.file = dataexcel
         var reader = new FileReader()
         reader.readAsDataURL(val.target.files[0])
-        this.$store.dispatch('excelUploadTagihan', [1, this.file])
+        this.$store.dispatch('excelUploadTagihan', [this.$route.params.id, this.file, 1])
       } else {
         this.failedMsg = 'Tipe Excel harus xlsx/xls'
         alert('Tipe Excel harus xlsx/xls')

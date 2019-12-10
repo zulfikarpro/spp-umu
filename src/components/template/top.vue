@@ -20,7 +20,7 @@
         <router-link active-class="active" to="/admin/siswa" class="nav-link mx-1 navText">Kemahasiswaan</router-link>
       </li>
       <li class="nav-item">
-        <a class="nav-link mx-1 navText" href="#">Pembayaran</a>
+        <router-link active-class="active" to="/admin/tagihan" class="nav-link mx-1 navText">Pembayaran</router-link>
       </li>
       <li class="nav-item">
         <a class="nav-link mx-1 navText" href="#">Fee Management</a>

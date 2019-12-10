@@ -1,7 +1,7 @@
 <template>
 <div class="login">
 <div class="login-form mx-auto mt-5 shadow p-5 mb-5 bg-white rounded">
-        <p class="text-center h4 pb-3">Universitas Ahmad Dahlan</p>
+        <p class="text-center h4 pb-3">UMU Login</p>
         <div class="form-group">
         <div class="input-group">
         <div class="input-group-prepend">

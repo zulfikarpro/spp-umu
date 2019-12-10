@@ -29,7 +29,9 @@ export const state = {
 
   // Akademi
   indexAkademiData: 0,
-  oneAkademiData: {}
+  oneAkademiData: {},
+  indexUpdateAkademi: 0,
+  updateAkademiData: {}
   // end Akademi
 
 }
@@ -64,6 +66,12 @@ export const mutations = {
   },
   respGetAkademi (state, resp) {
     state.oneAkademiData = resp
+  },
+  countUpdateAkademi (state) {
+    state.indexUpdateAkademi++
+  },
+  respUpdateAkademi (state, resp) {
+    state.updateAkademiData = resp
   }
 }
 
@@ -75,8 +83,8 @@ export const actions = {
         commit('respUploadSiswa', response.data)
       })
   },
-  excelUploadTagihan ({commit}, [x, y, z]) {
-    return Axios.post(baseUrl + '/umu-spp/tagihan/excel/upload?idSiswa=' + x + '&idAkademi=' + z, y)
+  excelUploadTagihan ({commit}, [x, y]) {
+    return Axios.post(baseUrl + '/umu-spp/tagihan/excel/upload?idAkademi=' + x, y)
       .then((response) => {
         commit('countUploadTagihan')
         commit('respUploadTagihan', response.data)
@@ -145,6 +153,14 @@ export const actions = {
       .then((response) => {
         commit('countGetAkademi')
         commit('respGetAkademi', response.data)
+      })
+  },
+  updateAkademi ({commit}, [x, y]) {
+    return Axios.post(baseUrl + '/umu-spp/akademi/updateData?idAkademi=' + x.idAkademi + '&&akademiName=' + x.akademiName + '&&akademiAddress=' +
+    x.akademiAddress + '&&akademiPhone=' + x.akademiPhone + '&&akademiEmail=' + x.akademiEmail + '&&akademiWeb=' + x.akademiWeb, y)
+      .then((response) => {
+        commit('countUpdateAkademi')
+        commit('respUpdateAkademi', response.data)
       })
   }
 }

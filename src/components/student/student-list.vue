@@ -196,9 +196,10 @@ export default {
       paginationData.to = paginationData.from * paginationData.numberOfElements - 1
       this.$refs.pagination.setPaginationData(paginationData)
     },
-    nameFunc(value) {
+    nameFunc (value) {
+      // Ubah ukuran text
       let namaValue = value.toLowerCase().split(' ')
-      for(let i = 0; i < namaValue.length; i++){
+      for (let i = 0; i < namaValue.length; i++) {
         namaValue[i] = namaValue[i].charAt(0).toUpperCase() + namaValue[i].substring(1)
       }
       return namaValue.join(' ')
@@ -206,7 +207,7 @@ export default {
     onActionClicked (action, data) {
       switch (action) {
         case 'tagihan':
-          this.$router.push({ path: `/admin/tagihan/listTagihan/${data.idSiswa}` })
+          this.$router.push({ path: `/admin/tagihan/viewTagihan/${data.idSiswa}` })
           break
       }
     },
