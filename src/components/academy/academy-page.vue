@@ -54,7 +54,7 @@ export default {
     init () {
       this.$store.dispatch('getAkademiOne', 1)
     },
-    linkEdit() {
+    linkEdit () {
       this.$router.push('/admin/akademi/editAkademi')
     }
   },

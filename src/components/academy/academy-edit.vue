@@ -65,7 +65,7 @@ export default {
     indexAkademiData () {
       return this.$store.state.indexAkademiData
     },
-    indexUpdateAkademi (){
+    indexUpdateAkademi () {
       return this.$store.state.indexUpdateAkademi
     }
   },
@@ -74,10 +74,11 @@ export default {
       this.academyData = this.$store.state.oneAkademiData.data
     },
     'indexUpdateAkademi' () {
+      console.log(this.$store.state.updateAkademiData)
       if (this.$store.state.updateAkademiData.success === true) {
         alert('Data Berhasil di ubah')
-      }else {
-        this.failedMsg = this.$store.updateAkademiData.message
+      } else {
+        this.failedMsg = this.$store.state.updateAkademiData.message
         alert(this.failedMsg == null ? 'Input Data gagal' : this.failedMsg)
       }
     }
@@ -90,24 +91,27 @@ export default {
       this.$refs.fileGambar.click()
     },
     submitForm () {
-      if(this.imgSize === true){
+      if (this.imgSize === true) {
         alert('Ukuran Gambar terlalu besar')
-      }else{
+        this.$refs.fileGambar.value = '' // Reset Input File
+      } else {
         this.academyData.idAkademi = 1
         this.$store.dispatch('updateAkademi', [this.academyData, this.imgFile])
+        this.$refs.fileGambar.value = '' // Reset Input File
       }
     },
     uploadGambar (val) {
       let dataimage = new FormData()
       dataimage.append('file', val.target.files[0])
       let extfile = val.target.files[0].name.substring(val.target.files[0].name.lastIndexOf('.')).toLowerCase()
+      console.log(extfile)
       if (extfile === '.jpg' || extfile === '.png' || extfile === '.jpeg') {
         var reader = new FileReader()
         this.imgFile = dataimage
         // this.imgFile = val.target.files[0]
         reader.onload = (val) => {
-        let base64 = val.target.result.substring(val.target.result.indexOf(',', 0) + 1)
-        this.academyData.akademiLogo = base64
+          let base64 = val.target.result.substring(val.target.result.indexOf(',', 0) + 1)
+          this.academyData.akademiLogo = base64
         }
         reader.readAsDataURL(val.target.files[0])
         if (val.target.files[0].size < 250000) {
