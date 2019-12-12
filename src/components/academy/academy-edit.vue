@@ -1,6 +1,6 @@
 <template>
-<div class="container mt-n1 shadow rounded">
-<div class="mt-5 row px-3 py-3">
+<div class="container mt-7 shadow rounded">
+<div class=" row px-3 py-3">
   <div class="col-sm-12 text-center font-weight-bold mb-4" style="font-size:x-large;">Ubah Informasi Universitas</div>
   <div class="col-sm-9">
     <div class="form-group row">
@@ -78,6 +78,7 @@ export default {
       console.log(this.$store.state.updateAkademiData)
       if (this.$store.state.updateAkademiData.success === true) {
         alert('Data Berhasil di ubah')
+        this.$router.push('/admin/akademi/')
       } else {
         this.failedMsg = this.$store.state.updateAkademiData.message
         alert(this.failedMsg == null ? 'Input Data gagal' : this.failedMsg)
@@ -160,8 +161,8 @@ export default {
   text-align: center;
 }
 
-.mt-n1 {
-  margin-top: 10rem !important
+.mt-7 {
+  margin-top: 7rem !important
 }
 
 </style>
