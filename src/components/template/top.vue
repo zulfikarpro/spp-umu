@@ -14,7 +14,7 @@
         <router-link active-class="active" to="/admin/beranda" class="nav-link mx-1 navText">Home</router-link>
       </li>
       <li class="nav-item">
-        <router-link active-class="active" to="/admin/akademi" class="nav-link mx-1 navText">Informasi Kampus</router-link>
+        <router-link active-class="active" to="/admin/akademi" class="nav-link mx-1 navText">Informasi Universitas</router-link>
       </li>
       <li class="nav-item">
         <router-link active-class="active" to="/admin/siswa" class="nav-link mx-1 navText">Kemahasiswaan</router-link>

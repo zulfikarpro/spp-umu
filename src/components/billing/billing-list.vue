@@ -1,12 +1,24 @@
 <template>
-<div class="container-fluid">
-            <div class="mx-3 mt-3">
-            <div class="float-right mb-3">
-            <button @click="tempExcel">Template Excel</button>
-            <button @click="uploadExcel">Upload Excel
+<div class="container-fluid mt-3">
+  <div class="form-inline float-right">
+    <div class="form-group mr-3 mb-2">
+      <input @keyup.enter="filterSubmit" type="text" class="form-control" v-model="nimFilter" placeholder="Filter Nim">
+    </div>
+    <div class="form-group mr-3 mb-2">
+      <input  @keyup.enter="filterSubmit" type="text" class="form-control" v-model="periodeFilter" placeholder="Filter Tahun Ajaran">
+    </div>
+    <button class="btn btn-primary  mr-3 mb-2" @click="tempExcel">Template Excel</button>
+    <button class="btn btn-primary mb-2" @click="uploadExcel">Upload Excel
+    <input type="file" style="display:none" ref="fileExcel" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" @change="uploadpick">
+    </button>
+  </div>
+            <!-- <div class="float-right mb-3">
+            <input type="text" class="form-control" placeholder="Filter Nim"/>
+            <button class="btn btn-primary" @click="tempExcel">Template Excel</button>
+            <button class="btn btn-primary" @click="uploadExcel">Upload Excel
                 <input type="file" style="display:none" ref="fileExcel" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" @change="uploadpick">
             </button>
-            </div>
+            </div> -->
             <div class="table-responsive">
             <vuetable ref="vuetable"
                     :query-params="queryParams"
@@ -26,7 +38,6 @@
                 <vuetable-pagination  ref="pagination" :css="css.pagination" style="float:right;"
                 @vuetable-pagination:change-page="onChangePage"
                 ></vuetable-pagination>
-            </div>
             </div>
 </div>
 </template>
@@ -48,6 +59,8 @@ export default {
     return {
       billingData: {},
       appendParams: {},
+      nimFilter: '',
+      periodeFilter: '',
       url: '',
       queryParams: {
         sort: 'sort',
@@ -262,6 +275,14 @@ export default {
       NProgress.configure({ showSpinner: false })
       NProgress.start()
       this.$store.dispatch('excelTemplateTagihan')
+    },
+    filterSubmit () {
+      NProgress.configure({ showSpinner: false })
+      NProgress.start()
+      const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
+      this.url = baseUrl + '/umu-spp/tagihan/getAllTagihan?nim=' + this.nimFilter + '&&periode=' + this.periodeFilter
+      this.$refs.vuetable.refresh()
+      NProgress.done()
     }
   },
   mounted () {

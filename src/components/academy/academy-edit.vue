@@ -1,7 +1,8 @@
 <template>
-<div class="container">
-<div class="mt-5 row">
-  <div class="col-sm-8">
+<div class="container mt-n1 shadow rounded">
+<div class="mt-5 row px-3 py-3">
+  <div class="col-sm-12 text-center font-weight-bold mb-4" style="font-size:x-large;">Ubah Informasi Universitas</div>
+  <div class="col-sm-9">
     <div class="form-group row">
     <label  class="col-sm-3 col-form-label">Nama Universitas</label>
     <div class="col-sm-9">
@@ -33,7 +34,7 @@
     </div>
     </div>
    </div>
-  <div class="col-sm-4 ">
+  <div class="col-sm-3 justify-content-md-center">
       <div class="" style="cursor:pointer;" @click="pilihGambar">
         <input type="file" ref="fileGambar" class="d-none" @change="uploadGambar" accept="image/*" />
         <img class="rounded-sm" :src="'data:image/jpeg;base64,' + academyData.akademiLogo" width="200" height="200" />
@@ -157,6 +158,10 @@ export default {
   display: inline;
   width: 100%;
   text-align: center;
+}
+
+.mt-n1 {
+  margin-top: 10rem !important
 }
 
 </style>

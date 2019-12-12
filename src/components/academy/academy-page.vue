@@ -1,6 +1,6 @@
 <template>
-    <div class="mx-auto container mt-4">
-        <div class="text-center mb-2 font-weight-bold" style="font-size:x-large;">Mengisi Informasi Universitas</div>
+    <div class="container mt-n1 px-3 py-3 shadow rounded">
+        <div class="text-center font-weight-bold mb-4" style="font-size:x-large;">Informasi Universitas</div>
         <div class="row justify-content-md-center form-group typoText">
             <label class="col-2 col-form-label" >Nama Universitas</label>
             <label class="offset-1 col-form-label" >:</label>
@@ -68,5 +68,9 @@ export default {
 .typoText {
     font-size: 18px;
     font-weight: 400;
+}
+
+.mt-n1 {
+  margin-top: 10rem !important
 }
 </style>
