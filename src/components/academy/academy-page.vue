@@ -27,14 +27,14 @@
             <div class="col-5">{{academyData.akademiWeb}}</div>
         </div>
         <div class="col-sm-4 mt-4 mx-auto">
-          <button type="submit" @click="linkEdit" style="background-color:#ff5500;color:white;" class="btn btn-block py-3">Edit Universitas</button>
+          <button type="submit" @click="linkEdit" style="background-color:#ff5500;color:white;" class="btn btn-block py-3">Edit Informasi Universitas</button>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-  name: 'academyPage',
+  name: 'AcademyPage',
   data () {
     return {
       academyData: {}

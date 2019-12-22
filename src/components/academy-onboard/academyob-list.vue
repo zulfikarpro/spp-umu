@@ -1,11 +1,19 @@
 <template>
 <div class="container-fluid mt-3">
 <div class="mx-3">
-<div class="float-right">
-  <button class="btn btn-primary mr-3 mb-2" @click="tempExcel">Template Excel</button>
-  <button class="btn btn-primary mb-2" @click="uploadExcel">Upload Excel
-    <input type="file" style="display:none" ref="fileExcel" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" @change="uploadpick">
-  </button>
+<div class="d-flex my-4 buttonLeft">
+  <div>Show <select v-model="selectedEntri">
+  <option v-for="n in totalDataPage">{{ n }}</option>
+  </select>
+  Entires
+  </div>
+  <div><datepicker placeholder="Tanggal Awal" v-model="firstDate"></datepicker></div>
+  <div><datepicker placeholder="Tanggal Akhir" v-model="secondDate"></datepicker></div>
+  <div class="ml-auto">
+    <button class="btn btn-primary px-3 mr-3" >Buat Order</button>
+    <label>Cari :</label>
+    <input type="text" placeholder=""/>
+  </div>
   </div>
 <div class="table-responsive">
 <vuetable ref="vuetable"
@@ -20,12 +28,12 @@
           data-path="content"
           noDataTemplate=""
           @vuetable:pagination-data="onPaginationData"
+          @vuetable:loaded="loadVuetable"
         >
-      <div slot="numbering" slot-scope="props">
-        {{ props.rowIndex + 1}}
-      </div>
       <div slot="actions" slot-scope="props">
-      <button @click="onActionClicked('tagihan', props.rowData)">Tagihan</button>
+      <button @click="onActionClicked('edit', props.rowData)">Edit</button>
+      <button @click="onActionClicked('kirimKode', props.rowData)">Kirim Kode Aktivasi</button>
+      <button @click="onActionClicked('delete', props.rowData)">Hapus</button>
       </div>
       </vuetable>
       </div>
@@ -42,15 +50,21 @@ import Vuetable from 'vuetable-2'
 import VuetablePagination from
   'vuetable-2/src/components/VuetablePagination'
 import NProgress from 'nprogress'
+import Datepicker from 'vuejs-datepicker'
 
 export default {
-  name: 'studentList',
+  name: 'AcademyOnboardList',
   components: {
     Vuetable,
-    VuetablePagination
+    VuetablePagination,
+    Datepicker
   },
   data () {
     return {
+      firstDate: '',
+      secondDate: '',
+      selectedEntri: '',
+      totalPages: 0,
       paraf: '',
       appendParams: {},
       url: '',
@@ -91,14 +105,9 @@ export default {
       },
       fields: [
         {
-          name: '__slot:numbering',
-          title: 'No'
-        },
-        {
           name: 'name',
           title: 'Nama Siswa',
-          sortField: 'name',
-          callback: 'nameFunc'
+          sortField: 'name'
         },
         {
           name: 'nim',
@@ -150,6 +159,9 @@ export default {
     },
     indexTemplateSiswa () {
       return this.$store.state.indexTemplateSiswa
+    },
+    totalDataPage () {
+      return this.totalPages
     }
   },
   watch: {
@@ -173,6 +185,9 @@ export default {
     'indexTemplateSiswa': function () {
       this.$refs.vuetable.refresh()
       NProgress.done()
+    },
+    'selectedEntri': function () {
+      alert('pilih')
     }
   },
   methods: {
@@ -203,47 +218,20 @@ export default {
       paginationData.to = paginationData.from * paginationData.numberOfElements - 1
       this.$refs.pagination.setPaginationData(paginationData)
     },
-    nameFunc (value) {
-      // Ubah ukuran text
-      let namaValue = value.toLowerCase().split(' ')
-      for (let i = 0; i < namaValue.length; i++) {
-        namaValue[i] = namaValue[i].charAt(0).toUpperCase() + namaValue[i].substring(1)
-      }
-      return namaValue.join(' ')
-    },
     onActionClicked (action, data) {
       switch (action) {
-        case 'tagihan':
-          this.$router.push({ path: `/admin/tagihan/viewTagihan/${data.idSiswa}` })
+        case 'delete':
+          alert('Apakah Anda Yakin ingin untuk menghapus order')
+          // this.$router.push({ path: `/admin/tagihan/viewTagihan/${data.idSiswa}` })
+          break
+        case 'kirimKode':
+          alert('Apakah Anda Yakin Ingin Mengirim kode aktivasi')
           break
       }
     },
-    uploadExcel () {
-      this.$refs.fileExcel.click()
-    },
-    uploadpick (val) {
-      let dataexcel = new FormData()
-      dataexcel.append('file', val.target.files[0])
-      let extfile = val.target.files[0].name.substring(val.target.files[0].name.lastIndexOf('.'))
-      NProgress.configure({ showSpinner: false })
-      NProgress.start()
-      if (extfile === '.xls' || extfile === '.xlsx') {
-        this.file = dataexcel
-        var reader = new FileReader()
-        reader.readAsDataURL(val.target.files[0])
-        this.$store.dispatch('excelUploadSiswa', this.file)
-      } else {
-        this.failedMsg = 'Tipe Excel harus xlsx/xls'
-        alert('Tipe Excel harus xlsx/xls')
-        this.$refs.fileExcel.value = '' // Reset Input File
-        this.$refs.vuetable.refresh()
-        NProgress.done()
-      }
-    },
-    tempExcel () {
-      NProgress.configure({ showSpinner: false })
-      NProgress.start()
-      this.$store.dispatch('excelTemplateSiswa')
+    loadVuetable () {
+      this.totalPages = this.$refs.vuetable.tablePagination.totalPages
+      console.log(this.$refs.vuetable)
     }
   },
   mounted () {
@@ -251,3 +239,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.buttonLeft > div:not(:first-of-type):not(:last-of-type) {
+  margin-left: 1.5rem;
+}
+</style>

@@ -1,24 +1,12 @@
 <template>
-<div class="container-fluid mt-3">
-  <div class="form-inline float-right">
-    <div class="form-group mr-3 mb-2">
-      <input @keyup.enter="filterSubmit" type="text" class="form-control" v-model="nimFilter" placeholder="Filter Nim">
-    </div>
-    <div class="form-group mr-3 mb-2">
-      <input  @keyup.enter="filterSubmit" type="text" class="form-control" v-model="periodeFilter" placeholder="Filter Tahun Ajaran">
-    </div>
-    <button class="btn btn-primary  mr-3 mb-2" @click="tempExcel">Template Excel</button>
-    <button class="btn btn-primary mb-2" @click="uploadExcel">Upload Excel
-    <input type="file" style="display:none" ref="fileExcel" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" @change="uploadpick">
-    </button>
-  </div>
-            <!-- <div class="float-right mb-3">
-            <input type="text" class="form-control" placeholder="Filter Nim"/>
-            <button class="btn btn-primary" @click="tempExcel">Template Excel</button>
-            <button class="btn btn-primary" @click="uploadExcel">Upload Excel
+<div class="container-fluid">
+        <div class="mx-3">
+            <div class="float-right mb-3 d-none">
+            <button @click="tempExcel">Template Excel</button>
+            <button @click="uploadExcel">Upload Excel
                 <input type="file" style="display:none" ref="fileExcel" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" @change="uploadpick">
             </button>
-            </div> -->
+            </div>
             <div class="table-responsive">
             <vuetable ref="vuetable"
                     :query-params="queryParams"
@@ -35,14 +23,18 @@
                     >
                 <div slot="numbering" slot-scope="props">
                 {{ props.rowIndex + 1}}
-                </div> 
+                </div>     
                 </vuetable>
                 <div style="clear:both;"></div>
                 <vuetable-pagination  ref="pagination" :css="css.pagination" style="float:right;"
                 @vuetable-pagination:change-page="onChangePage"
                 ></vuetable-pagination>
             </div>
-</div>
+              <div class="float-right mt-7 mb-5"> 
+                <router-link to="/admin/feeManage/" style="padding-left: 7rem;padding-right: 7rem" class="btn btn-primary btn-lg py-3">Kembali</router-link>
+              </div>
+            </div>
+    </div>
 </template>
 
 <script>
@@ -50,10 +42,9 @@ import Vuetable from 'vuetable-2'
 import VuetablePagination from
   'vuetable-2/src/components/VuetablePagination'
 import NProgress from 'nprogress'
-// import dayjs from 'dayjs'
 
 export default {
-  name: 'billingList',
+  name: 'FeeBillingView',
   components: {
     Vuetable,
     VuetablePagination
@@ -62,8 +53,6 @@ export default {
     return {
       billingData: {},
       appendParams: {},
-      nimFilter: '',
-      periodeFilter: '',
       url: '',
       queryParams: {
         sort: 'sort',
@@ -104,56 +93,26 @@ export default {
         {
           name: '__slot:numbering',
           title: 'No'
-        },
+        },          
         {
           name: 'name',
           title: 'Nama Tagihan',
           sortField: 'name'
         },
         {
-          name: 'periode',
-          title: 'Periode',
-          sortField: 'periode'
+          name: 'jumlahTertagih',
+          title: 'Jumlah Tertagih',
+          sortField: 'jumlahTertagih'
         },
         {
-          name: 'namaSiswa',
-          title: 'Nama Siswa',
-          sortField: 'namaSiswa'
+          name: 'noInvoice',
+          title: 'No Invoice',
+          sortField: 'noInvoice'
         },
         {
-          name: 'nim',
-          title: 'Nim',
-          sortField: 'nim'
-        },
-        {
-          name: 'jnsPembayaran',
-          title: 'Jenis Pembayaran',
-          sortField: 'jnsPembayaran'
-        },
-        {
-          name: 'amount',
-          title: 'Total Tagihan',
-          sortField: 'amount'
-        },
-        {
-          name: 'jumlahTerbayar',
-          title: 'Terbayar',
-          sortField: 'jumlahTerbayar'
-        },
-        {
-          name: 'jumlahSisa',
-          title: 'Sisa',
-          sortField: 'jumlahSisa'
-        },
-        {
-          name: 'jumlahTerhutang',
-          title: 'Tunggakan',
-          sortField: 'jumlahTerhutang'
-        },
-        {
-          name: 'jatuhTempo',
-          title: 'Jatuh Tempo',
-          sortField: 'jatuhTempo',
+          name: 'tanggalInvoice',
+          title: 'Tanggal Invoice',
+          sortField: 'tanggalInvoice',
           callback: 'tableTanggal|YYYY-MM-DD'
         },
         {
@@ -161,12 +120,6 @@ export default {
           title: 'Status',
           sortField: 'status',
           callback: 'tableStatus'
-        },
-        {
-          name: 'tanggalTerbayar',
-          title: 'Tanggal Bayar',
-          sortField: 'tanggalTerbayar',
-          callback: 'tableTanggal|YYYY-MM-DD'
         }
       ]
     }
@@ -185,15 +138,9 @@ export default {
   watch: {
     'indexUploadTagihan': function () {
       if (this.$store.state.uploadTagihanData.success === true) {
-        alert(this.$store.state.uploadTagihanData.message)
+        alert('Berhasil: ' + this.$store.state.uploadTagihanData.data.inserted + '\n' + 'Total data: ' + this.$store.state.uploadTagihanData.data.total)
       } else {
-        alert(this.$store.state.uploadTagihanData.message + '\n')
-        let url = window.URL.createObjectURL(new Blob([this.$store.state.uploadTagihanData.data], {type: 'text/txt'}))
-        let link = document.createElement('a')
-        link.href = url
-        link.setAttribute('download', 'tagihanFail.txt')
-        link.click()
-        window.URL.revokeObjectURL(url)
+        alert(this.$store.state.uploadTagihanData.message)
       }
       NProgress.done()
       this.$refs.fileExcel.value = '' // Reset Input File
@@ -213,7 +160,11 @@ export default {
     init () {
       // const baseUrl = window.location.origin
       const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
-      this.url = baseUrl + '/umu-spp/tagihan/getAllTagihan'
+      this.url = baseUrl + '/umu-spp/tagihan/getdata'
+      this.appendParams = {
+        idSiswa: this.$route.params.id
+      }
+      this.$store.dispatch('getSiswaOne', this.$route.params.id)
     },
     getSortParam: function (sortOrder) {
       this.loaded = false
@@ -234,18 +185,6 @@ export default {
       paginationData.to = paginationData.from * paginationData.numberOfElements - 1
       this.$refs.pagination.setPaginationData(paginationData)
     },
-    tableTempo (value) {
-      if (value !== null) {
-        // let dateChunk = value.split('-');
-        // return dayjs(dateChunk[2] + '-' + dateChunk[1] + '-' + dateChunk[0]).format('dd-mm-yyyy');
-        return value
-      } else {
-        return ''
-      }
-      // return (value === null)
-      //   ? ''
-      //   : dayjs(value).format("dd-MM-yyyy")
-    },
     tableTanggal (value) {
       return (value === null)
         ? ''
@@ -253,8 +192,8 @@ export default {
     },
     tableStatus (value) {
       return (value === 'close')
-        ? 'Lunas'
-        : 'Belum Lunas'
+        ? 'Done'
+        : 'Dalam Proses'
     },
     uploadExcel () {
       this.$refs.fileExcel.click()
@@ -269,7 +208,7 @@ export default {
         this.file = dataexcel
         var reader = new FileReader()
         reader.readAsDataURL(val.target.files[0])
-        this.$store.dispatch('excelUploadTagihan', [1, this.file])
+        this.$store.dispatch('excelUploadTagihan', [this.$route.params.id, this.file, 1])
       } else {
         this.failedMsg = 'Tipe Excel harus xlsx/xls'
         alert('Tipe Excel harus xlsx/xls')
@@ -282,14 +221,6 @@ export default {
       NProgress.configure({ showSpinner: false })
       NProgress.start()
       this.$store.dispatch('excelTemplateTagihan')
-    },
-    filterSubmit () {
-      NProgress.configure({ showSpinner: false })
-      NProgress.start()
-      const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
-      this.url = baseUrl + '/umu-spp/tagihan/getAllTagihan?nim=' + this.nimFilter + '&&periode=' + this.periodeFilter
-      this.$refs.vuetable.refresh()
-      NProgress.done()
     }
   },
   mounted () {
@@ -299,3 +230,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.mt-7 {
+  margin-top: 7rem;
+}
+</style>

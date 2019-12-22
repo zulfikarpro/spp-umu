@@ -1,12 +1,12 @@
 <template>
 <div class="container-fluid mt-3">
 <div class="mx-3">
-<div class="float-right">
+<!-- <div class="float-right">
   <button class="btn btn-primary mr-3 mb-2" @click="tempExcel">Template Excel</button>
   <button class="btn btn-primary mb-2" @click="uploadExcel">Upload Excel
     <input type="file" style="display:none" ref="fileExcel" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" @change="uploadpick">
   </button>
-  </div>
+  </div> -->
 <div class="table-responsive">
 <vuetable ref="vuetable"
           :query-params="queryParams"
@@ -23,16 +23,32 @@
         >
       <div slot="numbering" slot-scope="props">
         {{ props.rowIndex + 1}}
-      </div>
+      </div> 
       <div slot="actions" slot-scope="props">
-      <button @click="onActionClicked('tagihan', props.rowData)">Tagihan</button>
+      <button @click="onActionClicked('riwayat', props.rowData)">Riwayat</button>
+      <button @click="onActionClicked('closeTagihan', props.rowData)">Close Tagihan</button>
       </div>
       </vuetable>
       </div>
       <div style="clear:both;"></div>
-      <vuetable-pagination  ref="pagination" :css="css.pagination" style="float:right;"
+      <vuetable-pagination  ref="pagination" :css="css.pagination" style="float:right"
       @vuetable-pagination:change-page="onChangePage"
     ></vuetable-pagination>
+</div>
+<div class="row mx-3 mt-7">
+  <div class="col-sm-7 offset-sm-5 ">
+    <fieldset disabled>
+    <div class="form-group row">
+    <label  class="col-sm-3 col-form-label"><h4>Buat Invoice Sebesar</h4></label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control-lg" placeholder="" >
+    </div>
+    </div>
+    </fieldset>
+  </div>
+  <div class="col-sm-3 offset-sm-7 mt-5 mb-5"> 
+    <button type="button" class="btn btn-primary btn-lg py-3 px-5" @click="createInvoice">Buat Invoice</button>
+  </div>
 </div>
 </div>
 </template>
@@ -44,7 +60,7 @@ import VuetablePagination from
 import NProgress from 'nprogress'
 
 export default {
-  name: 'studentList',
+  name: 'FeeBillingList',
   components: {
     Vuetable,
     VuetablePagination
@@ -95,51 +111,21 @@ export default {
           title: 'No'
         },
         {
-          name: 'name',
-          title: 'Nama Siswa',
-          sortField: 'name',
-          callback: 'nameFunc'
+          name: 'periode',
+          title: 'Periode',
+          sortField: 'periode'
         },
         {
-          name: 'nim',
-          title: 'Nim',
-          sortField: 'nim'
+          name: 'jenis_tagihan',
+          title: 'Jenis Tagihan',
+          sortField: 'jenis_tagihan'
         },
         {
-          name: 'tglLahir',
-          title: 'Tanggal Lahir',
-          sortField: 'tglLahir'
+          name: 'penerimaan',
+          title: 'Penerimaan Saat Ini',
+          sortField: 'penerimaan'
         },
-        {
-          name: 'tingkatan',
-          title: 'Tingkatan',
-          sortField: 'tingkatan'
-        },
-        {
-          name: 'fakultas',
-          title: 'Fakultas',
-          sortField: 'fakultas'
-        },
-        {
-          name: 'jurusan',
-          title: 'Jurusan',
-          sortField: 'jurusan'
-        },
-        {
-          name: 'peminatan',
-          title: 'Peminatan',
-          sortField: 'peminatan'
-        },
-        {
-          name: 'tahunAkademik',
-          title: 'Tahun Akademik',
-          sortField: 'tahunakademik'
-        },
-        {
-          name: 'statusMasuk',
-          title: 'Status Masuk',
-          sortField: 'statusMasuk'
-        },
+        '__checkbox',
         '__slot:actions'
       ]
     }
@@ -179,10 +165,7 @@ export default {
     init () {
       const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
       // const baseUrl = 'http://mumu.hike.id:10015'
-      this.url = baseUrl + '/umu-spp/siswa/getdata'
-      this.appendParams = {
-        idAkademi: 1
-      }
+      this.url = baseUrl + '/umu-spp/test/getdata'
     },
     getSortParam: function (sortOrder) {
       this.loaded = false
@@ -213,8 +196,14 @@ export default {
     },
     onActionClicked (action, data) {
       switch (action) {
-        case 'tagihan':
-          this.$router.push({ path: `/admin/tagihan/viewTagihan/${data.idSiswa}` })
+        case 'closeTagihan':
+          if(confirm('Apakah Anda Yakin Untuk Close Tagihan')){
+            alert('ashiaap')
+          }
+          break
+        case 'riwayat':
+          // this.$router.push({ path: `/admin/feeManage/feeRiwayat/${data.idSiswa}` })
+          this.$router.push({ path: `/admin/feeManage/feeRiwayat/3` })
           break
       }
     },
@@ -244,6 +233,11 @@ export default {
       NProgress.configure({ showSpinner: false })
       NProgress.start()
       this.$store.dispatch('excelTemplateSiswa')
+    },
+    createInvoice () {
+      if(confirm('Apakah Anda Yakin Untuk Mmebuat Invoice')){
+        alert('underdevelopment')
+      }
     }
   },
   mounted () {
@@ -251,3 +245,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.mt-7 {
+  margin-top: 7rem;
+}
+</style>

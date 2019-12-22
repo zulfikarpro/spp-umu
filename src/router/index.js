@@ -9,8 +9,14 @@ import BillingIndex from '@/components/billing/'
 import BillingList from '@/components/billing/billing-list'
 import BillingView from '@/components/billing/billing-view'
 import AcademyIndex from '@/components/academy/'
-import academyPage from '@/components/academy/academy-page'
-import academyEdit from '@/components/academy/academy-edit'
+import AcademyPage from '@/components/academy/academy-page'
+import AcademyEdit from '@/components/academy/academy-edit'
+import FeeBillingIndex from '@/components/fee-billing/'
+import FeeBillingList from '@/components/fee-billing/fee-list'
+import FeeBillingView from '@/components/fee-billing/fee-view'
+import AkademiOnboardIndex from '@/components/academy-onboard'
+import AkademiOnboardList from '@/components/academy-onboard/academyob-list'
+import AkademiOnboardAdd from '@/components/academy-onboard/academyob-add'
 
 import mode from '../prodProperties'
 Vue.use(Router)
@@ -57,6 +63,24 @@ export default new Router({
           ]
         },
         {
+          path: 'feeManage',
+          component: FeeBillingIndex,
+          name: 'FeeBilling',
+          redirect: 'feeManage/listFee',
+          children: [
+            {
+              path: 'listFee',
+              component: FeeBillingList,
+              name: 'FeeBillingList'
+            },
+            {
+              path: 'feeRiwayat/:id',
+              component: FeeBillingView,
+              name: 'FeeBillingView'
+            }
+          ]
+        },
+        {
           path: 'akademi',
           component: AcademyIndex,
           name: 'academy',
@@ -64,31 +88,49 @@ export default new Router({
           children: [
             {
               path: 'pageAkademi',
-              component: academyPage,
-              name: 'academyPage'
+              component: AcademyPage,
+              name: 'AcademyPage'
             },
             {
               path: 'editAkademi',
-              component: academyEdit,
-              name: 'academyEdit'
+              component: AcademyEdit,
+              name: 'AcademyEdit'
             }
           ]
         },
         {
           path: 'tagihan',
           component: BillingIndex,
-          name: 'billing',
+          name: 'Billing',
           redirect: 'tagihan/listTagihan',
           children: [
             {
               path: 'listTagihan',
-              name: 'billingList',
+              name: 'BillingList',
               component: BillingList
             },
             {
               path: 'viewTagihan/:id',
-              name: 'billingView',
+              name: 'BillingView',
               component: BillingView
+            }
+          ]
+        },
+        {
+          path: 'akademiOnboard',
+          component: AkademiOnboardIndex,
+          name: 'AkademiOnboard',
+          redirect: 'akademiOnboard/listAkademiOnboard',
+          children: [
+            {
+              path: 'listAkademiOnboard',
+              name: 'AcademyOnboardList',
+              component: AkademiOnboardList
+            },
+            {
+              path: 'addAkademiOnboard',
+              name: 'AcademyOnboardAdd',
+              component: AkademiOnboardAdd
             }
           ]
         }

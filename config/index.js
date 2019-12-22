@@ -53,6 +53,10 @@ module.exports = {
       '/umu-spp/akademi/updateData': {
         target: 'http://localhost:10015',
         changeOrigin: true
+      },
+      '/umu-spp/test/getdata': {
+        target: 'http://localhost:10015',
+        changeOrigin: true
       }
     },
 

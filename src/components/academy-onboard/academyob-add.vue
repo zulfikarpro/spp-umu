@@ -1,6 +1,70 @@
 <template>
-<div class="container mt-7 shadow rounded">
-<div class=" row px-3 py-3">
+<div class="container mt-5">
+<div class="row">
+  <div class="col-sm-12 font-weight-bold mb-5" style="font-size:x-large;">Buat Order</div>
+  <div class="col-sm-6">
+    <div class="mb-3" style="font-size:x-large;">Data Penanggung Jawab</div>
+    <div class="form-group">
+      <label for="inputEmail4">Nama Penanggung Jawab</label>
+      <input type="text" class="form-control" placeholder="">
+    </div>
+    <div class="form-group">
+      <label for="inputEmail4">Jabatan</label>
+      <input type="text" class="form-control" placeholder="">
+    </div>
+    <div class="form-group">
+      <label for="inputEmail4">No Telpon</label>
+      <input type="text" class="form-control" placeholder="">
+    </div>
+    <div class="form-group">
+      <label for="inputEmail4">Email</label>
+      <input type="text" class="form-control" placeholder="">
+    </div>
+    <div class="form-group">
+      <label for="inputEmail4">Tanggal Lahir</label>
+      <input type="text" class="form-control" placeholder="">
+    </div>
+    <div class="form-group">
+      <label for="inputEmail4">Alamat Sesuai Identitas</label>
+      <input type="text" class="form-control" placeholder="">
+    </div>
+    <div class="form-group">
+      <label for="inputEmail4">Jenis Kelamin</label>
+      <input type="text" class="form-control" placeholder="">
+    </div>
+    <div class="form-group">
+      <label for="inputEmail4">NIK</label>
+      <input type="text" class="form-control" placeholder="">
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="mb-3" style="font-size:x-large;">Data Instansi</div>
+    <div class="form-group">
+      <label for="inputEmail4">Nama Instansi</label>
+      <input type="text" class="form-control" placeholder="">
+    </div>
+    <div class="form-group">
+      <label for="inputEmail4">Alamat Instansi</label>
+      <input type="text" class="form-control" placeholder="">
+    </div>
+    <div class="form-group">
+      <label for="inputEmail4">Nomor Telpon</label>
+      <input type="text" class="form-control" placeholder="">
+    </div>
+    <div class="form-group">
+      <label for="inputEmail4">Email Yang Didaftarkan</label>
+      <input type="text" class="form-control" placeholder="">
+    </div>
+    <div class="form-group">
+      <label for="inputEmail4">Inforrmasi Rekening Instansi</label>
+      <input type="text" class="form-control" placeholder="">
+    </div>
+  </div>
+    <div class="mt-4 mx-auto mb-5 d-flex">
+    <div class="d-inline mr-3"><button type="submit" class="btn btn-outline-custom btn-block px-5 py-3">Batal</button></div>
+    <div class="d-inline "><button type="submit" style="background-color:#ff5500;color:white;font-weight: bold;" class="btn btn-block px-5 py-3">Submit</button></div>
+  </div>
+<!-- <div class=" row px-3 py-3">
   <div class="col-sm-12 text-center font-weight-bold mb-4" style="font-size:x-large;">Ubah Informasi Universitas</div>
   <div class="col-sm-9">
     <div class="form-group row">
@@ -47,13 +111,14 @@
   <div class="col-sm-4 mt-4 mx-auto">
     <button type="submit" @click="submitForm" style="background-color:#ff5500;color:white;" class="btn btn-block py-3">Submit</button>
   </div>
+</div> -->
 </div>
 </div>
 </template>
 
 <script>
 export default {
-  name: 'AcademyEdit',
+  name: 'AcademyOnboardAdd',
   data () {
     return {
       academyData: {},
@@ -147,22 +212,32 @@ export default {
     background-color: #24292e!important;
 }
 
-.label_upload {
-  color: #fff;
-  position: absolute;
-  margin-top: -32px;
-  z-index: 1;
-  background-color: black;
-}
-.label_upload .teks {
-  background: rgba(0,0,0,.7);
-  display: inline;
-  width: 100%;
-  text-align: center;
-}
-
 .mt-7 {
   margin-top: 7rem !important
+}
+
+.btn-outline-custom {
+  color: #ff5500;
+  background-color: #ffffff;
+  border-color: #ff5500;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+.btn-outline-custom {
+  color: #ff5500;
+  background-color: #ffffff;
+  border-color: #ff5500;
+  font-weight: bold;
+}
+
+.btn-outline-custom:hover,
+.btn-outline-custom:active,
+.btn-outline-custom:focus,
+.btn-outline-custom.active {
+  background: #ff5500;
+  color: #ffffff;
+  border-color: #ff5500;
 }
 
 </style>
