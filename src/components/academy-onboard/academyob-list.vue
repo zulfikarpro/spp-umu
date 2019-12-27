@@ -3,14 +3,14 @@
 <div class="mx-3">
 <div class="d-flex my-4 buttonLeft">
   <div>Show <select v-model="selectedEntri">
-  <option v-for="n in totalDataPage">{{ n }}</option>
+  <option v-for="n in totalDataPage" :key="n">{{ n }}</option>
   </select>
   Entires
   </div>
   <div><datepicker placeholder="Tanggal Awal" v-model="firstDate"></datepicker></div>
   <div><datepicker placeholder="Tanggal Akhir" v-model="secondDate"></datepicker></div>
   <div class="ml-auto">
-    <button class="btn btn-primary px-3 mr-3" >Buat Order</button>
+    <router-link to="addAkademiOnboard" class="btn btn-primary px-3 mr-3">Buat Order</router-link>
     <label>Cari :</label>
     <input type="text" placeholder=""/>
   </div>

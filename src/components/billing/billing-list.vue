@@ -35,7 +35,7 @@
                     >
                 <div slot="numbering" slot-scope="props">
                 {{ props.rowIndex + 1}}
-                </div> 
+                </div>
                 </vuetable>
                 <div style="clear:both;"></div>
                 <vuetable-pagination  ref="pagination" :css="css.pagination" style="float:right;"

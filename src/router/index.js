@@ -17,6 +17,9 @@ import FeeBillingView from '@/components/fee-billing/fee-view'
 import AkademiOnboardIndex from '@/components/academy-onboard'
 import AkademiOnboardList from '@/components/academy-onboard/academyob-list'
 import AkademiOnboardAdd from '@/components/academy-onboard/academyob-add'
+import ActivationIndex from '@/components/activation'
+import ActivationView from '@/components/activation/activation-view'
+import Register from '@/components/logon/register'
 
 import mode from '../prodProperties'
 Vue.use(Router)
@@ -29,6 +32,11 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
     },
     {
       path: '*',
@@ -131,6 +139,19 @@ export default new Router({
               path: 'addAkademiOnboard',
               name: 'AcademyOnboardAdd',
               component: AkademiOnboardAdd
+            }
+          ]
+        },
+        {
+          path: 'aktivasi',
+          component: ActivationIndex,
+          name: 'Activation',
+          redirect: { name: 'admin' },
+          children: [
+            {
+              path: 'token/:id',
+              name: 'ActivationView',
+              component: ActivationView
             }
           ]
         }

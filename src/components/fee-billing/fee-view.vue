@@ -23,14 +23,14 @@
                     >
                 <div slot="numbering" slot-scope="props">
                 {{ props.rowIndex + 1}}
-                </div>     
+                </div>
                 </vuetable>
                 <div style="clear:both;"></div>
                 <vuetable-pagination  ref="pagination" :css="css.pagination" style="float:right;"
                 @vuetable-pagination:change-page="onChangePage"
                 ></vuetable-pagination>
             </div>
-              <div class="float-right mt-7 mb-5"> 
+              <div class="float-right mt-7 mb-5">
                 <router-link to="/admin/feeManage/" style="padding-left: 7rem;padding-right: 7rem" class="btn btn-primary btn-lg py-3">Kembali</router-link>
               </div>
             </div>
@@ -93,7 +93,7 @@ export default {
         {
           name: '__slot:numbering',
           title: 'No'
-        },          
+        },
         {
           name: 'name',
           title: 'Nama Tagihan',

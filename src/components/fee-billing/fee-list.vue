@@ -23,7 +23,7 @@
         >
       <div slot="numbering" slot-scope="props">
         {{ props.rowIndex + 1}}
-      </div> 
+      </div>
       <div slot="actions" slot-scope="props">
       <button @click="onActionClicked('riwayat', props.rowData)">Riwayat</button>
       <button @click="onActionClicked('closeTagihan', props.rowData)">Close Tagihan</button>
@@ -46,7 +46,7 @@
     </div>
     </fieldset>
   </div>
-  <div class="col-sm-3 offset-sm-7 mt-5 mb-5"> 
+  <div class="col-sm-3 offset-sm-7 mt-5 mb-5">
     <button type="button" class="btn btn-primary btn-lg py-3 px-5" @click="createInvoice">Buat Invoice</button>
   </div>
 </div>
@@ -197,7 +197,7 @@ export default {
     onActionClicked (action, data) {
       switch (action) {
         case 'closeTagihan':
-          if(confirm('Apakah Anda Yakin Untuk Close Tagihan')){
+          if (confirm('Apakah Anda Yakin Untuk Close Tagihan')) {
             alert('ashiaap')
           }
           break
@@ -235,7 +235,7 @@ export default {
       this.$store.dispatch('excelTemplateSiswa')
     },
     createInvoice () {
-      if(confirm('Apakah Anda Yakin Untuk Mmebuat Invoice')){
+      if (confirm('Apakah Anda Yakin Untuk Mmebuat Invoice')) {
         alert('underdevelopment')
       }
     }
