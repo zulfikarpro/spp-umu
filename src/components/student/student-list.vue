@@ -62,7 +62,7 @@ export default {
       sortOrder: [
         {
           field: 'name',
-          direction: 'desc',
+          direction: 'asc',
           sortField: 'name'
         }
       ],
