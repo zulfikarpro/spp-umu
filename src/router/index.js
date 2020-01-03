@@ -19,7 +19,9 @@ import AkademiOnboardList from '@/components/academy-onboard/academyob-list'
 import AkademiOnboardAdd from '@/components/academy-onboard/academyob-add'
 import ActivationIndex from '@/components/activation'
 import ActivationView from '@/components/activation/activation-view'
-import Register from '@/components/logon/register'
+import UniversityOnboardIndex from '@/components/university-onboard'
+import UniversityOnboard from '@/components/university-onboard/university'
+import Register2 from '@/components/logon/register2'
 
 import mode from '../prodProperties'
 Vue.use(Router)
@@ -34,9 +36,9 @@ export default new Router({
       component: Login
     },
     {
-      path: '/register',
-      name: 'register',
-      component: Register
+      path: '/register2',
+      name: 'register2',
+      component: Register2
     },
     {
       path: '*',
@@ -45,6 +47,19 @@ export default new Router({
     {
       path: '/',
       redirect: { name: 'login' }
+    },
+    {
+      path: '/universityOnboard',
+      component: UniversityOnboardIndex,
+      name: 'UniversityOnboard',
+      redirect: '/universityOnboard/register',
+      children: [
+        {
+          path: '/universityOnboard/register/:id?',
+          name: 'UniversityOnboard',
+          component: UniversityOnboard
+        }
+      ]
     },
     {
       path: '/admin',

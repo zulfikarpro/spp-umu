@@ -31,8 +31,50 @@ export const state = {
   indexAkademiData: 0,
   oneAkademiData: {},
   indexUpdateAkademi: 0,
-  updateAkademiData: {}
+  updateAkademiData: {},
   // end Akademi
+
+  // Register
+  regisUser: {
+    name: '',
+    nip: '',
+    position: '',
+    phone: '',
+    email: '',
+    placeDob: '',
+    dateOfBirth: '',
+    address: '',
+    addressNow: '',
+    gender: '',
+    citizen: '',
+    nik: ''
+  },
+  regisWakil: {
+    name: '',
+    nip: '',
+    position: '',
+    phone: '',
+    email: '',
+    placeDob: '',
+    dateOfBirth: '',
+    address: '',
+    addressNow: '',
+    gender: '',
+    citizen: '',
+    nik: ''
+  },
+  regisAkademi: {
+    akademiName: '',
+    akademiAddress: '',
+    akademiPhone: '',
+    akademiEmail: '',
+    akademiBank: '',
+    noRekening: '',
+    nameRekening: ''
+  },
+  indexSaveUser: 0,
+  saveUserData: {}
+  // end Register
 
 }
 
@@ -72,6 +114,12 @@ export const mutations = {
   },
   respUpdateAkademi (state, resp) {
     state.updateAkademiData = resp
+  },
+  countSaveUser (state) {
+    state.indexSaveUser++
+  },
+  respSaveUser (state, resp) {
+    state.saveUserData = resp
   }
 }
 
@@ -161,6 +209,22 @@ export const actions = {
       .then((response) => {
         commit('countUpdateAkademi')
         commit('respUpdateAkademi', response.data)
+      })
+  },
+  saveUser ({commit}, x) {
+    return Axios.post(baseUrl + '/umu-spp/user/registration', x)
+      .then((response) => {
+        commit('countSaveUser')
+        commit('respSaveUser', response.data)
+      })
+      .catch((error) => {
+        let err = error + ''
+        if (err.includes('Invalid')) {
+          alert('Tidak Dapat Diakses')
+          console.log(error)
+        } else {
+          alert('Terjadi Kesalahan')
+        }
       })
   }
 }
