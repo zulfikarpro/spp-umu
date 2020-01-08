@@ -52,11 +52,11 @@
 </template>
 
 <script>
-import { objSession } from '../../variable'
 export default {
   name: 'AcademyEdit',
   data () {
     return {
+      objSession: JSON.parse(sessionStorage.getItem('umuSS')),
       academyData: {},
       failedMsg: '',
       imgSize: false,
@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     init () {
-      this.$store.dispatch('getAkademiOne', objSession.idAkademi)
+      this.$store.dispatch('getAkademiOne', this.objSession.idAkademi)
     },
     pilihGambar () {
       this.$refs.fileGambar.click()
@@ -98,7 +98,7 @@ export default {
         alert('Ukuran Gambar terlalu besar')
         this.$refs.fileGambar.value = '' // Reset Input File
       } else {
-        this.academyData.idAkademi = objSession.idAkademi
+        this.academyData.idAkademi = this.objSession.idAkademi
         this.$store.dispatch('updateAkademi', [this.academyData, this.imgFile])
         this.$refs.fileGambar.value = '' // Reset Input File
       }

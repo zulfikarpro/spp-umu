@@ -42,7 +42,6 @@ import Vuetable from 'vuetable-2'
 import VuetablePagination from
   'vuetable-2/src/components/VuetablePagination'
 import NProgress from 'nprogress'
-import { objSession } from '../../variable'
 
 export default {
   name: 'studentList',
@@ -52,6 +51,7 @@ export default {
   },
   data () {
     return {
+      objSession: JSON.parse(sessionStorage.getItem('umuSS')),
       paraf: '',
       appendParams: {},
       url: '',
@@ -182,7 +182,7 @@ export default {
       // const baseUrl = 'http://mumu.hike.id:10015'
       this.url = baseUrl + '/umu-spp/siswa/getdata'
       this.appendParams = {
-        idAkademi: objSession.idAkademi
+        idAkademi: this.objSession.idAkademi
       }
     },
     getSortParam: function (sortOrder) {

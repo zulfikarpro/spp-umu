@@ -2,7 +2,7 @@
     <div>
     <nav class="navbar navbar-expand-lg sticky-top navbar-dark" style="background-image: linear-gradient(180deg, #ff5500, #fc7735); ">
   <a class="navbar-brand" href="#">
-     <img src="../../assets/univ.png" width="35" height="35" alt="">
+     <img :src="'data:image/jpeg;base64,' + logoAkademi" width="50" height="50" alt="Logo" />
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -33,7 +33,31 @@
 
 <script>
 export default {
-  name: 'top'
+  name: 'top',
+  data () {
+    return {
+      objSession: JSON.parse(sessionStorage.getItem('umuSS')),
+      logoAkademi: ''
+    }
+  },
+  computed: {
+    indexAkademiData () {
+      return this.$store.state.indexAkademiData
+    }
+  },
+  watch: {
+    'indexAkademiData' () {
+      this.logoAkademi = this.$store.state.oneAkademiData.data.akademiLogo
+    }
+  },
+  methods: {
+    init () {
+      this.$store.dispatch('getAkademiOne', this.objSession.idAkademi)
+    }
+  },
+  mounted () {
+    this.init()
+  }
 }
 </script>
 

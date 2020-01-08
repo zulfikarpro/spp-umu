@@ -50,7 +50,6 @@ import Vuetable from 'vuetable-2'
 import VuetablePagination from
   'vuetable-2/src/components/VuetablePagination'
 import NProgress from 'nprogress'
-import { objSession } from '../../variable'
 // import dayjs from 'dayjs'
 
 export default {
@@ -271,7 +270,7 @@ export default {
         this.file = dataexcel
         var reader = new FileReader()
         reader.readAsDataURL(val.target.files[0])
-        this.$store.dispatch('excelUploadTagihan', [objSession.idAkademi, this.file])
+        this.$store.dispatch('excelUploadTagihan', [this.objSession.idAkademi, this.file])
       } else {
         this.failedMsg = 'Tipe Excel harus xlsx/xls'
         alert('Tipe Excel harus xlsx/xls')
@@ -283,7 +282,7 @@ export default {
     tempExcel () {
       NProgress.configure({ showSpinner: false })
       NProgress.start()
-      this.$store.dispatch('excelTemplateTagihan', objSession.idAkademi)
+      this.$store.dispatch('excelTemplateTagihan', this.objSession.idAkademi)
     },
     filterSubmit () {
       NProgress.configure({ showSpinner: false })
