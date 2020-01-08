@@ -42,6 +42,7 @@ import Vuetable from 'vuetable-2'
 import VuetablePagination from
   'vuetable-2/src/components/VuetablePagination'
 import NProgress from 'nprogress'
+import { objSession } from '../../variable'
 
 export default {
   name: 'studentList',
@@ -181,7 +182,7 @@ export default {
       // const baseUrl = 'http://mumu.hike.id:10015'
       this.url = baseUrl + '/umu-spp/siswa/getdata'
       this.appendParams = {
-        idAkademi: 1
+        idAkademi: objSession.idAkademi
       }
     },
     getSortParam: function (sortOrder) {
@@ -231,7 +232,7 @@ export default {
         this.file = dataexcel
         var reader = new FileReader()
         reader.readAsDataURL(val.target.files[0])
-        this.$store.dispatch('excelUploadSiswa', this.file)
+        this.$store.dispatch('excelUploadSiswa', [1, this.file])
       } else {
         this.failedMsg = 'Tipe Excel harus xlsx/xls'
         alert('Tipe Excel harus xlsx/xls')

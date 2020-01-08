@@ -24,27 +24,52 @@
         <div class="form-group">
             <button type="submit" v-on:click="postlogin" style="background-color:#ff5500;color:white;" class="btn btn-block mx-auto w-25">Login</button>
         </div>
-    <p class="text-center"><a href="#">Lupa Password</a></p>
+    <!-- <p class="text-center"><a href="#">Lupa Password</a></p> -->
 </div>
 </div>
 </template>
 
 <script>
+import CryptoJS from 'crypto-js'
 
 export default {
   name: 'login',
   data () {
     return {
-      email: 'test',
-      password: '123'
+      email: '',
+      password: '',
+      secretKey: 'YWJjZGVmZ2hpamtsbW5vcA=='
+    }
+  },
+  computed: {
+    indexLoginUser () {
+      return this.$store.state.indexLoginUser
+    }
+  },
+  watch: {
+    'indexLoginUser' () {
+      if (this.$store.state.oneLoginUser.success === true) {
+        sessionStorage.setItem('umuSS', JSON.stringify(this.$store.state.oneLoginUser.data))
+        this.$router.push('admin/beranda')
+      } else {
+        alert(this.$store.state.oneLoginUser.message)
+      }
     }
   },
   methods: {
     postlogin () {
-      if (this.email === 'test' && this.password === '123') {
-        this.$router.push('admin/beranda')
+      if (this.email === '' || this.email === undefined || this.password === '' || this.password === undefined) {
+        alert('Failed Login')
       } else {
-        alert('email dan password salah')
+        let key = CryptoJS.enc.Base64.parse(this.secretKey)
+        let cfg = {
+          mode: CryptoJS.mode.ECB,
+          padding: CryptoJS.pad.Pkcs7
+        }
+        let encryptedData = CryptoJS.AES.encrypt(this.password, key, cfg).toString()
+        // console.log(encryptedData)
+        this.$store.dispatch('loginUser', [this.email, encryptedData])
+        // this.$router.push('admin/beranda')
       }
     }
   }

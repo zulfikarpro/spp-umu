@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { objSession } from '../../variable'
 export default {
   name: 'AcademyPage',
   data () {
@@ -52,7 +53,7 @@ export default {
   },
   methods: {
     init () {
-      this.$store.dispatch('getAkademiOne', 1)
+      this.$store.dispatch('getAkademiOne', objSession.idAkademi)
     },
     linkEdit () {
       this.$router.push('/admin/akademi/editAkademi')

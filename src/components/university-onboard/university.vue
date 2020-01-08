@@ -36,51 +36,51 @@
         <div class="mt-3 font-weight-bold">A. DATA PENANGGUNG JAWAB KEUANGAN SEKOLAH/UNIVERSITAS</div>
         <div class="form-group mt-3">
         <label >Nama Penanggung Jawab</label>
-        <input type="text" class="form-control" v-validate="'required'" name="nama"  v-model="data1.name">
-        <small class="form-text text-muted" v-show="errors.has('nama')">{{ errors.first('nama') }}</small>
+        <input type="text" class="form-control"   v-model="$v.data1.name.$model" >
+        <small class="form-text text-danger error" v-if="$v.data1.name.$error">Field is required.</small>
         </div>
         <div class="form-group mt-3">
         <label >NIP/Nomor Induk Pegawai</label>
-        <input type="text" class="form-control" v-validate="'required'" name="nip" v-model="data1.nip">
-        <small class="form-text text-muted" v-show="errors.has('nip')">{{ errors.first('nip') }}</small>
+        <input type="text" class="form-control"  v-model="$v.data1.nip.$model">
+        <small class="form-text text-danger error" v-if="$v.data1.nip.$error">Field is required.</small>
         </div>
         <div class="form-group mt-3">
         <label >Jabatan</label>
-        <input type="text" class="form-control" v-validate="'required'" name="jabatan" v-model="data1.position">
-        <small class="form-text text-muted" v-show="errors.has('jabatan')">{{ errors.first('jabatan') }}</small>
+        <input type="text" class="form-control" v-model="$v.data1.position.$model">
+        <small class="form-text text-danger error" v-if="$v.data1.position.$error">Field is required.</small>
         </div>
         <div class="form-group mt-3">
         <label >Nomor Handphone</label>
-        <input type="number" class="form-control" v-validate="'required|numeric'" name="phone" v-model="data1.phone">
-        <small class="form-text text-muted" v-show="errors.has('phone')">{{ errors.first('phone') }}</small>
+        <input type="number" class="form-control"  v-model="$v.data1.phone.$model">
+        <small class="form-text text-danger error" v-if="$v.data1.phone.$error">Field is required.</small>
         </div>
         <div class="form-group mt-3">
         <label >Email</label>
-        <input type="email" class="form-control" v-validate="'required|email'" name="email" v-model="data1.email">
-        <small class="form-text text-muted" v-show="errors.has('email')">{{ errors.first('email') }}</small>
+        <input type="email" class="form-control"  v-model="$v.data1.email.$model">
+        <small class="form-text text-danger error" v-if="$v.data1.email.$error">Field is required.</small>
         </div>
         <div class="form-group mt-3 row">
           <label class="col-12">Tempat Tanggal Lahir</label>
-          <div class="col-6"><input type="text" class="form-control under-line" v-validate="'required'" name="place" placeholder="Tempat" v-model="data1.placeDob"></div>
-          <div class="col-6"><datepicker placeholder="Tanggal Lahir" v-validate="'required'" name="dateofbirth" :bootstrap-styling="true" v-model="data1.dateOfBirth"></datepicker></div>
-          <div class="col-6"><small class="form-text text-muted" v-show="errors.has('place')">{{ errors.first('place') }}</small></div>
-          <!-- <div :class="[errors.has('place') ? 'offset-6' : 'col-6' ]"><small class="form-text text-muted" v-show="errors.has('dateofbirth')">{{ errors.first('dateofbirth') }}</small></div> -->
+          <div class="col-6"><input type="text" class="form-control under-line"  placeholder="Tempat" v-model="$v.data1.placeDob.$model"></div>
+          <div class="col-6"><datepicker placeholder="Tanggal Lahir" :format="'dd-MM-yyyy'" :bootstrap-styling="true" v-model="$v.data1.dateOfBirth.$model"></datepicker></div>
+          <small class="form-text text-danger col-6" v-if="$v.data1.placeDob.$error">Field is required.</small>
+          <small class="form-text text-danger" :class="$v.data1.placeDob.$error === true ? 'col-6' : 'offset-6'" v-if="$v.data1.dateOfBirth.$error">Select is required.</small>
         </div>
         <div class="form-group mt-3">
           <label >Alamat Sesuai Identitas</label>
-          <input type="text" class="form-control" v-validate="'required'" name="alamatidentitas" v-model="data1.address">
-          <small class="form-text text-muted" v-show="errors.has('alamatidentitas')">{{ errors.first('alamatidentitas') }}</small>
+          <input type="text" class="form-control"  v-model="$v.data1.address.$model">
+          <small class="form-text text-danger" v-if="$v.data1.address.$error">Field is required.</small>
         </div>
         <div class="form-group mt-3">
           <label >Alamat Tinggal</label>
-          <input type="text" class="form-control" v-validate="'required'" name="alamat" v-model="data1.addressNow">
-          <small class="form-text text-muted" v-show="errors.has('alamat')">{{ errors.first('alamat') }}</small>
+          <input type="text" class="form-control"  v-model="$v.data1.addressNow.$model">
+          <small class="form-text text-danger" v-if="$v.data1.addressNow.$error">Field is required.</small>
         </div>
         <div class="form-group mt-3 row">
           <label class="col-12">Jenis Kelamin</label>
           <div class="col-6">
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="gender"  v-model="data1.gender"  v-bind:value="'laki-laki'" checked>
+            <input class="form-check-input" type="radio" name="gender"  v-model="$v.data1.gender.$model"  v-bind:value="'laki-laki'" checked>
             <label class="form-check-label" >
               Laki-Laki
             </label>
@@ -88,18 +88,19 @@
           </div>
           <div class="col-6">
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="gender" v-model="data1.gender"  v-bind:value="'perempuan'">
+            <input class="form-check-input" type="radio" name="gender" v-model="$v.data1.gender.$model"  v-bind:value="'perempuan'">
             <label class="form-check-label" >
               Perempuan
             </label>
           </div>
           </div>
+          <small class="form-text text-danger" v-if="$v.data1.gender.$error">Choose is required.</small>
         </div>
         <div class="form-group mt-3 row">
           <label class="col-12">Kewarganegaraan</label>
           <div class="col-6">
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="citizen"  v-model="data1.citizen"   v-bind:value="'WNI'" checked>
+            <input class="form-check-input" type="radio" name="citizen"  v-model="$v.data1.citizen.$model"   v-bind:value="'WNI'" checked>
             <label class="form-check-label" >
               WNI
             </label>
@@ -107,17 +108,18 @@
           </div>
           <div class="col-6">
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="citizen" v-model="data1.citizen"   v-bind:value="'WNA'" >
+            <input class="form-check-input" type="radio" name="citizen" v-model="$v.data1.citizen.$model"   v-bind:value="'WNA'" >
             <label class="form-check-label" >
               WNA
             </label>
           </div>
           </div>
+          <small class="form-text text-danger" v-if="$v.data1.citizen.$error">Choose is required.</small>
         </div>
         <div class="form-group mt-3">
           <label >NIK</label>
-          <input type="text" class="form-control" v-model="data1.nik" name="nik" v-validate="'required'">
-          <small class="form-text text-muted" v-show="errors.has('nik')">{{ errors.first('nik') }}</small>
+          <input type="text" class="form-control" v-model="$v.data1.nik.$model" name="nik" v-validate="'required'">
+          <small class="form-text text-danger" v-if="$v.data1.nik.$error">Field is required.</small>
         </div>
       </div>
       <div class="col-sm-8 mx-auto mt-5 mb-5">
@@ -144,34 +146,41 @@
         <div class="mt-3 font-weight-bold">B. DATA SEKOLAH/UNIVERSITAS</div>
         <div class="form-group mt-3">
         <label >Nama Sekolah/Universitas</label>
-        <input type="text" class="form-control" v-model="data2.akademiName">
+        <input type="text" class="form-control" v-model="$v.data2.akademiName.$model">
+        <small class="form-text text-danger error" v-if="$v.data2.akademiName.$error">Field is required.</small>
         </div>
         <div class="form-group mt-3">
         <label >Alamat Sekolah/Universitas</label>
-        <input type="text" class="form-control" v-model="data2.alamat">
+        <input type="text" class="form-control" v-model="$v.data2.akademiAddress.$model">
+        <small class="form-text text-danger error" v-if="$v.data2.akademiAddress.$error">Field is required.</small>
         </div>
         <div class="form-group mt-3">
         <label >Nomor Telepon</label>
-        <input type="number" class="form-control" v-model="data2.phone">
+        <input type="number" class="form-control" v-model="$v.data2.akademiPhone.$model">
+        <small class="form-text text-danger error" v-if="$v.data2.akademiPhone.$error">Field is required.</small>
         </div>
         <div class="form-group mt-3">
         <label >Email yang Didaftarkan</label>
-        <input type="email" class="form-control" v-model="data2.email">
+        <input type="email" class="form-control" v-model="$v.data2.akademiEmail.$model">
+        <small class="form-text text-danger error" v-if="$v.data2.akademiEmail.$error">Field is required.</small>
         </div>
         <div class="form-group mt-3">
         <label >Bank</label>
-        <select id="inputBank" class="form-control" v-model="data2.bank">
+        <select id="inputBank" class="form-control" v-model="$v.data2.akademiBank.$model">
         <option value="" selected>Pilih Bank</option>
         <option value="BNI">BNI</option>
-      </select>
+        </select>
+        <small class="form-text text-danger error" v-if="$v.data2.akademiBank.$error">Choose is required.</small>
         </div>
         <div class="form-group mt-3">
           <label >Nomor Rekening Bank</label>
-          <input type="text" class="form-control" v-model="data2.noRekening">
+          <input type="text" class="form-control" v-model="$v.data2.noRekening.$model">
+          <small class="form-text text-danger error" v-if="$v.data2.noRekening.$error">Field is required.</small>
         </div>
         <div class="form-group mt-3">
           <label >Nama Pemilik Rekening Bank</label>
-          <input type="text" class="form-control" v-model="data2.nameRekening">
+          <input type="text" class="form-control" v-model="$v.data2.nameRekening.$model">
+          <small class="form-text text-danger error" v-if="$v.data2.noRekening.$error">Field is required.</small>
         </div>
       </div>
       <div class="col-sm-8 mx-auto mt-5 mb-5">
@@ -198,51 +207,51 @@
         <div class="mt-3 font-weight-bold">C. DATA WAKIL REKTOR BIDANG KEUANGAN SEKOLAH/UNIVERSITAS</div>
         <div class="form-group mt-3">
         <label >Nama Wakil Rektor</label>
-        <input type="text" class="form-control" v-validate="'required'" name="nama"  v-model="data3.name">
-        <small class="form-text text-muted" v-show="errors.has('nama')">{{ errors.first('nama') }}</small>
+        <input type="text" class="form-control"  v-model="$v.data3.name.$model">
+        <small class="form-text text-danger error" v-if="$v.data3.name.$error">Field is required.</small>
         </div>
         <div class="form-group mt-3">
         <label >NIP/Nomor Induk Pegawai</label>
-        <input type="text" class="form-control" v-validate="'required'" name="nip" v-model="data3.nip">
-        <small class="form-text text-muted" v-show="errors.has('nip')">{{ errors.first('nip') }}</small>
+        <input type="text" class="form-control"  v-model="$v.data3.nip.$model">
+        <small class="form-text text-danger error" v-if="$v.data3.nip.$error">Field is required.</small>
         </div>
         <div class="form-group mt-3">
         <label >Jabatan</label>
-        <input type="text" class="form-control" v-validate="'required'" name="jabatan" v-model="data3.position">
-        <small class="form-text text-muted" v-show="errors.has('jabatan')">{{ errors.first('jabatan') }}</small>
+        <input type="text" class="form-control"  v-model="$v.data3.position.$model">
+        <small class="form-text text-danger error" v-if="$v.data3.position.$error">Field is required.</small>
         </div>
         <div class="form-group mt-3">
         <label >Nomor Handphone</label>
-        <input type="number" class="form-control" v-validate="'required|numeric'" name="phone" v-model="data3.phone">
-        <small class="form-text text-muted" v-show="errors.has('phone')">{{ errors.first('phone') }}</small>
+        <input type="number" class="form-control"  v-model="$v.data3.phone.$model">
+       <small class="form-text text-danger error" v-if="$v.data3.phone.$error">Field is required.</small>
         </div>
         <div class="form-group mt-3">
         <label >Email</label>
-        <input type="email" class="form-control" v-validate="'required|email'" name="email" v-model="data3.email">
-        <small class="form-text text-muted" v-show="errors.has('email')">{{ errors.first('email') }}</small>
+        <input type="email" class="form-control" v-model="$v.data3.email.$model">
+        <small class="form-text text-danger error" v-if="$v.data3.email.$error">Field is required.</small>
         </div>
         <div class="form-group mt-3 row">
           <label class="col-12">Tempat Tanggal Lahir</label>
-          <div class="col-6"><input type="text" class="form-control under-line" v-validate="'required'" name="place" placeholder="Tempat" v-model="data3.placeDob"></div>
-          <div class="col-6"><datepicker placeholder="Tanggal Lahir" v-validate="'required'" name="dateofbirth" :bootstrap-styling="true" v-model="data3.dateOfBirth"></datepicker></div>
-          <div class="col-6"><small class="form-text text-muted" v-show="errors.has('place')">{{ errors.first('place') }}</small></div>
-          <!-- <div :class="[errors.has('place') ? 'offset-6' : 'col-6' ]"><small class="form-text text-muted" v-show="errors.has('dateofbirth')">{{ errors.first('dateofbirth') }}</small></div> -->
+          <div class="col-6"><input type="text" class="form-control under-line" placeholder="Tempat" v-model="$v.data3.placeDob.$model"></div>
+          <div class="col-6"><datepicker placeholder="Tanggal Lahir" :bootstrap-styling="true" v-model="$v.data3.dateOfBirth.$model"></datepicker></div>
+          <small class="form-text text-danger col-6" v-if="$v.data3.placeDob.$error">Field is required.</small>
+          <small class="form-text text-danger" :class="$v.data3.placeDob.$error === true ? 'col-6' : 'offset-6'" v-if="$v.data3.dateOfBirth.$error">Select is required.</small>
         </div>
         <div class="form-group mt-3">
           <label >Alamat Sesuai Identitas</label>
-          <input type="text" class="form-control" v-validate="'required'" name="alamatidentitas" v-model="data3.address">
-          <small class="form-text text-muted" v-show="errors.has('alamatidentitas')">{{ errors.first('alamatidentitas') }}</small>
+          <input type="text" class="form-control" v-model="$v.data3.address.$model">
+          <small class="form-text text-danger error" v-if="$v.data3.address.$error">Field is required.</small>
         </div>
         <div class="form-group mt-3">
           <label >Alamat Tinggal</label>
-          <input type="text" class="form-control" v-validate="'required'" name="alamat" v-model="data3.addressNow">
-          <small class="form-text text-muted" v-show="errors.has('alamat')">{{ errors.first('alamat') }}</small>
+          <input type="text" class="form-control" v-model="$v.data3.addressNow.$model">
+          <small class="form-text text-danger error" v-if="$v.data3.addressNow.$error">Field is required.</small>
         </div>
         <div class="form-group mt-3 row">
           <label class="col-12">Jenis Kelamin</label>
           <div class="col-6">
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="gender"  v-model="data3.gender"  v-bind:value="'laki-laki'" checked>
+            <input class="form-check-input" type="radio"  v-model="$v.data3.gender.$model"  v-bind:value="'laki-laki'" checked>
             <label class="form-check-label" >
               Laki-Laki
             </label>
@@ -250,18 +259,19 @@
           </div>
           <div class="col-6">
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="gender" v-model="data3.gender"  v-bind:value="'perempuan'">
+            <input class="form-check-input" type="radio" v-model="$v.data3.gender.$model"  v-bind:value="'perempuan'">
             <label class="form-check-label" >
               Perempuan
             </label>
           </div>
           </div>
+          <small class="form-text text-danger" v-if="$v.data3.gender.$error">Choose is required.</small>
         </div>
         <div class="form-group mt-3 row">
           <label class="col-12">Kewarganegaraan</label>
           <div class="col-6">
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="citizen"  v-model="data3.citizen"   v-bind:value="'WNI'" checked>
+            <input class="form-check-input" type="radio"  v-model="$v.data3.citizen.$model"   v-bind:value="'WNI'" checked>
             <label class="form-check-label" >
               WNI
             </label>
@@ -269,17 +279,18 @@
           </div>
           <div class="col-6">
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="citizen" v-model="data3.citizen"   v-bind:value="'WNA'" >
+            <input class="form-check-input" type="radio" v-model="$v.data3.citizen.$model"   v-bind:value="'WNA'" >
             <label class="form-check-label" >
               WNA
             </label>
           </div>
           </div>
+          <small class="form-text text-danger" v-if="$v.data3.citizen.$error">Choose is required.</small>
         </div>
         <div class="form-group mt-3">
           <label >NIK</label>
-          <input type="text" class="form-control" v-model="data3.nik" name="nik" v-validate="'required'">
-          <small class="form-text text-muted" v-show="errors.has('nik')">{{ errors.first('nik') }}</small>
+          <input type="text" class="form-control" v-model="$v.data3.nik.$model" name="nik" v-validate="'required'">
+          <small class="form-text text-danger error" v-if="$v.data3.nik.$error">Field is required.</small>
         </div>
       </div>
       <div class="col-sm-8 mx-auto mt-5 mb-5">
@@ -341,10 +352,7 @@
 
 <script>
 import Datepicker from 'vuejs-datepicker'
-import Vue from 'vue'
-import VeeValidate from 'vee-validate'
-
-Vue.use(VeeValidate)
+import { required } from 'vuelidate/lib/validators'
 
 export default {
   name: 'UniversityOnboardList',
@@ -395,15 +403,57 @@ export default {
       imgStatus: false
     }
   },
+  validations: {
+    data1: {
+      name: {required},
+      nip: {required},
+      position: {required},
+      phone: {required},
+      email: {required},
+      placeDob: {required},
+      dateOfBirth: {required},
+      address: {required},
+      addressNow: {required},
+      gender: {required},
+      citizen: {required},
+      nik: {required}
+    },
+    data2: {
+      akademiName: {required},
+      akademiAddress: {required},
+      akademiPhone: {required},
+      akademiEmail: {required},
+      akademiBank: {required},
+      noRekening: {required},
+      nameRekening: {required}
+    },
+    data3: {
+      name: {required},
+      nip: {required},
+      position: {required},
+      phone: {required},
+      email: {required},
+      placeDob: {required},
+      dateOfBirth: {required},
+      address: {required},
+      addressNow: {required},
+      gender: {required},
+      citizen: {required},
+      nik: {required}
+    }
+  },
   computed: {
     indexSaveUser () {
       return this.$store.state.indexSaveUser
+    },
+    DateAja () {
+      return new Date(this.data1.dateOfBirth)
     }
   },
   watch: {
-    'indexSaveUser' () {
-      if (this.$store.state.saveUserData.success === true) {
-        this.$router.push('2')
+    'indexSaveWizard' () {
+      if (this.$store.state.saveWizardData.success === true) {
+        this.$router.push('4')
       } else {
         alert(this.$store.state.saveUserData.message)
       }
@@ -450,31 +500,105 @@ export default {
     backButton () {
       this.$router.go(-1)
     },
+    changeDateFormat () {
+      let cdf = new Date(this.data1.dateOfBirth)
+      let day = cdf.getDate()
+      let month = cdf.getMonth() + 1
+      let year = cdf.getFullYear()
+      if (day < 10) {
+        day = '0' + day
+      }
+      if (month < 10) {
+        month = '0' + month
+      }
+      let resultDateFormat = day + '-' + month + '-' + year
+      this.data1.dateOfBirth = resultDateFormat
+    },
     submitButton (params) {
       if (params === 'userRegis') {
-        if (this.data1.name === '' || this.data1.nip === '' || this.data1.position === '' || this.data1.phone === '' || this.data1.email === '' || this.data1.placeDob === '' ||
-          this.data1.dateOfBirth === '' || this.data1.address === '' || this.data1.addressNow === '' || this.data1.gender === '' || this.data1.citizen === '' || this.data1.nik === '') {
-          alert('Data Harus Lengkap')
+        // if (this.data1.name === '' || this.data1.nip === '' || this.data1.position === '' || this.data1.phone === '' || this.data1.email === '' || this.data1.placeDob === '' ||
+        //   this.data1.dateOfBirth === '' || this.data1.address === '' || this.data1.addressNow === '' || this.data1.gender === '' || this.data1.citizen === '' || this.data1.nik === '') {
+        //   alert('Data Harus Lengkap')
+        // } else {
+        //   this.$store.state.regisUser = this.data1
+        //   this.$router.push('2')
+        this.$v.data1.$touch()
+        if (this.$v.data1.$error) {
+          alert('Data Harus Lengkapi')
         } else {
           this.$store.state.regisUser = this.data1
           this.$router.push('2')
-          // this.$store.dispatch('saveUser', this.data1)
         }
       } else if (params === 'akademiRegis') {
-        if (this.data2.akademiName === '' || this.data2.alamat === '' || this.data2.phone === '' || this.data2.email === '' || this.data2.bank === '' ||
-          this.data2.noRekening === '' || this.data2.nameRekening === '') {
-          alert('Data Harus Lengkap')
+        // if (this.data2.akademiName === '' || this.data2.akademiAddress === '' || this.data2.akademiPhone === '' || this.data2.akademiEmail === '' || this.data2.akademiBank === '' ||
+        //   this.data2.noRekening === '' || this.data2.nameRekening === '') {
+        //   alert('Data Harus Lengkap')
+        // } else {
+        //   this.$store.state.regisAkademi = this.data2
+        //   this.$router.push('3')
+        //
+        this.$v.data2.$touch()
+        if (this.$v.data2.$error) {
+          alert('Data Harus Lengkapi')
         } else {
           this.$store.state.regisAkademi = this.data2
           this.$router.push('3')
         }
       } else if (params === 'wakilRegis') {
-        if (this.data3.name === '' || this.data3.nip === '' || this.data3.position === '' || this.data3.phone === '' || this.data3.email === '' || this.data3.placeDob === '' ||
-          this.data3.dateOfBirth === '' || this.data3.address === '' || this.data3.addressNow === '' || this.data3.gender === '' || this.data3.citizen === '' || this.data3.nik === '') {
-          alert('Data Harus Lengkap')
+        // if (this.data3.name === '' || this.data3.nip === '' || this.data3.position === '' || this.data3.phone === '' || this.data3.email === '' || this.data3.placeDob === '' ||
+        //   this.data3.dateOfBirth === '' || this.data3.address === '' || this.data3.addressNow === '' || this.data3.gender === '' || this.data3.citizen === '' || this.data3.nik === '') {
+        //   alert('Data Harus Lengkap')
+        // } else {
+        //   this.$store.state.regisWakil = this.data3
+        //   this.$router.push('4')
+        // }
+        this.$v.data3.$touch()
+        if (this.$v.data3.$error) {
+          alert('Data Harus Lengkapi')
         } else {
           this.$store.state.regisWakil = this.data3
-          this.$router.push('4')
+          let firstData = Object.values(this.$store.state.regisUser)
+          let secondData = Object.values(this.$store.state.regisAkademi)
+          let thirdData = Object.values(this.$store.state.regisWakil)
+          let allData = firstData.concat(secondData, thirdData)
+          if (allData.includes(undefined) || allData.includes('')) {
+            alert('Semua Form Tidak Boleh Kosong')
+          } else {
+            let readyData = {
+              name: this.$store.state.regisUser.name,
+              nip: this.$store.state.regisUser.nip,
+              position: this.$store.state.regisUser.position,
+              phone: this.$store.state.regisUser.phone,
+              email: this.$store.state.regisUser.email,
+              placeDob: this.$store.state.regisUser.placeDob,
+              dateOfBirth: this.$store.state.regisUser.dateOfBirth,
+              address: this.$store.state.regisUser.address,
+              addressNow: this.$store.state.regisUser.addressNow,
+              gender: this.$store.state.regisUser.gender,
+              citizen: this.$store.state.regisUser.citizen,
+              nik: this.$store.state.regisUser.nik,
+              akademiName: this.$store.state.regisAkademi.akademiName,
+              akademiAddress: this.$store.state.regisAkademi.akademiAddress,
+              akademiPhone: this.$store.state.regisAkademi.akademiPhone,
+              akademiEmail: this.$store.state.regisAkademi.akademiEmail,
+              akademiBank: this.$store.state.regisAkademi.akademiBank,
+              noRekening: this.$store.state.regisAkademi.noRekening,
+              nameRekening: this.$store.state.regisAkademi.nameRekening,
+              name2: this.$store.state.regisWakil.name,
+              nip2: this.$store.state.regisWakil.nip,
+              position2: this.$store.state.regisWakil.position,
+              phone2: this.$store.state.regisWakil.phone,
+              email2: this.$store.state.regisWakil.email,
+              placeDob2: this.$store.state.regisWakil.placeDob,
+              dateOfBirth2: this.$store.state.regisWakil.dateOfBirth,
+              address2: this.$store.state.regisWakil.address,
+              addressNow2: this.$store.state.regisWakil.addressNow,
+              gender2: this.$store.state.regisWakil.gender,
+              citizen2: this.$store.state.regisWakil.citizen,
+              nik2: this.$store.state.regisWakil.nik
+            }
+            this.$store.dispatch('saveWizard', readyData)
+          }
         }
       }
     }

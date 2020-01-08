@@ -26,7 +26,7 @@ import Register2 from '@/components/logon/register2'
 import mode from '../prodProperties'
 Vue.use(Router)
 
-export default new Router({
+let vueRouter = new Router({
   base: mode,
   mode: 'history',
   routes: [
@@ -174,3 +174,24 @@ export default new Router({
     }
   ]
 })
+
+vueRouter.beforeEach((to, from, next) => {
+  let objSession = ''
+  if (to.path.includes('/login') && (objSession !== null || objSession !== '') && (objSession.idAkademi !== '' || objSession.status !== '')) {
+    next('/admin')
+  } else {
+    next()
+  }
+  if (!to.path.includes('admin')) {
+    next()
+  } else {
+    objSession = JSON.parse(sessionStorage.getItem('umuSS'))
+    if ((objSession === undefined || objSession === null) || (objSession.idAkademi === '' || objSession.idAkademi === undefined || objSession.idAkademi === null) || (objSession.status === null || objSession.status === '' || objSession.status === undefined || objSession.status !== 'active')) {
+      next('/login')
+    } else {
+      next()
+    }
+  }
+})
+
+export default vueRouter

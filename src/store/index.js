@@ -34,6 +34,11 @@ export const state = {
   updateAkademiData: {},
   // end Akademi
 
+  // Login
+  indexLoginUser: 0,
+  oneLoginUser: {},
+  // end Login
+
   // Register
   regisUser: {
     name: '',
@@ -72,8 +77,8 @@ export const state = {
     noRekening: '',
     nameRekening: ''
   },
-  indexSaveUser: 0,
-  saveUserData: {}
+  indexSaveWizard: 0,
+  saveWizardData: {}
   // end Register
 
 }
@@ -115,17 +120,23 @@ export const mutations = {
   respUpdateAkademi (state, resp) {
     state.updateAkademiData = resp
   },
-  countSaveUser (state) {
-    state.indexSaveUser++
+  countSaveWizard (state) {
+    state.indexSaveWizard++
   },
-  respSaveUser (state, resp) {
-    state.saveUserData = resp
+  respSaveWizard (state, resp) {
+    state.saveWizardData = resp
+  },
+  countLoginUser (state) {
+    state.indexLoginUser++
+  },
+  respLoginUser (state, resp) {
+    state.oneLoginUser = resp
   }
 }
 
 export const actions = {
-  excelUploadSiswa ({commit}, x) {
-    return Axios.post(baseUrl + '/umu-spp/siswa/excel/upload?idAkademi=1', x)
+  excelUploadSiswa ({commit}, [x, y]) {
+    return Axios.post(baseUrl + '/umu-spp/siswa/excel/upload?idAkademi=' + x, y)
       .then((response) => {
         commit('countUploadSiswa')
         commit('respUploadSiswa', response.data)
@@ -169,12 +180,12 @@ export const actions = {
       commit('countTemplateSiswa')
     })
   },
-  excelTemplateTagihan ({commit}) {
+  excelTemplateTagihan ({commit}, x) {
     return Axios({
       method: 'GET',
       url: baseUrl + '/umu-spp/tagihan/excel/template',
       params: {
-        idAkademi: 1
+        idAkademi: x
       },
       responseType: 'blob'
     }).then((response) => {
@@ -211,11 +222,27 @@ export const actions = {
         commit('respUpdateAkademi', response.data)
       })
   },
-  saveUser ({commit}, x) {
+  saveWizard ({commit}, x) {
     return Axios.post(baseUrl + '/umu-spp/user/registration', x)
       .then((response) => {
-        commit('countSaveUser')
-        commit('respSaveUser', response.data)
+        commit('countSaveWizard')
+        commit('respSaveWizard', response.data)
+      })
+      .catch((error) => {
+        let err = error + ''
+        if (err.includes('Invalid')) {
+          alert('Tidak Dapat Diakses')
+          console.log(error)
+        } else {
+          alert('Terjadi Kesalahan')
+        }
+      })
+  },
+  loginUser ({commit}, [x, y]) {
+    return Axios.post(baseUrl + '/umu-spp/login/auth?email=' + x + '&password=' + y)
+      .then((response) => {
+        commit('countLoginUser')
+        commit('respLoginUser', response.data)
       })
       .catch((error) => {
         let err = error + ''

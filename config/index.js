@@ -57,6 +57,10 @@ module.exports = {
       '/umu-spp/user/registration': {
         target: 'http://localhost:10015',
         changeOrigin: true
+      },
+      '/umu-spp/login/auth': {
+        target: 'http://localhost:10015',
+        changeOrigin: true
       }
     },
 
