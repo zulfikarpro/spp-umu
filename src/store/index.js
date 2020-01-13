@@ -78,9 +78,12 @@ export const state = {
     nameRekening: ''
   },
   indexSaveWizard: 0,
-  saveWizardData: {}
+  saveWizardData: {},
   // end Register
 
+  // Upload University
+  indexTemplateUser: 0
+  // End University Upload
 }
 
 export const mutations = {
@@ -131,6 +134,9 @@ export const mutations = {
   },
   respLoginUser (state, resp) {
     state.oneLoginUser = resp
+  },
+  countTemplateUser (state) {
+    state.indexTemplateUser++
   }
 }
 
@@ -245,10 +251,43 @@ export const actions = {
         commit('respLoginUser', response.data)
       })
       .catch((error) => {
+        console.log(error.response)
         let err = error + ''
         if (err.includes('Invalid')) {
           alert('Tidak Dapat Diakses')
-          console.log(error)
+        } else {
+          alert('Terjadi Kesalahan')
+        }
+      })
+  },
+  pdfTemplateUser ({commit}) {
+    return Axios({
+      method: 'GET',
+      url: baseUrl + '/umu-spp/user/pdf',
+      responseType: 'blob'
+    }).then((response) => {
+      let userAgent = navigator.userAgent
+      let url = window.URL.createObjectURL(new Blob([response.data]))
+      let link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', 'user.pdf')
+      if (userAgent.includes('Firefox')) {
+        document.body.appendChild(link)
+        link.click()
+        setTimeout(function () {
+          window.URL.revokeObjectURL(url)
+        }, 100)
+      } else {
+        link.click()
+        window.URL.revokeObjectURL(url)
+      }
+      commit('countTemplateUser')
+    })
+      .catch((error) => {
+        console.log(error.response)
+        let err = error + ''
+        if (err.includes('Invalid')) {
+          alert('Tidak Dapat Diakses')
         } else {
           alert('Terjadi Kesalahan')
         }

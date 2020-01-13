@@ -21,6 +21,7 @@ import ActivationIndex from '@/components/activation'
 import ActivationView from '@/components/activation/activation-view'
 import UniversityOnboardIndex from '@/components/university-onboard'
 import UniversityOnboard from '@/components/university-onboard/university'
+import UniversityDownload from '@/components/university-onboard/university-download'
 import Register2 from '@/components/logon/register2'
 
 import mode from '../prodProperties'
@@ -49,15 +50,20 @@ let vueRouter = new Router({
       redirect: { name: 'login' }
     },
     {
-      path: '/universityOnboard',
+      path: '/university',
       component: UniversityOnboardIndex,
       name: 'UniversityOnboard',
-      redirect: '/universityOnboard/register',
+      redirect: '/university/register',
       children: [
         {
-          path: '/universityOnboard/register/:id?',
-          name: 'UniversityOnboard',
+          path: '/university/register/:id?',
+          name: 'RegisterUniv',
           component: UniversityOnboard
+        },
+        {
+          path: '/university/registrasi',
+          name: 'DownloadUniv',
+          component: UniversityDownload
         }
       ]
     },
