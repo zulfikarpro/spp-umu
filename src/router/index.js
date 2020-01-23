@@ -23,6 +23,7 @@ import UniversityOnboardIndex from '@/components/university-onboard'
 import UniversityOnboard from '@/components/university-onboard/university'
 import UniversityDownload from '@/components/university-onboard/university-download'
 import Register2 from '@/components/logon/register2'
+import OrderIndex from '@/components/order-manage'
 
 import mode from '../prodProperties'
 Vue.use(Router)
@@ -53,7 +54,7 @@ let vueRouter = new Router({
       path: '/university',
       component: UniversityOnboardIndex,
       name: 'UniversityOnboard',
-      redirect: '/university/register',
+      redirect: '/university/registrasi',
       children: [
         {
           path: '/university/register/:id?',
@@ -173,6 +174,29 @@ let vueRouter = new Router({
               path: 'token/:id',
               name: 'ActivationView',
               component: ActivationView
+            }
+          ]
+        },
+        {
+          path: 'order',
+          component: OrderIndex,
+          name: 'Order',
+          redirect: 'order/listOrder',
+          children: [
+            {
+              path: 'listOrder',
+              component: () => import('@/components/order-manage/order-list'),
+              name: 'OrderList'
+            },
+            {
+              path: 'addOrder/:id',
+              component: () => import('@/components/order-manage/order-add'),
+              name: 'OrderAdd'
+            },
+            {
+              path: 'viewOrder/:id',
+              component: () => import('@/components/order-manage/order-view'),
+              name: 'OrderView'
             }
           ]
         }

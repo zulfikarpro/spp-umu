@@ -65,6 +65,18 @@ module.exports = {
       '/umu-spp/user/pdf': {
         target: 'http://localhost:10015',
         changeOrigin: true
+      },
+      '/umu-spp/order/listData': {
+        target: 'http://localhost:10015',
+        changeOrigin: true
+      },
+      '/umu-spp/order/add': {
+        target: 'http://localhost:10015',
+        changeOrigin: true
+      },
+      '/umu-spp/order/view': {
+        target: 'http://localhost:10015',
+        changeOrigin: true
       }
     },
 

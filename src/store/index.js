@@ -81,6 +81,37 @@ export const state = {
   saveWizardData: {},
   // end Register
 
+  // Start Order
+  orderPenanggungJawab: {
+    name: '',
+    nip: '',
+    position: '',
+    phone: '',
+    email: '',
+    placeDob: '',
+    dateOfBirth: '',
+    address: '',
+    addressNow: '',
+    gender: '',
+    citizen: '',
+    nik: ''
+  },
+  orderAkademi: {
+    akademiName: '',
+    akademiAddress: '',
+    akademiLogo: '',
+    akademiPhone: '',
+    akademiEmail: '',
+    akademiBank: '',
+    noRekening: '',
+    nameRekening: ''
+  },
+  indexOneOrder: 0,
+  oneOrderData: {},
+  indexSaveOrder: 0,
+  saveOrderData: {},
+  // End Order
+
   // Upload University
   indexTemplateUser: 0
   // End University Upload
@@ -129,6 +160,12 @@ export const mutations = {
   respSaveWizard (state, resp) {
     state.saveWizardData = resp
   },
+  countSaveOrder (state) {
+    state.indexSaveOrder++
+  },
+  respSaveOrder (state, resp) {
+    state.saveOrderData = resp
+  },
   countLoginUser (state) {
     state.indexLoginUser++
   },
@@ -137,6 +174,12 @@ export const mutations = {
   },
   countTemplateUser (state) {
     state.indexTemplateUser++
+  },
+  countGetOrder (state) {
+    state.indexOneOrder++
+  },
+  respGetOrder (state, resp) {
+    state.oneOrderData = resp
   }
 }
 
@@ -244,6 +287,29 @@ export const actions = {
         }
       })
   },
+  saveOrder ({commit}, x) {
+    return Axios.post(baseUrl + '/umu-spp/order/add', x)
+      .then((response) => {
+        commit('countSaveOrder')
+        commit('respSaveOrder', response.data)
+      })
+      .catch((error) => {
+        let err = error + ''
+        if (err.includes('Invalid')) {
+          alert('Tidak Dapat Diakses')
+          console.log(error)
+        } else {
+          alert('Terjadi Kesalahan')
+        }
+      })
+  },
+  getOrderOne ({commit}, x) {
+    return Axios.get(baseUrl + '/umu-spp/order/view?namaAkademi=' + x)
+      .then((response) => {
+        commit('countGetOrder')
+        commit('respGetOrder', response.data)
+      })
+  },
   loginUser ({commit}, [x, y]) {
     return Axios.post(baseUrl + '/umu-spp/login/auth?email=' + x + '&password=' + y)
       .then((response) => {
@@ -255,6 +321,8 @@ export const actions = {
         let err = error + ''
         if (err.includes('Invalid')) {
           alert('Tidak Dapat Diakses')
+        } else if (err.response.status === '504') {
+          alert('Periksa Koneksi')
         } else {
           alert('Terjadi Kesalahan')
         }
