@@ -1,20 +1,20 @@
 <template>
 <div class="container-fluid styling">
     <div class="row">
-        <div class="col-sm-12 mx-auto rounded" :style="{backgroundImage: 'url(' + require('@/assets/people-children.png') + ')' }" >
+        <div class="col-sm-12 mx-auto" :style="{backgroundImage: 'url(' + require('@/assets/people-children.png') + ')', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }" >
         <div class="col-sm-12 row mt-4 mx-auto ">
             <div class="col-md-2 col-5"><img src="../../assets/abyaasia.png" class="img-fluid rounded-pill" width="300" height="80" alt="abyaasia"></div>
             <div class="offset-md-9 offset-4"></div>
             <div class="col-md-1 col-3"><img src="../../assets/logo_umu_orange.png" class="img-fluid" width="90" height="100" alt="logoumu"></div>
         </div>
-        <div class="col-sm-8 mx-auto text-center mt-7" style="font-size:96px;text-shadow: -1px 0 black;">Selamat Datang di <span style="color:#FF3D12;">UMU</span></div>
+        <div class="col-sm-8 mx-auto text-center mt-7" style="font-size:5vw;text-shadow: -1px 0 black;">Selamat Datang di <span style="color:#FF3D12;">UMU</span></div>
         <div class="col-sm-2 mx-auto text-center mb-5"><div class="mt-3 mx-5 lineText"></div></div>
         <div class="col-sm-12 mx-auto text-center mb-5 subtext"> Nikmati kemudahan pembayaran SPP di Aplikasi UMU.<br/> Kemudahan tak hanya dirasakan oleh Sekolah/Universitas, tetapi juga oleh pelajar/mahasiswa.<br/> Masih belum yakin?? Yuk buktikan dengan daftar Sekolah/Universitas Anda sekarang! </div>
-        <div class="col-sm-4 mx-auto text-center mb-7"><a href="#daftarLink" class="btn btn-lg rounded-pill shadow-lg px-5 py-2 subtext" style="background-color:#FF3D12;color:white;" v-smooth-scroll>Daftar Sekarang</a></div>
+        <div class="col-sm-4 mx-auto text-center mb-7"><a href="#daftarLink" class="btn btn-lg rounded-pill shadow-lg px-5 py-2" style="background-color:#FF3D12;color:white;font-size:1.8vw;" v-smooth-scroll>Daftar Sekarang</a></div>
         <div class="mt-7">&nbsp;</div>
         </div>
         <div class="col-sm-12 mx-auto rounded mb-5 " style="color:black;background-color:#E5E5E5;">
-            <div class="mt-7 col-sm-4 mx-auto text-center font-weight-bold" id="daftarLink" style="font-size:64px;">Cara Daftar</div>
+            <div class="mt-7 col-sm-4 mx-auto text-center font-weight-bold" id="daftarLink" style="font-size:3.4vw">Cara Daftar</div>
             <div class="col-sm-2 mx-auto text-center mb-7"><div class="mt-3 mx-5 lineText"></div></div>
             <div class="col-sm-12 mx-auto row">
                 <div class="col-sm-6 minortext border roundedcust mb-5 py-5 px-4" style="background-color:white;border-color:#d1d1d1!important">
@@ -22,7 +22,7 @@
                 <div class="col-sm-6 mx-auto text-center">
                     <div class="btn-group buttonGroup buttonDefault" role="group" aria-label="Basic example">
                         <button type="button" class="btn " style="background-color:#FF451D;" ><img src="../../assets/downloadformwhite.png" class="img-fluid" alt="dunlud"></button>
-                        <button type="button" @click="pdfTemp" class="btn py-2 px-4 minortext " style="background-color:#FF3509;color:white;">Unduh Dokumen</button>
+                        <button type="button" @click="pdfTemp" class="btn py-2 px-4 minortext" style="background-color:#FF3509;color:white;">Unduh Dokumen</button>
                     </div>
                 </div>
                 <div class="mt-5 mb-5"><p class="font-weight-bold" style="margin-left: 20px;">Tata cara registrasi :</p>
@@ -31,21 +31,20 @@
                     <li>Lengkapi dokumen Formulir Pendaftaran SPP UMU dengan tandatangan pejabat terkait &amp; cap sekolah/universitas</li>
                     <li>Scan dokumen &amp; kirim ke <span class="font-weight-bold" style="color:#FF3D12;"><u>hello@umu.co.id</u></span></li>
                     <li>Kode Aktivasi akun sekolah/universitas akan dikirimkan ke email yang didaftarkan</li>
-                    <li>Untuk pertanyaan &amp; bantuan, silahkan menghubungi hello@umu.co.id</li>
                     </ol>
                 </div>
-                <div class="col-sm-12 mx-auto text-center">
+                <div class="col-sm-11 mx-auto text-center" style="height:150px;" :style="{backgroundImage: 'url(' + require('@/assets/support-background.png') + ')', backgroundRepeat: 'no-repeat', backgroundSize: 'contain' }">
+                    &nbsp;
                     <!-- <div class="btn-group buttonGroup" role="group" aria-label="Basic example">
                         <button type="button" class="btn px-5" style="background-color:#FF451D;z-index:1;" ><img src="../../assets/onlinesupport.png" class="img-fluid" alt="support"></button>
                         <button type="button" class="btn minortext " style="background-color:#FF3509;color:white;">Untuk pertanyaan &amp; bantuan, silahkan menghubungi <b>hello@umu.co.id</b></button>
                     </div> -->
-                    <div class="d-flex py-3" :style="{backgroundImage: 'url(' + require('@/assets/support-background.png') + ')', backgroundRepeat: 'no-repeat' }">
-                      <a class="px-7 py-5" href="mail:hello@umu.co.id">&nbsp;</a>
-                    </div>
-                    <!-- <div><img src="../../assets/support-background.png" class="img-fluid" alt="support"></div> -->
+                    <!-- <div class="d-flex py-3" :style="{backgroundImage: 'url(' + require('@/assets/support-background.png') + ')', backgroundRepeat: 'no-repeat', backgroundSize: 'contain' }">
+                      <div class="px-7 py-5" href="mail:hello@umu.co.id">&nbsp;</div>
+                    </div> -->
                 </div>
                 </div>
-                <div class="col-sm-6 text-center"><img src="../../assets/ilustrasi.png" alt="ilustrasi" class="img-fluid"></div>
+                <div class="col-sm-6 mt-7 text-center"><img src="../../assets/ilustrasi.png" alt="ilustrasi" class="img-fluid"></div>
             </div>
         </div>
     </div>
@@ -99,10 +98,10 @@ export default {
     font-family: "Roboto Slab";
 }
 .subtext{
-    font-size:36px;
+    font-size:1.8vw;
 }
 .minortext {
-    font-size:28px;
+    font-size:1.5vw;
 }
 .lineText {
     border-bottom: 6px solid #FF3D12;
