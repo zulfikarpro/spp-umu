@@ -18,9 +18,9 @@
             <input type="password" class="form-control" v-model="password" placeholder="Password" required="required">
             </div>
         </div>
-        <div class="clearfix">
+        <!-- <div class="clearfix">
             <label class="float-left checkbox-inline"><input type="checkbox"> Ingat Saya</label>
-        </div>
+        </div> -->
         <div class="form-group">
             <button type="submit" v-on:click="postlogin" style="background-color:#ff5500;color:white;" class="btn btn-block mx-auto w-25">Login</button>
         </div>
@@ -31,6 +31,7 @@
 
 <script>
 import CryptoJS from 'crypto-js'
+import NProgress from 'nprogress'
 
 export default {
   name: 'login',
@@ -44,22 +45,36 @@ export default {
   computed: {
     indexLoginUser () {
       return this.$store.state.indexLoginUser
+    },
+    indexGetPermission () {
+      return this.$store.state.indexGetPermission
     }
   },
   watch: {
     'indexLoginUser' () {
       if (this.$store.state.oneLoginUser.success === true) {
         sessionStorage.setItem('umuSS', JSON.stringify(this.$store.state.oneLoginUser.data))
-        this.$router.push('admin/beranda')
+        this.$store.dispatch('getPermission', this.$store.state.oneLoginUser.data.role)
       } else {
         alert(this.$store.state.oneLoginUser.message)
       }
+    },
+    'indexGetPermission' () {
+      if (this.$store.state.listPermissionData.success === true) {
+        sessionStorage.setItem('umuRole', JSON.stringify(this.$store.state.listPermissionData.data))
+      } else {
+        alert(this.$store.state.listPermissionData.message)
+      }
+      NProgress.done()
+      this.$router.push('admin/beranda')
     }
   },
   methods: {
     postlogin () {
       if (this.email === '' || this.email === undefined || this.password === '' || this.password === undefined) {
         alert('Failed Login')
+      } else if (this.password.length < 5) {
+        alert('Password Terlalu Pendek')
       } else {
         let key = CryptoJS.enc.Base64.parse(this.secretKey)
         let cfg = {
@@ -67,9 +82,12 @@ export default {
           padding: CryptoJS.pad.Pkcs7
         }
         let encryptedData = CryptoJS.AES.encrypt(this.password, key, cfg).toString()
+        sessionStorage.clear()
         // console.log(encryptedData)
         this.$store.dispatch('loginUser', [this.email, encryptedData])
         // this.$router.push('admin/beranda')
+        NProgress.configure({ showSpinner: false })
+        NProgress.start()
       }
     }
   }

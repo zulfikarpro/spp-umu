@@ -39,7 +39,7 @@
             <label class="col-5 col-form-label">{{allData.jabatan}}</label>
         </div>
         <div class="row form-group typoText">
-            <label class="col-2 col-form-label">Nip</label>
+            <label class="col-2 col-form-label">NIP</label>
             <label class="offset-1 col-form-label">:</label>
             <label class="col-5 col-form-label">{{allData.nip}}</label>
         </div>
@@ -67,6 +67,26 @@
             <div class="col-2 col-form-label">Alamat Identitas</div>
             <div class="offset-1 col-form-label">:</div>
             <div class="col-5 col-form-label">{{allData.alamatIdentitas}}</div>
+        </div>
+        <div class="row form-group typoText">
+            <div class="col-2 col-form-label">Alamat Tinggal</div>
+            <div class="offset-1 col-form-label">:</div>
+            <div class="col-5 col-form-label">{{allData.alamatTinggal}}</div>
+        </div>
+        <div class="row form-group typoText">
+            <div class="col-2 col-form-label">Jenis Kelamin</div>
+            <div class="offset-1 col-form-label">:</div>
+            <div class="col-5 col-form-label">{{allData.jenisKelamin}}</div>
+        </div>
+        <div class="row form-group typoText">
+            <div class="col-2 col-form-label">Kewarganegaraan</div>
+            <div class="offset-1 col-form-label">:</div>
+            <div class="col-5 col-form-label">{{allData.kewarganegaraan}}</div>
+        </div>
+        <div class="row form-group typoText">
+            <div class="col-2 col-form-label">NIK</div>
+            <div class="offset-1 col-form-label">:</div>
+            <div class="col-5 col-form-label">{{allData.nik}}</div>
         </div>
         <div class="col-sm-3 mt-4 mx-auto">
           <button type="submit" @click="() => (this.$router.push('../'))" style="background-color:#ff5500;color:white;" class="btn btn-block py-3">Menu Utama</button>

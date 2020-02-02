@@ -7,10 +7,12 @@
     <div class="form-group mr-3 mb-2">
       <input  @keyup.enter="filterSubmit" type="text" class="form-control" v-model="periodeFilter" placeholder="Filter Tahun Ajaran">
     </div>
+    <div v-if="this.$store.state.permissionData.billing_c">
     <button class="btn btn-primary  mr-3 mb-2" @click="tempExcel">Template Excel</button>
     <button class="btn btn-primary mb-2" @click="uploadExcel">Upload Excel
     <input type="file" style="display:none" ref="fileExcel" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" @change="uploadpick">
     </button>
+    </div>
   </div>
             <!-- <div class="float-right mb-3">
             <input type="text" class="form-control" placeholder="Filter Nim"/>
@@ -214,7 +216,7 @@ export default {
     init () {
       // const baseUrl = window.location.origin
       const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
-      this.url = baseUrl + '/umu-spp/tagihan/getAllTagihan'
+      this.url = baseUrl + '/umu-spp/tagihan/getAllTagihan?idAkademi=' + this.objSession.idAkademi
     },
     getSortParam: function (sortOrder) {
       this.loaded = false
@@ -288,7 +290,7 @@ export default {
       NProgress.configure({ showSpinner: false })
       NProgress.start()
       const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
-      this.url = baseUrl + '/umu-spp/tagihan/getAllTagihan?nim=' + this.nimFilter + '&&periode=' + this.periodeFilter
+      this.url = baseUrl + '/umu-spp/tagihan/getAllTagihan?idAkademi=' + this.objSession.idAkademi + '&&nim=' + this.nimFilter + '&&periode=' + this.periodeFilter
       this.$refs.vuetable.refresh()
       NProgress.done()
     }

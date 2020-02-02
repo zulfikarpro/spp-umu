@@ -1,7 +1,7 @@
 <template>
 <div class="container-fluid mt-3">
 <div class="mx-3">
-<div class="float-right">
+<div class="float-right" v-if="this.$store.state.permissionData.student_c">
   <button class="btn btn-primary mr-3 mb-2" @click="tempExcel">Template Excel</button>
   <button class="btn btn-primary mb-2" @click="uploadExcel">Upload Excel
     <input type="file" style="display:none" ref="fileExcel" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" @change="uploadpick">

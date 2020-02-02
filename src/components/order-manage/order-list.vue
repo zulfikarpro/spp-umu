@@ -180,7 +180,7 @@ export default {
     onActionClicked (action, data) {
       switch (action) {
         case 'view':
-          this.$router.push({ path: `/admin/order/viewOrder/${data.namaAkademi}` })
+          this.$router.push({ path: `/admin/order/viewOrder/${data.idAkademi}` })
           break
       }
     },

@@ -39,6 +39,21 @@ export const state = {
   oneLoginUser: {},
   // end Login
 
+  // Permission
+  indexGetPermission: 0,
+  listPermissionData: {},
+  permissionData: {
+    academy_u: 0,
+    academy_r: 0,
+    student_r: 0,
+    student_c: 0,
+    billing_r: 0,
+    billing_c: 0,
+    order_c: 0,
+    order_r: 0
+  },
+  // End Permission
+
   // Register
   regisUser: {
     name: '',
@@ -180,6 +195,12 @@ export const mutations = {
   },
   respGetOrder (state, resp) {
     state.oneOrderData = resp
+  },
+  countGetPermission (state) {
+    state.indexGetPermission++
+  },
+  respGetPermission (state, resp) {
+    state.listPermissionData = resp
   }
 }
 
@@ -304,10 +325,39 @@ export const actions = {
       })
   },
   getOrderOne ({commit}, x) {
-    return Axios.get(baseUrl + '/umu-spp/order/view?namaAkademi=' + x)
+    return Axios.get(baseUrl + '/umu-spp/order/view?idAkademi=' + x)
       .then((response) => {
         commit('countGetOrder')
         commit('respGetOrder', response.data)
+      })
+      .catch((error) => {
+        console.log(error.response)
+        let err = error + ''
+        if (err.includes('Invalid')) {
+          alert('Tidak Dapat Diakses')
+        } else if (err.response.status === '504') {
+          alert('Periksa Koneksi')
+        } else {
+          alert('Terjadi Kesalahan')
+        }
+      })
+  },
+  getPermission ({commit}, x) {
+    return Axios.get(baseUrl + '/umu-spp/role/getPermission?roleName=' + x)
+      .then((response) => {
+        commit('countGetPermission')
+        commit('respGetPermission', response.data)
+      })
+      .catch((error) => {
+        console.log(error.response)
+        let err = error + ''
+        if (err.includes('Invalid')) {
+          alert('Tidak Dapat Diakses')
+        } else if (err.response.status === '504') {
+          alert('Periksa Koneksi')
+        } else {
+          alert('Terjadi Kesalahan')
+        }
       })
   },
   loginUser ({commit}, [x, y]) {

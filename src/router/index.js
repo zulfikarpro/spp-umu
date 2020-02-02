@@ -207,7 +207,8 @@ let vueRouter = new Router({
 
 vueRouter.beforeEach((to, from, next) => {
   let objSession = ''
-  if (to.path.includes('/login') && (objSession !== null || objSession !== '') && (objSession.idAkademi !== '' || objSession.status !== '')) {
+
+  if (to.path.includes('/login') && (objSession !== null || objSession !== '') && (objSession.status !== undefined || objSession.status !== '')) {
     next('/admin')
   } else {
     next()
@@ -216,7 +217,7 @@ vueRouter.beforeEach((to, from, next) => {
     next()
   } else {
     objSession = JSON.parse(sessionStorage.getItem('umuSS'))
-    if ((objSession === undefined || objSession === null) || (objSession.idAkademi === '' || objSession.idAkademi === undefined || objSession.idAkademi === null) || (objSession.status === null || objSession.status === '' || objSession.status === undefined || objSession.status !== 'active')) {
+    if ((objSession === undefined || objSession === null) || (objSession.status === null || objSession.status === '' || objSession.status === undefined || objSession.status !== 'active')) {
       next('/login')
     } else {
       next()

@@ -77,6 +77,10 @@ module.exports = {
       '/umu-spp/order/view': {
         target: 'http://localhost:10015',
         changeOrigin: true
+      },
+      '/umu-spp/role/getPermission': {
+        target: 'http://localhost:10015',
+        changeOrigin: true
       }
     },
 

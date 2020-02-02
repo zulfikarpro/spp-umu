@@ -26,7 +26,7 @@
             <div class="offset-1">:</div>
             <div class="col-5">{{academyData.akademiWeb}}</div>
         </div>
-        <div class="col-sm-4 mt-4 mx-auto">
+        <div class="col-sm-4 mt-4 mx-auto" v-if="this.$store.state.permissionData.academy_u">
           <button type="submit" @click="linkEdit" style="background-color:#ff5500;color:white;" class="btn btn-block py-3">Edit Informasi Universitas</button>
         </div>
     </div>
