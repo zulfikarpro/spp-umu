@@ -50,7 +50,8 @@ export const state = {
     billing_r: 0,
     billing_c: 0,
     order_c: 0,
-    order_r: 0
+    order_r: 0,
+    approval_u: 0
   },
   // End Permission
 
@@ -125,11 +126,18 @@ export const state = {
   oneOrderData: {},
   indexSaveOrder: 0,
   saveOrderData: {},
+  indexApprovalOrder: 0,
+  oneApprovalOrder: {},
   // End Order
 
   // Upload University
-  indexTemplateUser: 0
+  indexTemplateUser: 0,
   // End University Upload
+
+  // User
+  indexChangePassword: 0,
+  oneChangePassword: {}
+  // End User
 }
 
 export const mutations = {
@@ -196,11 +204,23 @@ export const mutations = {
   respGetOrder (state, resp) {
     state.oneOrderData = resp
   },
+  countApprovalOrder (state) {
+    state.indexApprovalOrder++
+  },
+  respApprovalOrder (state, resp) {
+    state.oneApprovalOrder = resp
+  },
   countGetPermission (state) {
     state.indexGetPermission++
   },
   respGetPermission (state, resp) {
     state.listPermissionData = resp
+  },
+  countChangePassword (state) {
+    state.indexChangePassword++
+  },
+  respChangePassword (state, resp) {
+    state.oneChangePassword = resp
   }
 }
 
@@ -365,6 +385,42 @@ export const actions = {
       .then((response) => {
         commit('countLoginUser')
         commit('respLoginUser', response.data)
+      })
+      .catch((error) => {
+        console.log(error.response)
+        let err = error + ''
+        if (err.includes('Invalid')) {
+          alert('Tidak Dapat Diakses')
+        } else if (err.response.status === '504') {
+          alert('Periksa Koneksi')
+        } else {
+          alert('Terjadi Kesalahan')
+        }
+      })
+  },
+  changePassword ({commit}, [x, y, z]) {
+    return Axios.post(baseUrl + '/umu-spp/user/ubahPassword?email=' + x + '&oldPassword=' + y + '&newPassword=' + z)
+      .then((response) => {
+        commit('countChangePassword')
+        commit('respChangePassword', response.data)
+      })
+      .catch((error) => {
+        console.log(error.response)
+        let err = error + ''
+        if (err.includes('Invalid')) {
+          alert('Tidak Dapat Diakses')
+        } else if (err.response.status === '504') {
+          alert('Periksa Koneksi')
+        } else {
+          alert('Terjadi Kesalahan')
+        }
+      })
+  },
+  approvalOrder ({commit}, [x, y]) {
+    return Axios.post(baseUrl + '/umu-spp/order/approval?idAkademi=' + x + '&email=' + y)
+      .then((response) => {
+        commit('countApprovalOrder')
+        commit('respApprovalOrder', response.data)
       })
       .catch((error) => {
         console.log(error.response)

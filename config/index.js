@@ -81,6 +81,14 @@ module.exports = {
       '/umu-spp/role/getPermission': {
         target: 'http://localhost:10015',
         changeOrigin: true
+      },
+      '/umu-spp/user/ubahPassword': {
+        target: 'http://localhost:10015',
+        changeOrigin: true
+      },
+      '/umu-spp/order/approval': {
+        target: 'http://localhost:10015',
+        changeOrigin: true
       }
     },
 

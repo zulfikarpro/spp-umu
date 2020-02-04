@@ -2,7 +2,7 @@
 <div class="container-fluid mt-3">
 <div class="mx-3">
 <div class="float-right">
-  <button @click="critOrder" class="btn btn-primary mr-3 mb-2">Buat Order</button>
+  <button @click="critOrder" v-if="this.$store.state.permissionData.order_c" class="btn btn-primary mr-3 mb-2">Buat Order</button>
   <!-- <button class="btn btn-primary mr-3 mb-2" @click="tempExcel">Template Excel</button>
   <button class="btn btn-primary mb-2" @click="uploadExcel">Upload Excel
     <input type="file" style="display:none" ref="fileExcel" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" @change="uploadpick">
@@ -29,7 +29,8 @@
         <img class="rounded-sm" :src="'data:image/jpeg;base64,' + props.rowData.dokumen" width="200" height="200" />
       </div>
       <div slot="actions" slot-scope="props">
-      <button @click="onActionClicked('view', props.rowData)">View</button>
+      <button class="btn btn-primary" @click="onActionClicked('view', props.rowData)">View</button>
+      <button class="btn btn-primary" v-if="props.rowData.approvalStatus === false" :class="classApprove" @click="onActionClicked('approve', props.rowData)">Approve</button>
       </div>
       </vuetable>
       </div>
@@ -56,6 +57,7 @@ export default {
   data () {
     return {
       objSession: JSON.parse(sessionStorage.getItem('umuSS')),
+      classApprove: '',
       paraf: '',
       appendParams: {},
       url: '',
@@ -67,7 +69,7 @@ export default {
       sortOrder: [
         {
           field: 'idAkademi',
-          direction: 'asc',
+          direction: 'desc',
           sortField: 'idAkademi'
         }
       ],
@@ -111,7 +113,8 @@ export default {
         {
           name: 'approvalStatus',
           title: 'Status',
-          sortField: 'status'
+          sortField: 'status',
+          callback: 'tableStatus'
         },
         {
           name: 'createDate',
@@ -123,32 +126,17 @@ export default {
     }
   },
   computed: {
-    indexUploadSiswa () {
-      return this.$store.state.indexUploadSiswa
-    },
-    indexTemplateSiswa () {
-      return this.$store.state.indexTemplateSiswa
+    indexApprovalOrder () {
+      return this.$store.state.indexApprovalOrder
     }
   },
   watch: {
-    'indexUploadSiswa': function () {
-      if (this.$store.state.uploadSiswaData.success === true) {
-        alert(this.$store.state.uploadSiswaData.message)
+    'indexApprovalOrder': function () {
+      if (this.$store.state.oneApprovalOrder.success === true) {
+        alert('Berhasil Approval Order')
       } else {
-        alert(this.$store.state.uploadSiswaData.message + '\n')
-        this.paraf = this.$store.state.uploadSiswaData.data
-        let url = window.URL.createObjectURL(new Blob([this.paraf], {type: 'text/txt'}))
-        let link = document.createElement('a')
-        link.href = url
-        link.setAttribute('download', 'siswaFail.txt')
-        link.click()
-        window.URL.revokeObjectURL(url)
+        alert(this.$store.state.oneApprovalOrder.message)
       }
-      NProgress.done()
-      this.$refs.fileExcel.value = '' // Reset Input File
-      this.$refs.vuetable.refresh()
-    },
-    'indexTemplateSiswa': function () {
       this.$refs.vuetable.refresh()
       NProgress.done()
     }
@@ -157,6 +145,15 @@ export default {
     init () {
       const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
       this.url = baseUrl + '/umu-spp/order/listData'
+      this.showHiddenApprove()
+      console.log(this.$refs.vuetable)
+    },
+    showHiddenApprove () {
+      if (this.$store.state.permissionData.approval_u === 0) {
+        this.classApprove = 'hidden-style'
+      } else {
+        this.classApprove = ''
+      }
     },
     getSortParam: function (sortOrder) {
       this.loaded = false
@@ -182,34 +179,17 @@ export default {
         case 'view':
           this.$router.push({ path: `/admin/order/viewOrder/${data.idAkademi}` })
           break
+        case 'approve':
+          this.$store.dispatch('approvalOrder', [data.idAkademi, this.objSession.email])
+          NProgress.configure({ showSpinner: false })
+          NProgress.start()
+          break
       }
     },
-    uploadExcel () {
-      this.$refs.fileExcel.click()
-    },
-    uploadpick (val) {
-      let dataexcel = new FormData()
-      dataexcel.append('file', val.target.files[0])
-      let extfile = val.target.files[0].name.substring(val.target.files[0].name.lastIndexOf('.'))
-      NProgress.configure({ showSpinner: false })
-      NProgress.start()
-      if (extfile === '.xls' || extfile === '.xlsx') {
-        this.file = dataexcel
-        var reader = new FileReader()
-        reader.readAsDataURL(val.target.files[0])
-        this.$store.dispatch('excelUploadSiswa', [1, this.file])
-      } else {
-        this.failedMsg = 'Tipe Excel harus xlsx/xls'
-        alert('Tipe Excel harus xlsx/xls')
-        this.$refs.fileExcel.value = '' // Reset Input File
-        this.$refs.vuetable.refresh()
-        NProgress.done()
-      }
-    },
-    tempExcel () {
-      NProgress.configure({ showSpinner: false })
-      NProgress.start()
-      this.$store.dispatch('excelTemplateSiswa')
+    tableStatus (value) {
+      return (value === false)
+        ? 'Belum Aktif'
+        : 'Aktif'
     },
     critOrder () {
       this.$router.push('addOrder/1')
@@ -220,3 +200,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.hidden-style {
+  display:none;
+}
+</style>

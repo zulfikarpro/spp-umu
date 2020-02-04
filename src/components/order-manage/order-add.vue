@@ -92,7 +92,7 @@
         </div>
         <div class="form-group mt-3">
           <label >NIK</label>
-          <input type="text" class="form-control" v-model="$v.data1.nik.$model" name="nik" v-validate="'required'">
+          <input type="text" class="form-control" v-model="$v.data1.nik.$model" name="nik">
           <small class="form-text text-danger" v-if="$v.data1.nik.$error">Field is required.</small>
         </div>
       </div>
@@ -143,6 +143,8 @@
         <select id="inputBank" class="form-control" v-model="$v.data2.akademiBank.$model">
         <option value="" selected>Pilih Bank</option>
         <option value="BNI">BNI</option>
+        <option value="MANDIRI">MANDIRI</option>
+        <option value="BRI">BRI</option>
         </select>
         <small class="form-text text-danger error" v-if="$v.data2.akademiBank.$error">Choose is required.</small>
         </div>
@@ -272,7 +274,7 @@ export default {
         alert('Buat Order berhasil')
         this.$router.push('../')
       } else {
-        alert(this.$store.state.saveUserData.message)
+        alert(this.$store.state.saveOrderData.message)
       }
     }
   },

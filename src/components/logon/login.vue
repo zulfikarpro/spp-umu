@@ -58,6 +58,7 @@ export default {
       } else {
         alert(this.$store.state.oneLoginUser.message)
       }
+      NProgress.done()
     },
     'indexGetPermission' () {
       if (this.$store.state.listPermissionData.success === true) {
@@ -65,7 +66,6 @@ export default {
       } else {
         alert(this.$store.state.listPermissionData.message)
       }
-      NProgress.done()
       this.$router.push('admin/beranda')
     }
   },

@@ -11,21 +11,31 @@
   <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item">
-        <router-link active-class="active" to="/admin/beranda" class="nav-link mx-1 navText">Home</router-link>
+        <router-link active-class="active" to="/admin/beranda" class="nav-link mx-1 px-2 navText text-white">Home</router-link>
       </li>
       <li class="nav-item">
-        <router-link active-class="active" v-if="this.$store.state.permissionData.academy_r" to="/admin/akademi" class="nav-link mx-1 navText">Informasi Universitas</router-link>
+        <router-link active-class="active" v-if="this.$store.state.permissionData.academy_r" to="/admin/akademi" class="nav-link mx-1 px-2 navText text-white">Informasi Universitas</router-link>
       </li>
       <li class="nav-item">
-        <router-link active-class="active" v-if="this.$store.state.permissionData.student_r" to="/admin/siswa" class="nav-link mx-1 navText">Kemahasiswaan</router-link>
+        <router-link active-class="active" v-if="this.$store.state.permissionData.student_r" to="/admin/siswa" class="nav-link mx-1 px-2 navText text-white">Kemahasiswaan</router-link>
       </li>
       <li class="nav-item">
-        <router-link active-class="active" v-if="this.$store.state.permissionData.billing_r" to="/admin/tagihan" class="nav-link mx-1 navText">Pembayaran</router-link>
+        <router-link active-class="active" v-if="this.$store.state.permissionData.billing_r" to="/admin/tagihan" class="nav-link mx-1 px-2 navText text-white">Pembayaran</router-link>
       </li>
       <li class="nav-item">
-        <router-link active-class="active" v-if="this.$store.state.permissionData.order_r"  to="/admin/order" class="nav-link mx-1 navText">Order</router-link>
+        <router-link active-class="active" v-if="this.$store.state.permissionData.order_r"  to="/admin/order" class="nav-link px-2 mx-1 navText text-white">Order</router-link>
       </li>
     </ul>
+    <div class="dropdown mr-5">
+      <button class="btn btn-lg navText dropdown-toggle text-white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      {{ objSession.name }}
+      </button>
+     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <router-link class="dropdown-item" to="/admin/user/changePassword">Ganti Password</router-link>
+      <button class="dropdown-item"
+      @click="logOut">Keluar</button>
+      </div>
+    </div>
   </div>
   </nav>
     </div>
@@ -64,6 +74,10 @@ export default {
         permis[item] = 1
       }
       Object.assign(this.$store.state.permissionData, permis)
+    },
+    logOut () {
+      sessionStorage.clear()
+      this.$router.push('login')
     }
   },
   mounted () {

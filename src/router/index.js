@@ -24,8 +24,10 @@ import UniversityOnboard from '@/components/university-onboard/university'
 import UniversityDownload from '@/components/university-onboard/university-download'
 import Register2 from '@/components/logon/register2'
 import OrderIndex from '@/components/order-manage'
+import UserIndex from '@/components/user'
 
 import mode from '../prodProperties'
+import store from '../store'
 Vue.use(Router)
 
 let vueRouter = new Router({
@@ -199,6 +201,19 @@ let vueRouter = new Router({
               name: 'OrderView'
             }
           ]
+        },
+        {
+          path: 'user',
+          component: UserIndex,
+          name: 'User',
+          redirect: 'beranda',
+          children: [
+            {
+              path: 'changePassword',
+              component: () => import('@/components/user/user-edit'),
+              name: 'UserEdit'
+            }
+          ]
         }
       ]
     }
@@ -222,6 +237,11 @@ vueRouter.beforeEach((to, from, next) => {
     } else {
       next()
     }
+  }
+  if (to.path.includes('order') && store.state.permissionData.order_r === 0) {
+    next('/admin')
+  } else {
+    next()
   }
 })
 
