@@ -48,17 +48,24 @@ export default {
     return {
       objSession: JSON.parse(sessionStorage.getItem('umuSS')),
       objRole: JSON.parse(sessionStorage.getItem('umuRole')),
-      logoAkademi: ''
+      logoAkademi: '',
+      indexLogOut: 0
     }
   },
   computed: {
     indexAkademiData () {
       return this.$store.state.indexAkademiData
+    },
+    logOutDirect () {
+      return this.indexLogOut
     }
   },
   watch: {
     'indexAkademiData' () {
       this.logoAkademi = this.$store.state.oneAkademiData.data.akademiLogo
+    },
+    'logOutDirect' () {
+      this.$router.push('/login')
     }
   },
   methods: {
@@ -77,7 +84,14 @@ export default {
     },
     logOut () {
       sessionStorage.clear()
-      this.$router.push('login')
+      let permis = {}
+      let permisObject = this.$store.state.permissionData
+      let permisKey = Object.keys(permisObject)
+      for (let idx of permisKey) {
+        permis[idx] = 0
+      }
+      Object.assign(this.$store.state.permissionData, permis)
+      this.indexLogOut++
     }
   },
   mounted () {
