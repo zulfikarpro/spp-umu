@@ -25,11 +25,9 @@
       <div slot="numbering" slot-scope="props">
         {{ props.rowIndex + 1}}
       </div>
-      <div slot="image" slot-scope="props">
-        <img class="rounded-sm" :src="'data:image/jpeg;base64,' + props.rowData.dokumen" width="200" height="200" />
-      </div>
       <div slot="actions" slot-scope="props">
       <button class="btn btn-primary" @click="onActionClicked('view', props.rowData)">View</button>
+      <button class="btn btn-primary" @click="onActionClicked('edit', props.rowData)">Edit</button>
       <button class="btn btn-primary" v-if="props.rowData.approvalStatus === false" :class="classApprove" @click="onActionClicked('approve', props.rowData)">Approve</button>
       </div>
       </vuetable>
@@ -102,13 +100,19 @@ export default {
           title: 'No'
         },
         {
-          name: '__slot:image',
-          title: 'Gambar Formulir'
-        },
-        {
           name: 'noOrder',
           title: 'No Order',
           sortField: 'noOrder'
+        },
+        {
+          name: 'akademiName',
+          title: 'Nama Sekolah/Universitas',
+          sortField: 'akademiName'
+        },
+        {
+          name: 'akademiEmail',
+          title: 'Email Terdaftar',
+          sortField: 'akademiEmail'
         },
         {
           name: 'approvalStatus',
@@ -118,7 +122,7 @@ export default {
         },
         {
           name: 'createDate',
-          title: 'Tanggal dibuat',
+          title: 'Tanggal Order',
           sortField: 'createDate'
         },
         '__slot:actions'
@@ -146,11 +150,10 @@ export default {
       const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
       this.url = baseUrl + '/umu-spp/order/listData'
       this.showHiddenApprove()
-      console.log(this.$refs.vuetable)
     },
     showHiddenApprove () {
       if (this.$store.state.permissionData.approval_u === 0) {
-        this.classApprove = 'hidden-style'
+        this.classApprove = 'd-none'
       } else {
         this.classApprove = ''
       }
@@ -179,6 +182,9 @@ export default {
         case 'view':
           this.$router.push({ path: `/admin/order/viewOrder/${data.idAkademi}` })
           break
+        case 'edit':
+          this.$router.push({ path: `/admin/order/editOrder/${data.idAkademi}` })
+          break
         case 'approve':
           this.$store.dispatch('approvalOrder', [data.idAkademi, this.objSession.email])
           NProgress.configure({ showSpinner: false })
@@ -202,7 +208,5 @@ export default {
 </script>
 
 <style>
-.hidden-style {
-  display:none;
-}
+
 </style>

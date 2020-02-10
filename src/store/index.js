@@ -128,6 +128,10 @@ export const state = {
   saveOrderData: {},
   indexApprovalOrder: 0,
   oneApprovalOrder: {},
+  indexUpdateOrder: 0,
+  updateOrderData: {},
+  indexGetUpdateOrder: 0,
+  getUpdateOrderData: {},
   // End Order
 
   // Upload University
@@ -188,6 +192,18 @@ export const mutations = {
   },
   respSaveOrder (state, resp) {
     state.saveOrderData = resp
+  },
+  countUpdateOrder (state) {
+    state.indexUpdateOrder++
+  },
+  respUpdateOrder (state, resp) {
+    state.updateOrderData = resp
+  },
+  countGetUpdateOrder (state) {
+    state.indexGetUpdateOrder++
+  },
+  respGetUpdateOrder (state, resp) {
+    state.getUpdateOrderData = resp
   },
   countLoginUser (state) {
     state.indexLoginUser++
@@ -339,6 +355,40 @@ export const actions = {
         if (err.includes('Invalid')) {
           alert('Tidak Dapat Diakses')
           console.log(error)
+        } else {
+          alert('Terjadi Kesalahan')
+        }
+      })
+  },
+  updateOrder ({commit}, [x, y]) {
+    return Axios.post(baseUrl + '/umu-spp/order/edit?idAkademi=' + x, y)
+      .then((response) => {
+        commit('countUpdateOrder')
+        commit('respUpdateOrder', response.data)
+      })
+      .catch((error) => {
+        let err = error + ''
+        if (err.includes('Invalid')) {
+          alert('Tidak Dapat Diakses')
+          console.log(error)
+        } else {
+          alert('Terjadi Kesalahan')
+        }
+      })
+  },
+  getUpdateOrder ({commit}, x) {
+    return Axios.get(baseUrl + '/umu-spp/order/getOrderData?idAkademi=' + x)
+      .then((response) => {
+        commit('countGetUpdateOrder')
+        commit('respGetUpdateOrder', response.data)
+      })
+      .catch((error) => {
+        console.log(error.response)
+        let err = error + ''
+        if (err.includes('Invalid')) {
+          alert('Tidak Dapat Diakses')
+        } else if (err.response.status === '504') {
+          alert('Periksa Koneksi')
         } else {
           alert('Terjadi Kesalahan')
         }

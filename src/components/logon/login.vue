@@ -1,6 +1,6 @@
 <template>
 <div class="login">
-<div class="login-form mx-auto mt-5 shadow p-5 mb-5 bg-white rounded">
+<div class="login-form mx-auto mt-5 shadow p-5 mb-5 bg-white rounded" @keyup.enter="postlogin">
         <p class="text-center h4 pb-3">UMU Login</p>
         <div class="form-group">
         <div class="input-group">
@@ -22,7 +22,7 @@
             <label class="float-left checkbox-inline"><input type="checkbox"> Ingat Saya</label>
         </div> -->
         <div class="form-group">
-            <button type="submit" v-on:click="postlogin" style="background-color:#ff5500;color:white;" class="btn btn-block mx-auto w-25">Login</button>
+            <button type="submit" @click="postlogin" style="background-color:#ff5500;color:white;" class="btn btn-block mx-auto w-25">Login</button>
         </div>
     <!-- <p class="text-center"><a href="#">Lupa Password</a></p> -->
 </div>

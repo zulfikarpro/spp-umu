@@ -2,12 +2,12 @@
 <div class="container-fluid">
     <div class="row">
 
-      <div class="col-sm-8 mx-auto shadow rounded mt-5 mb-5" v-if="$route.params.id == 1">
+      <div class="col-sm-8 mx-auto shadow rounded mt-5 mb-5" >
         <div class="row mt-4">
-          <div class="col-sm-8 col-8 mx-auto"><div class="font-weight-bold text-center mt-4" style="font-size:x-large;">Data Penanggung Jawab</div></div>
+          <div class="col-sm-8 col-8 mx-auto"><div class="font-weight-bold text-center mt-4" style="font-size:x-large;">Edit Order</div></div>
         </div>
       <div class="col-sm-10 offset-sm-1 ">
-        <div class="mt-3 font-weight-bold">A. DATA PENANGGUNG JAWAB KEUANGAN SEKOLAH/UNIVERSITAS</div>
+        <div class="mt-5 font-weight-bold">A. DATA PENANGGUNG JAWAB KEUANGAN SEKOLAH/UNIVERSITAS</div>
         <div class="form-group mt-3">
         <label >Nama Penanggung Jawab</label>
         <input type="text" class="form-control"   v-model="$v.data1.name.$model" >
@@ -100,98 +100,77 @@
           <small class="form-text text-danger" v-if="!$v.data1.nik.minLength">Field must have at least 8 letters.</small>
         </div>
       </div>
-      <div class="col-sm-8 mx-auto mt-5 mb-5">
-      <div class="row">
-        <div class="col-sm-4 offset-sm-2 text-center"><button type="submit" v-on:click="backButton" style="background-color:#FBE5D7;color:black;" class="btn btn-block py-3">Batal</button></div>
-        <div class="col-sm-4 text-center"><button type="submit" v-on:click="submitButton('userRegis')"  style="background-color:#F0B286;color:black;" class="btn btn-block py-3">Selanjutnya</button></div>
-      </div>
-      </div>
-      </div>
 
-      <div class="col-sm-8 mx-auto shadow rounded mt-5 mb-5" v-if="$route.params.id == 2">
-        <div class="row mt-4">
-          <div class="col-sm-8 col-8 mx-auto"><div class="font-weight-bold text-center mt-4" style="font-size:x-large;">Data Universitas/Sekolah</div></div>
-        </div>
       <div class="col-sm-10 offset-sm-1 ">
-        <div class="mt-3 font-weight-bold">B. DATA SEKOLAH/UNIVERSITAS</div>
+        <div class="mt-5 font-weight-bold">B. DATA SEKOLAH/UNIVERSITAS</div>
         <div class="form-group mt-3">
         <label >Nama Sekolah/Universitas</label>
-        <input type="text" class="form-control" v-model="$v.data2.akademiName.$model">
-        <small class="form-text text-danger error" v-if="$v.data2.akademiName.$dirty && !$v.data2.akademiName.required">Field is required.</small>
+        <input type="text" class="form-control" v-model="$v.data1.akademiName.$model">
+        <small class="form-text text-danger error" v-if="$v.data1.akademiName.$dirty && !$v.data1.akademiName.required">Field is required.</small>
         </div>
         <div class="form-group mt-3">
         <label >Alamat Sekolah/Universitas</label>
-        <input type="text" class="form-control" v-model="$v.data2.akademiAddress.$model">
-        <small class="form-text text-danger error" v-if="$v.data2.akademiAddress.$dirty && !$v.data2.akademiAddress.required">Field is required.</small>
+        <input type="text" class="form-control" v-model="$v.data1.akademiAddress.$model">
+        <small class="form-text text-danger error" v-if="$v.data1.akademiAddress.$dirty && !$v.data1.akademiAddress.required">Field is required.</small>
         </div>
         <div class="form-group mt-3">
           <label >Logo Universitas</label>
           <div class="custom-file">
             <input type="file" class="custom-file-input" id="inputGroupFile04" @change="uploadLogo">
-            <label class="custom-file-label" for="inputGroupFile04">{{ data2.akademiLogo.name }}</label>
-            <small class="form-text text-danger error" v-if="$v.data2.akademiLogo.$dirty && !$v.data2.akademiLogo.required">Choose is required.</small>
+            <label class="custom-file-label" for="inputGroupFile04">{{ data1.akademiLogo.name }}</label>
           </div>
         </div>
         <div class="form-group mt-3">
         <label >Nomor Telepon</label>
-        <input type="number" class="form-control" v-model="$v.data2.akademiPhone.$model">
-        <small class="form-text text-danger error" v-if="$v.data2.akademiPhone.$dirty && !$v.data2.akademiPhone.required">Field is required.</small>
-        <small class="form-text text-danger error" v-if="$v.data2.akademiPhone.$dirty && !$v.data2.akademiPhone.numeric">Field must be a number.</small>
+        <input type="number" class="form-control" v-model="$v.data1.akademiPhone.$model">
+        <small class="form-text text-danger error" v-if="$v.data1.akademiPhone.$dirty && !$v.data1.akademiPhone.required">Field is required.</small>
+        <small class="form-text text-danger error" v-if="$v.data1.akademiPhone.$dirty && !$v.data1.akademiPhone.numeric">Field must be a number.</small>
         </div>
         <div class="form-group mt-3">
         <label >Email yang Didaftarkan</label>
-        <input type="email" class="form-control" v-model="$v.data2.akademiEmail.$model">
-        <small class="form-text text-danger error" v-if="$v.data2.akademiEmail.$dirty && !$v.data2.akademiEmail.required">Field is required.</small>
-        <small class="form-text text-danger error" v-if="$v.data2.akademiEmail.$dirty && !$v.data2.akademiEmail.email">Email not valid.</small>
+        <input type="email" class="form-control" v-model="$v.data1.akademiEmail.$model">
+        <small class="form-text text-danger error" v-if="$v.data1.akademiEmail.$dirty && !$v.data1.akademiEmail.required">Field is required.</small>
+        <small class="form-text text-danger error" v-if="$v.data1.akademiEmail.$dirty && !$v.data1.akademiEmail.email">Email not valid.</small>
         </div>
         <div class="form-group mt-3">
         <label >Bank</label>
-        <select id="inputBank" class="form-control" v-model="$v.data2.akademiBank.$model">
+        <select id="inputBank" class="form-control" v-model="$v.data1.akademiBank.$model">
         <option value="" selected>Pilih Bank</option>
         <option value="BNI">BNI</option>
         <option value="MANDIRI">MANDIRI</option>
         <option value="BRI">BRI</option>
         <option value="BCA">BCA</option>
         </select>
-        <small class="form-text text-danger error" v-if="$v.data2.akademiBank.$dirty && !$v.data2.akademiBank.required">Choose is required.</small>
+        <small class="form-text text-danger error" v-if="$v.data1.akademiBank.$dirty && !$v.data1.akademiBank.required">Choose is required.</small>
         </div>
         <div class="form-group mt-3">
           <label >Nomor Rekening Bank</label>
-          <input type="text" class="form-control" v-model="$v.data2.noRekening.$model">
-          <small class="form-text text-danger error" v-if="$v.data2.noRekening.$dirty && !$v.data2.noRekening.required">Field is required.</small>
-          <small class="form-text text-danger error" v-if="$v.data2.noRekening.$dirty && !$v.data2.noRekening.numeric">Field must be a number.</small>
+          <input type="text" class="form-control" v-model="$v.data1.noRekening.$model">
+          <small class="form-text text-danger error" v-if="$v.data1.noRekening.$dirty && !$v.data1.noRekening.required">Field is required.</small>
+          <small class="form-text text-danger error" v-if="$v.data1.noRekening.$dirty && !$v.data1.noRekening.numeric">Field must be a number.</small>
         </div>
         <div class="form-group mt-3">
           <label >Nama Pemilik Rekening Bank</label>
-          <input type="text" class="form-control" v-model="$v.data2.nameRekening.$model">
-          <small class="form-text text-danger error" v-if="$v.data2.noRekening.$dirty && !$v.data2.noRekening.required">Field is required.</small>
+          <input type="text" class="form-control" v-model="$v.data1.nameRekening.$model">
+          <small class="form-text text-danger error" v-if="$v.data1.noRekening.$dirty && !$v.data1.noRekening.required">Field is required.</small>
         </div>
-      </div>
-      <div class="col-sm-8 mx-auto mt-5 mb-5">
-      <div class="row">
-        <div class="col-sm-4 offset-sm-2 text-center"><button type="submit" v-on:click="backButton" style="background-color:#FBE5D7;color:black;" class="btn btn-block py-3">Kembali</button></div>
-        <div class="col-sm-4 text-center"><button type="submit" v-on:click="submitButton('akademiRegis')" style="background-color:#F0B286;color:black;" class="btn btn-block py-3">Selanjutnya</button></div>
-      </div>
-      </div>
       </div>
 
-      <div class="col-sm-8 mx-auto shadow rounded mt-5 mb-5" v-if="$route.params.id == 3">
-        <div class="row mt-4">
-          <div class="col-sm-8 col-8 mx-auto"><div class="font-weight-bold text-center mt-4" style="font-size:x-large;">UPLOAD FORMULIR PENDAFTARAN</div></div>
-        </div>
-      <div class="col-sm-8 mx-auto mt-5 text-center">
-        <div class="mt-3" style="cursor:pointer;" @click="pilihGambar">
-          <input type="file" ref="fileGambar" class="d-none" @change="uploadGambar" accept="image/*" />
-          <img src="../../assets/uploadform.png" alt="uploadForm" width="200" height="200">
-          <div class="mb-3"> {{ imgName }}</div>
+      <div class="col-sm-10 offset-sm-1 ">
+        <div class="mt-5 font-weight-bold">C. DATA FORMULIR PENDAFTARAN</div>
+        <div class="form-group mt-3">
+          <label >Upload Formulir</label>
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="inputGroupFile04" @change="uploadGambar">
+            <label class="custom-file-label" for="inputGroupFile04">{{ data1.dokumen.name }}</label>
           </div>
-        <div class="">Upload dokumen pendaftaran untuk membuat order</div>
-        <div class="mb-7">dengan klik button <b>Upload Dokumen</b></div>
+        </div>
+      </div>
+
       <div class="col-sm-8 mx-auto mt-5 mb-5">
       <div class="row">
-        <div class="col-sm-4 offset-sm-2 text-center"><button type="submit" v-on:click="backButton" style="background-color:#FBE5D7;color:black;" class="btn btn-block py-3">Kembali</button></div>
-        <div class="col-sm-4 text-center"><button type="submit" v-on:click="() => this.$router.push('../')" style="background-color:#F0B286;color:black;" class="btn btn-block py-3">Menu Utama</button></div>
-      </div>
+        <div class="col-sm-4 offset-sm-2 text-center"><button type="submit" v-on:click="backButton" style="background-color:#FBE5D7;color:black;" class="btn btn-block py-3">Batal</button></div>
+        <div class="col-sm-4 text-center"><button type="submit" v-on:click="submitButton()"  style="background-color:#F0B286;color:black;" class="btn btn-block py-3">Simpan</button></div>
       </div>
       </div>
       </div>
@@ -207,7 +186,7 @@ import { required, minLength, email, numeric } from 'vuelidate/lib/validators'
 import NProgress from 'nprogress'
 
 export default {
-  name: 'OrderAdd',
+  name: 'OrderEdit',
   components: {
     Datepicker
   },
@@ -226,9 +205,7 @@ export default {
         addressNow: '',
         gender: '',
         citizen: '',
-        nik: ''
-      },
-      data2: {
+        nik: '',
         akademiName: '',
         akademiAddress: '',
         akademiLogo: '',
@@ -236,11 +213,9 @@ export default {
         akademiEmail: '',
         akademiBank: '',
         noRekening: '',
-        nameRekening: ''
-      },
-      imgName: '',
-      imgFile: '',
-      imgStatus: false
+        nameRekening: '',
+        dokumen: ''
+      }
     }
   },
   validations: {
@@ -256,12 +231,9 @@ export default {
       addressNow: {required},
       gender: {required},
       citizen: {required},
-      nik: {required, numeric, minLength: minLength(8)}
-    },
-    data2: {
+      nik: {required, numeric, minLength: minLength(8)},
       akademiName: {required},
       akademiAddress: {required},
-      akademiLogo: {required},
       akademiPhone: {required, numeric},
       akademiEmail: {required, email},
       akademiBank: {required},
@@ -270,35 +242,55 @@ export default {
     }
   },
   computed: {
-    indexSaveOrder () {
-      return this.$store.state.indexSaveOrder
+    indexUpdateOrder () {
+      return this.$store.state.indexUpdateOrder
     },
     DateAja () {
       return new Date(this.data1.dateOfBirth)
+    },
+    indexGetUpdateOrder () {
+      return this.$store.state.indexGetUpdateOrder
     }
   },
   watch: {
-    'indexSaveOrder' () {
-      if (this.$store.state.saveOrderData.success === true) {
-        alert('Buat Order berhasil')
+    'indexUpdateOrder' () {
+      if (this.$store.state.updateOrderData.success === true) {
+        alert('Ubah Data Order Berhasil')
         this.$router.push('../')
       } else {
-        alert(this.$store.state.saveOrderData.message)
+        alert(this.$store.state.updateOrderData.message)
       }
       NProgress.done()
+    },
+    'indexGetUpdateOrder' () {
+      this.data1.name = this.$store.state.getUpdateOrderData.data.namaPegawai
+      this.data1.nip = this.$store.state.getUpdateOrderData.data.nip
+      this.data1.position = this.$store.state.getUpdateOrderData.data.jabatan
+      this.data1.phone = this.$store.state.getUpdateOrderData.data.phone
+      this.data1.email = this.$store.state.getUpdateOrderData.data.email
+      this.data1.placeDob = this.$store.state.getUpdateOrderData.data.tempatLahir
+      this.data1.dateOfBirth = this.$store.state.getUpdateOrderData.data.tanggalLahir
+      this.data1.address = this.$store.state.getUpdateOrderData.data.alamatIdentitas
+      this.data1.addressNow = this.$store.state.getUpdateOrderData.data.alamatTinggal
+      this.data1.gender = this.$store.state.getUpdateOrderData.data.jenisKelamin
+      this.data1.citizen = this.$store.state.getUpdateOrderData.data.kewarganegaraan
+      this.data1.nik = this.$store.state.getUpdateOrderData.data.nik
+      this.data1.akademiName = this.$store.state.getUpdateOrderData.data.akademiName
+      this.data1.akademiAddress = this.$store.state.getUpdateOrderData.data.akademiAddress
+      this.data1.akademiPhone = this.$store.state.getUpdateOrderData.data.akademiPhone
+      this.data1.akademiWeb = this.$store.state.getUpdateOrderData.data.akademiWeb
+      this.data1.akademiEmail = this.$store.state.getUpdateOrderData.data.akademiEmail
+      this.data1.akademiBank = this.$store.state.getUpdateOrderData.data.akademiBank
+      this.data1.noRekening = this.$store.state.getUpdateOrderData.data.noRekening
+      this.data1.nameRekening = this.$store.state.getUpdateOrderData.data.nameRekening
     }
   },
   methods: {
     init () {
-      if (this.$route.params.id === 1) {
-        this.data1 = this.$store.state.orderPenanggungJawab
+      this.$store.dispatch('getUpdateOrder', this.$route.params.id)
+      if (this.$route.params.id === undefined) {
+        this.$router.push('/admin')
       }
-      if (this.$route.params.id === 2) {
-        this.data2 = this.$store.state.orderAkademi
-      }
-    },
-    pilihGambar () {
-      this.$refs.fileGambar.click()
     },
     uploadGambar (val) {
       let extfile = val.target.files[0].name.substring(val.target.files[0].name.lastIndexOf('.')).toLowerCase()
@@ -309,57 +301,12 @@ export default {
       }
       if (extfile === '.jpg' || extfile === '.png' || extfile === '.jpeg') {
         var reader = new FileReader()
-        this.imgFile = val.target.files[0]
-        this.imgName = val.target.files[0].name
+        this.data1.dokumen = val.target.files[0]
         reader.readAsDataURL(val.target.files[0])
         this.imgStatus = true
       } else {
         alert('Tipe data harus gambar')
         this.$refs.fileGambar.value = '' // Reset Input File
-      }
-      if (this.imgStatus === true) {
-        let firstData = Object.values(this.$store.state.orderPenanggungJawab)
-        let secondData = Object.values(this.$store.state.orderAkademi)
-        let allData = firstData.concat(secondData)
-        if (allData.includes(undefined) || allData.includes('')) {
-          alert('Semua Form Tidak Boleh Kosong')
-        } else {
-          let dataimage = new FormData()
-          dataimage.append('file', this.$store.state.orderAkademi.akademiLogo)
-          dataimage.append('file', this.imgFile)
-          let tglLahir = this.changeDateFormat(this.$store.state.orderPenanggungJawab.dateOfBirth)
-          // console.log(this.$store.state.orderPenanggungJawab.dateOfBirth)
-          let readyData = {
-            // image: dataimage,
-            status: 'pending',
-            createBy: this.objSession.name,
-            updateBy: this.objSession.name,
-            namaPegawai: this.$store.state.orderPenanggungJawab.name,
-            nip: this.$store.state.orderPenanggungJawab.nip,
-            jabatan: this.$store.state.orderPenanggungJawab.position,
-            phone: this.$store.state.orderPenanggungJawab.phone,
-            email: this.$store.state.orderPenanggungJawab.email,
-            tempatLahir: this.$store.state.orderPenanggungJawab.placeDob,
-            tanggalLahir: tglLahir,
-            alamatIdentitas: this.$store.state.orderPenanggungJawab.address,
-            alamatTinggal: this.$store.state.orderPenanggungJawab.addressNow,
-            jenisKelamin: this.$store.state.orderPenanggungJawab.gender,
-            kewarganegaraan: this.$store.state.orderPenanggungJawab.citizen,
-            nik: this.$store.state.orderPenanggungJawab.nik,
-            akademiName: this.$store.state.orderAkademi.akademiName,
-            akademiAddress: this.$store.state.orderAkademi.akademiAddress,
-            akademiPhone: this.$store.state.orderAkademi.akademiPhone,
-            akademiWeb: null,
-            akademiEmail: this.$store.state.orderAkademi.akademiEmail,
-            akademiBank: this.$store.state.orderAkademi.akademiBank,
-            noRekening: this.$store.state.orderAkademi.noRekening,
-            nameRekening: this.$store.state.orderAkademi.nameRekening
-          }
-          dataimage.append('model', JSON.stringify(readyData))
-          this.$store.dispatch('saveOrder', dataimage)
-          NProgress.configure({ showSpinner: false })
-          NProgress.start()
-        }
       }
     },
     uploadLogo (val) {
@@ -370,7 +317,7 @@ export default {
       }
       if (extfile === '.jpg' || extfile === '.png' || extfile === '.jpeg') {
         var reader = new FileReader()
-        this.data2.akademiLogo = val.target.files[0]
+        this.data1.akademiLogo = val.target.files[0]
         reader.readAsDataURL(val.target.files[0])
       } else {
         alert('Tipe data harus gambar')
@@ -393,23 +340,43 @@ export default {
       let resultDateFormat = day + '-' + month + '-' + year
       return resultDateFormat
     },
-    submitButton (params) {
-      if (params === 'userRegis') {
-        this.$v.data1.$touch()
-        if (this.$v.data1.$error) {
-          alert('Data Harus Lengkapi')
-        } else {
-          this.$store.state.orderPenanggungJawab = this.data1
-          this.$router.push('2')
+    submitButton () {
+      this.$v.data1.$touch()
+      if (this.$v.data1.$error) {
+        alert('Semua Data Harus Di Isi')
+      } else {
+        let dataimage = new FormData()
+        dataimage.append('file', this.data1.akademiLogo === undefined ? null : this.data1.akademiLogo)
+        dataimage.append('file', this.data1.dokumen === undefined ? null : this.data1.dokumen)
+        let tglLahir = this.changeDateFormat(this.data1.dateOfBirth)
+        let readyData = {
+        // image: dataimage,
+          updateBy: this.objSession.name,
+          namaPegawai: this.data1.name,
+          nip: this.data1.nip,
+          jabatan: this.data1.position,
+          phone: this.data1.phone,
+          email: this.data1.email,
+          tempatLahir: this.data1.placeDob,
+          tanggalLahir: tglLahir,
+          alamatIdentitas: this.data1.address,
+          alamatTinggal: this.data1.addressNow,
+          jenisKelamin: this.data1.gender,
+          kewarganegaraan: this.data1.citizen,
+          nik: this.data1.nik,
+          akademiName: this.data1.akademiName,
+          akademiAddress: this.data1.akademiAddress,
+          akademiPhone: this.data1.akademiPhone,
+          akademiWeb: null,
+          akademiEmail: this.data1.akademiEmail,
+          akademiBank: this.data1.akademiBank,
+          noRekening: this.data1.noRekening,
+          nameRekening: this.data1.nameRekening
         }
-      } else if (params === 'akademiRegis') {
-        this.$v.data2.$touch()
-        if (this.$v.data2.$error) {
-          alert('Data Harus Lengkapi')
-        } else {
-          this.$store.state.orderAkademi = this.data2
-          this.$router.push('3')
-        }
+        dataimage.append('model', JSON.stringify(readyData))
+        this.$store.dispatch('updateOrder', [this.$route.params.id, dataimage])
+        NProgress.configure({ showSpinner: false })
+        NProgress.start()
       }
     }
   },

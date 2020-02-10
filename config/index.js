@@ -89,6 +89,14 @@ module.exports = {
       '/umu-spp/order/approval': {
         target: 'http://localhost:10015',
         changeOrigin: true
+      },
+      '/umu-spp/order/edit': {
+        target: 'http://localhost:10015',
+        changeOrigin: true
+      },
+      '/umu-spp/order/getOrderData': {
+        target: 'http://localhost:10015',
+        changeOrigin: true
       }
     },
 

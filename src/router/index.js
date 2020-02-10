@@ -27,7 +27,7 @@ import OrderIndex from '@/components/order-manage'
 import UserIndex from '@/components/user'
 
 import mode from '../prodProperties'
-import store from '../store'
+// import store from '../store'
 Vue.use(Router)
 
 let vueRouter = new Router({
@@ -199,6 +199,11 @@ let vueRouter = new Router({
               path: 'viewOrder/:id',
               component: () => import('@/components/order-manage/order-view'),
               name: 'OrderView'
+            },
+            {
+              path: 'editOrder/:id?',
+              component: () => import('@/components/order-manage/order-edit'),
+              name: 'OrderEdit'
             }
           ]
         },
@@ -222,6 +227,7 @@ let vueRouter = new Router({
 
 vueRouter.beforeEach((to, from, next) => {
   let objSession = ''
+  let objPermis = ''
 
   if (to.path.includes('/login') && (objSession !== null || objSession !== '') && (objSession.status !== undefined || objSession.status !== '')) {
     next('/admin')
@@ -232,13 +238,14 @@ vueRouter.beforeEach((to, from, next) => {
     next()
   } else {
     objSession = JSON.parse(sessionStorage.getItem('umuSS'))
+    objPermis = JSON.parse(sessionStorage.getItem('umuRole'))
     if ((objSession === undefined || objSession === null) || (objSession.status === null || objSession.status === '' || objSession.status === undefined || objSession.status !== 'active')) {
       next('/login')
     } else {
       next()
     }
   }
-  if (to.path.includes('order') && store.state.permissionData.order_r === 0) {
+  if (to.path.includes('order') && !objPermis.includes('order_r')) {
     next('/admin')
   } else {
     next()
