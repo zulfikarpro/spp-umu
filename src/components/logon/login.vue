@@ -26,20 +26,29 @@
         </div>
     <!-- <p class="text-center"><a href="#">Lupa Password</a></p> -->
 </div>
+<modal v-if="showModal" @close="showModal = false">
+<div slot="body">{{ msgModal }}</div>
+</modal>
 </div>
 </template>
 
 <script>
 import CryptoJS from 'crypto-js'
 import NProgress from 'nprogress'
+import modal from '../../Modal.vue'
 
 export default {
   name: 'login',
+  components: {
+    modal
+  },
   data () {
     return {
       email: '',
       password: '',
-      secretKey: 'YWJjZGVmZ2hpamtsbW5vcA=='
+      secretKey: 'YWJjZGVmZ2hpamtsbW5vcA==',
+      showModal: false,
+      msgModal: ''
     }
   },
   computed: {
@@ -56,7 +65,8 @@ export default {
         sessionStorage.setItem('umuSS', JSON.stringify(this.$store.state.oneLoginUser.data))
         this.$store.dispatch('getPermission', this.$store.state.oneLoginUser.data.role)
       } else {
-        alert(this.$store.state.oneLoginUser.message)
+        this.showModal = true
+        this.msgModal = this.$store.state.oneLoginUser.message
       }
       NProgress.done()
     },
@@ -64,7 +74,8 @@ export default {
       if (this.$store.state.listPermissionData.success === true) {
         sessionStorage.setItem('umuRole', JSON.stringify(this.$store.state.listPermissionData.data))
       } else {
-        alert(this.$store.state.listPermissionData.message)
+        this.showModal = true
+        this.msgModal = this.$store.state.listPermissionData.message
       }
       this.$router.push('admin/beranda')
     }
@@ -72,9 +83,11 @@ export default {
   methods: {
     postlogin () {
       if (this.email === '' || this.email === undefined || this.password === '' || this.password === undefined) {
-        alert('Failed Login')
+        this.showModal = true
+        this.msgModal = 'Failed Login'
       } else if (this.password.length < 5) {
-        alert('Password Terlalu Pendek')
+        this.showModal = true
+        this.msgModal = 'Password Terlalu Pendek'
       } else {
         let key = CryptoJS.enc.Base64.parse(this.secretKey)
         let cfg = {

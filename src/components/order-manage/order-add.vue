@@ -28,6 +28,8 @@
         <input type="number" class="form-control"  v-model="$v.data1.phone.$model">
         <small class="form-text text-danger error" v-if="$v.data1.phone.$dirty && !$v.data1.phone.required">Field is required.</small>
         <small class="form-text text-danger error" v-if="$v.data1.phone.$dirty && !$v.data1.phone.numeric">Field must be a number.</small>
+        <small class="form-text text-danger error" v-if="!$v.data1.phone.minLength">Field must have at least 10 letters.</small>
+        <small class="form-text text-danger error" v-if="!$v.data1.phone.maxLength">Field Maximum 13 letters.</small>
         </div>
         <div class="form-group mt-3">
         <label >Email</label>
@@ -97,7 +99,8 @@
           <input type="text" class="form-control" v-model="$v.data1.nik.$model" name="nik">
           <small class="form-text text-danger" v-if="$v.data1.nik.$dirty && !$v.data1.nik.required">Field is required.</small>
           <small class="form-text text-danger" v-if="$v.data1.nik.$dirty && !$v.data1.nik.numeric">Field must be a number.</small>
-          <small class="form-text text-danger" v-if="!$v.data1.nik.minLength">Field must have at least 8 letters.</small>
+          <small class="form-text text-danger" v-if="!$v.data1.nik.minLength">Field must have at least 16 letters.</small>
+          <small class="form-text text-danger" v-if="!$v.data1.nik.maxLength">Field Maximum 16 letters.</small>
         </div>
       </div>
       <div class="col-sm-8 mx-auto mt-5 mb-5">
@@ -137,6 +140,8 @@
         <input type="number" class="form-control" v-model="$v.data2.akademiPhone.$model">
         <small class="form-text text-danger error" v-if="$v.data2.akademiPhone.$dirty && !$v.data2.akademiPhone.required">Field is required.</small>
         <small class="form-text text-danger error" v-if="$v.data2.akademiPhone.$dirty && !$v.data2.akademiPhone.numeric">Field must be a number.</small>
+        <small class="form-text text-danger error" v-if="!$v.data2.akademiPhone.minLength">Field must have at least 10 letters.</small>
+        <small class="form-text text-danger error" v-if="!$v.data2.akademiPhone.maxLength">Field Maximum 13 letters.</small>
         </div>
         <div class="form-group mt-3">
         <label >Email yang Didaftarkan</label>
@@ -189,8 +194,7 @@
         <div class="mb-7">dengan klik button <b>Upload Dokumen</b></div>
       <div class="col-sm-8 mx-auto mt-5 mb-5">
       <div class="row">
-        <div class="col-sm-4 offset-sm-2 text-center"><button type="submit" v-on:click="backButton" style="background-color:#FBE5D7;color:black;" class="btn btn-block py-3">Kembali</button></div>
-        <div class="col-sm-4 text-center"><button type="submit" v-on:click="() => this.$router.push('../')" style="background-color:#F0B286;color:black;" class="btn btn-block py-3">Menu Utama</button></div>
+        <div class="col-sm-8 mx-auto text-center"><button type="submit" v-on:click="backButton" style="background-color:#FBE5D7;color:black;" class="btn btn-block py-3">Kembali</button></div>
       </div>
       </div>
       </div>
@@ -203,7 +207,7 @@
 
 <script>
 import Datepicker from 'vuejs-datepicker'
-import { required, minLength, email, numeric } from 'vuelidate/lib/validators'
+import { required, minLength, email, numeric, maxLength } from 'vuelidate/lib/validators'
 import NProgress from 'nprogress'
 
 export default {
@@ -248,7 +252,7 @@ export default {
       name: {required},
       nip: {required},
       position: {required},
-      phone: {required, numeric},
+      phone: {required, numeric, minLength: minLength(10), maxLength: maxLength(13)},
       email: {required, email},
       placeDob: {required},
       dateOfBirth: {required},
@@ -256,13 +260,13 @@ export default {
       addressNow: {required},
       gender: {required},
       citizen: {required},
-      nik: {required, numeric, minLength: minLength(8)}
+      nik: {required, numeric, minLength: minLength(16), maxLength: maxLength(16)}
     },
     data2: {
       akademiName: {required},
       akademiAddress: {required},
       akademiLogo: {required},
-      akademiPhone: {required, numeric},
+      akademiPhone: {required, numeric, minLength: minLength(10), maxLength: maxLength(13)},
       akademiEmail: {required, email},
       akademiBank: {required},
       noRekening: {required, numeric},

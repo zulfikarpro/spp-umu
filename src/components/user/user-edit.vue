@@ -32,14 +32,19 @@
   </div>
 </div>
 </div>
+<modal v-if="showModal" @close="showModal = false"><div slot="body">{{ msgModal }}</div></modal>
 </div>
 </template>
 
 <script>
 import { required, minLength } from 'vuelidate/lib/validators'
+import modal from '../../Modal.vue'
 
 export default {
   name: 'UserEdit',
+  components: {
+    modal
+  },
   data () {
     return {
       objSession: JSON.parse(sessionStorage.getItem('umuSS')),
@@ -48,7 +53,9 @@ export default {
         newPassword: '',
         newPassword2: ''
       },
-      failedMsg: ''
+      failedMsg: '',
+      showModal: false,
+      msgModal: ''
     }
   },
   validations: {
@@ -67,10 +74,12 @@ export default {
     'indexChangePassword' () {
       if (this.$store.state.oneChangePassword.success === true) {
         this.$router.push('/admin/beranda')
-        alert('Berhasil Ubah Password')
+        this.showModal = true
+        this.msgModal = 'Berhasil Ubah Password'
       } else {
         this.failedMsg = this.$store.state.oneChangePassword.message
-        alert(this.failedMsg === null ? 'Ubah Password Gagal' : this.failedMsg)
+        this.showModal = true
+        this.msgModal = this.failedMsg === null ? 'Ubah Password Gagal' : this.failedMsg
       }
     }
   },
@@ -78,10 +87,12 @@ export default {
     submitForm () {
       this.$v.userData.$touch()
       if (this.$v.userData.$error) {
-        alert('Data Harus dilengkapi')
+        this.showModal = true
+        this.msgModal = 'Data Harus dilengkapi'
       } else {
         if (this.userData.newPassword !== this.userData.newPassword2) {
-          alert('Password Baru Tidak Sama')
+          this.showModal = true
+          this.msgModal = 'Password Baru Tidak Sama'
         } else {
           this.$store.dispatch('changePassword', [this.objSession.email, this.userData.oldPassword, this.userData.newPassword])
         }

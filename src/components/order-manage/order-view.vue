@@ -13,6 +13,11 @@
             <label class="col-5 col-form-label">{{allData.akademiAddress}}</label>
         </div>
         <div class="row form-group typoText">
+            <label class="col-3 col-form-label">Jenjang</label>
+            <label class="offset-1 col-form-label" >:</label>
+            <label class="col-5 col-form-label">{{allData.jenjang}}</label>
+        </div>
+        <div class="row form-group typoText">
             <label class="col-3 col-form-label">No. Telepon</label>
             <label class="offset-1 col-form-label">:</label>
             <label class="col-5 col-form-label">{{allData.akademiPhone}}</label>
@@ -21,6 +26,16 @@
             <label class="col-3 col-form-label">Email</label>
             <label class="offset-1 col-form-label">:</label>
             <label class="col-5 col-form-label">{{allData.akademiEmail}}</label>
+        </div>
+        <div class="row  form-group typoText">
+            <label class="col-3 col-form-label">Nama Rekening</label>
+            <label class="offset-1 col-form-label">:</label>
+            <label class="col-5 col-form-label">{{allData.nameRekening}}</label>
+        </div>
+        <div class="row  form-group typoText">
+            <label class="col-3 col-form-label">No Rekening</label>
+            <label class="offset-1 col-form-label">:</label>
+            <label class="col-5 col-form-label">{{allData.noRekening}}</label>
         </div>
         <div class="row form-group typoText">
             <div class="col-3 col-form-label">Website</div>
@@ -88,7 +103,18 @@
             <div class="offset-1 col-form-label">:</div>
             <div class="col-5 col-form-label">{{allData.nik}}</div>
         </div>
-        <div class="col-sm-3 mt-4 mx-auto">
+        <div class="mt-5 font-weight-bold mb-3">Data Order</div>
+        <div class="row form-group typoText">
+            <div class="col-3 col-form-label">No Order</div>
+            <div class="offset-1 col-form-label">:</div>
+            <div class="col-5 col-form-label">{{allData.noOrder}}</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-12 mt-3">
+              <img class="rounded-sm text-center mx-auto float-center d-block" :src="'data:image/jpeg;base64,' + allData.dokumen" />
+            </div>
+        </div>
+        <div class="col-sm-3 mt-5 mx-auto">
           <button type="submit" @click="() => (this.$router.push('../'))" style="background-color:#ff5500;color:white;" class="btn btn-block py-3">Menu Utama</button>
         </div>
     </div>

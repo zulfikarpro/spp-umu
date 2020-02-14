@@ -26,9 +26,10 @@
         {{ props.rowIndex + 1}}
       </div>
       <div slot="actions" slot-scope="props">
-      <button class="btn btn-primary" @click="onActionClicked('view', props.rowData)">View</button>
-      <button class="btn btn-primary" @click="onActionClicked('edit', props.rowData)">Edit</button>
-      <button class="btn btn-primary" v-if="props.rowData.approvalStatus === false" :class="classApprove" @click="onActionClicked('approve', props.rowData)">Approve</button>
+      <button class="btn btn-success" @click="onActionClicked('view', props.rowData)">View</button>
+      <button class="btn btn-primary" :class="classEdit" @click="onActionClicked('edit', props.rowData)">Edit</button>
+      <button class="btn btn-danger" :class="classDelete" @click="onActionClicked('delete', props.rowData)">Delete</button>
+      <button class="btn btn-primary" :class="classApprove" v-if="props.rowData.approvalStatus === 0" @click="onActionClicked('approve', props.rowData)">Approve</button>
       </div>
       </vuetable>
       </div>
@@ -56,6 +57,8 @@ export default {
     return {
       objSession: JSON.parse(sessionStorage.getItem('umuSS')),
       classApprove: '',
+      classEdit: '',
+      classDelete: '',
       paraf: '',
       appendParams: {},
       url: '',
@@ -132,6 +135,9 @@ export default {
   computed: {
     indexApprovalOrder () {
       return this.$store.state.indexApprovalOrder
+    },
+    indexDeleteOrder () {
+      return this.$store.state.indexDeleteOrder
     }
   },
   watch: {
@@ -140,6 +146,15 @@ export default {
         alert('Berhasil Approval Order')
       } else {
         alert(this.$store.state.oneApprovalOrder.message)
+      }
+      this.$refs.vuetable.refresh()
+      NProgress.done()
+    },
+    'indexDeleteOrder': function () {
+      if (this.$store.state.deleteOrderData.success === true) {
+        alert('Berhasil Hapus Order')
+      } else {
+        alert(this.$store.state.deleteOrderData.message)
       }
       this.$refs.vuetable.refresh()
       NProgress.done()
@@ -156,6 +171,16 @@ export default {
         this.classApprove = 'd-none'
       } else {
         this.classApprove = ''
+      }
+      if (this.$store.state.permissionData.order_u === 0) {
+        this.classEdit = 'd-none'
+      } else {
+        this.classEdit = ''
+      }
+      if (this.$store.state.permissionData.order_d === 0) {
+        this.classDelete = 'd-none'
+      } else {
+        this.classDelete = ''
       }
     },
     getSortParam: function (sortOrder) {
@@ -185,6 +210,21 @@ export default {
         case 'edit':
           this.$router.push({ path: `/admin/order/editOrder/${data.idAkademi}` })
           break
+        case 'delete':
+          NProgress.configure({ showSpinner: false })
+          NProgress.start()
+          if (confirm('Apakah Kamu Yakin Ingin Menghapus Order ?')) {
+            if (data.approvalStatus) {
+              alert('Order Yang Sudah Aktif Tidak Bisa Dihapus')
+              NProgress.done()
+            } else {
+              this.$store.dispatch('deleteOrder', data.idAkademi)
+            }
+          } else {
+            this.$refs.vuetable.refresh()
+            NProgress.done()
+          }
+          break
         case 'approve':
           this.$store.dispatch('approvalOrder', [data.idAkademi, this.objSession.email])
           NProgress.configure({ showSpinner: false })
@@ -193,9 +233,16 @@ export default {
       }
     },
     tableStatus (value) {
-      return (value === false)
-        ? 'Belum Aktif'
-        : 'Aktif'
+      if (value === 0) {
+        value = 'Belum Aktif'
+      }
+      if (value === 1) {
+        value = 'Aktif'
+      }
+      if (value === 2) {
+        value = 'Ditolak'
+      }
+      return value
     },
     critOrder () {
       this.$router.push('addOrder/1')

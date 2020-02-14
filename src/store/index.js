@@ -51,7 +51,9 @@ export const state = {
     billing_c: 0,
     order_c: 0,
     order_r: 0,
-    approval_u: 0
+    approval_u: 0,
+    order_u: 0,
+    order_d: 0
   },
   // End Permission
 
@@ -132,6 +134,8 @@ export const state = {
   updateOrderData: {},
   indexGetUpdateOrder: 0,
   getUpdateOrderData: {},
+  deleteOrderData: {},
+  indexDeleteOrder: 0,
   // End Order
 
   // Upload University
@@ -198,6 +202,12 @@ export const mutations = {
   },
   respUpdateOrder (state, resp) {
     state.updateOrderData = resp
+  },
+  countDeleteOrder (state) {
+    state.indexDeleteOrder++
+  },
+  respDeleteOrder (state, resp) {
+    state.deleteOrderData = resp
   },
   countGetUpdateOrder (state) {
     state.indexGetUpdateOrder++
@@ -365,6 +375,22 @@ export const actions = {
       .then((response) => {
         commit('countUpdateOrder')
         commit('respUpdateOrder', response.data)
+      })
+      .catch((error) => {
+        let err = error + ''
+        if (err.includes('Invalid')) {
+          alert('Tidak Dapat Diakses')
+          console.log(error)
+        } else {
+          alert('Terjadi Kesalahan')
+        }
+      })
+  },
+  deleteOrder ({commit}, x) {
+    return Axios.post(baseUrl + '/umu-spp/order/delete?idAkademi=' + x)
+      .then((response) => {
+        commit('countDeleteOrder')
+        commit('respDeleteOrder', response.data)
       })
       .catch((error) => {
         let err = error + ''
