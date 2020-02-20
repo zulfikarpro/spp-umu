@@ -144,6 +144,22 @@
         <small class="form-text text-danger error" v-if="!$v.data2.akademiPhone.maxLength">Field Maximum 13 letters.</small>
         </div>
         <div class="form-group mt-3">
+        <label >Website</label>
+        <input type="text" class="form-control" v-model="$v.data2.akademiWeb.$model">
+        <small class="form-text text-danger error" v-if="$v.data2.akademiWeb.$dirty && !$v.data2.akademiWeb.required">Field is required.</small>
+        </div>
+        <div class="form-group mt-3">
+        <label >Jenjang</label>
+        <select id="inputBank" class="form-control" v-model="$v.data2.jenjang.$model">
+        <option value="" selected>Pilih Jenjang</option>
+        <option value="SD">SD/MI</option>
+        <option value="SMP">SMP/MTS</option>
+        <option value="SMA">SMA/MA/SMK</option>
+        <option value="UNIV">Universitas</option>
+        </select>
+        <small class="form-text text-danger error" v-if="$v.data2.jenjang.$dirty && !$v.data2.jenjang.required">Choose is required.</small>
+        </div>
+        <div class="form-group mt-3">
         <label >Email yang Didaftarkan</label>
         <input type="email" class="form-control" v-model="$v.data2.akademiEmail.$model">
         <small class="form-text text-danger error" v-if="$v.data2.akademiEmail.$dirty && !$v.data2.akademiEmail.required">Field is required.</small>
@@ -169,7 +185,7 @@
         <div class="form-group mt-3">
           <label >Nama Pemilik Rekening Bank</label>
           <input type="text" class="form-control" v-model="$v.data2.nameRekening.$model">
-          <small class="form-text text-danger error" v-if="$v.data2.noRekening.$dirty && !$v.data2.noRekening.required">Field is required.</small>
+          <small class="form-text text-danger error" v-if="$v.data2.nameRekening.$dirty && !$v.data2.nameRekening.required">Field is required.</small>
         </div>
       </div>
       <div class="col-sm-8 mx-auto mt-5 mb-5">
@@ -238,6 +254,8 @@ export default {
         akademiLogo: '',
         akademiPhone: '',
         akademiEmail: '',
+        akademiWeb: '',
+        jenjang: '',
         akademiBank: '',
         noRekening: '',
         nameRekening: ''
@@ -268,6 +286,8 @@ export default {
       akademiLogo: {required},
       akademiPhone: {required, numeric, minLength: minLength(10), maxLength: maxLength(13)},
       akademiEmail: {required, email},
+      akademiWeb: {required},
+      jenjang: {required},
       akademiBank: {required},
       noRekening: {required, numeric},
       nameRekening: {required}
@@ -353,7 +373,8 @@ export default {
             akademiName: this.$store.state.orderAkademi.akademiName,
             akademiAddress: this.$store.state.orderAkademi.akademiAddress,
             akademiPhone: this.$store.state.orderAkademi.akademiPhone,
-            akademiWeb: null,
+            akademiWeb: this.$store.state.orderAkademi.akademiWeb,
+            jenjang: this.$store.state.orderAkademi.jenjang,
             akademiEmail: this.$store.state.orderAkademi.akademiEmail,
             akademiBank: this.$store.state.orderAkademi.akademiBank,
             noRekening: this.$store.state.orderAkademi.noRekening,

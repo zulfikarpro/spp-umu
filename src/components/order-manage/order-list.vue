@@ -28,8 +28,9 @@
       <div slot="actions" slot-scope="props">
       <button class="btn btn-success" @click="onActionClicked('view', props.rowData)">View</button>
       <button class="btn btn-primary" :class="classEdit" @click="onActionClicked('edit', props.rowData)">Edit</button>
-      <button class="btn btn-danger" :class="classDelete" @click="onActionClicked('delete', props.rowData)">Delete</button>
+      <button class="btn btn-danger" :class="classDelete" v-if="props.rowData.approvalStatus === 0 || props.rowData.approvalStatus === 2" @click="onActionClicked('delete', props.rowData)">Delete</button>
       <button class="btn btn-primary" :class="classApprove" v-if="props.rowData.approvalStatus === 0" @click="onActionClicked('approve', props.rowData)">Approve</button>
+      <button class="btn btn-danger" :class="classReject" v-if="props.rowData.approvalStatus === 0" @click="onActionClicked('reject', props.rowData)">Reject</button>
       </div>
       </vuetable>
       </div>
@@ -38,6 +39,22 @@
       @vuetable-pagination:change-page="onChangePage"
     ></vuetable-pagination>
 </div>
+<modal v-if="showModal" @close="showModal = false">
+<div slot="header" v-if="rejectModal">Reject Form</div>
+<div slot="body" v-if="confirmModal">Apakah Kamu Yakin Ingin Menghapus Order ?</div>
+<div slot="body" v-if="rejectModal" class="my-3">
+<textarea class="form-control" v-model="dataReject.keterangan" placeholder="Alasan Reject Order...." rows="3"></textarea>
+</div>
+<div slot="body" v-else>{{ msgModal }}</div>
+<div slot="footer" v-if="confirmModal">
+  <button @click="deleteFromModal('yes')" class="btn btn-primary">Ya</button>
+  <button @click="deleteFromModal('no')" class="btn btn-danger">Tidak</button>
+</div>
+<div slot="footer" v-if="rejectModal">
+  <button @click="rejectFromModal('yes')" class="btn btn-primary">Oke</button>
+  <button @click="rejectFromModal('no')" class="btn btn-danger">Batal</button>
+</div>
+</modal>
 </div>
 </template>
 
@@ -46,12 +63,14 @@ import Vuetable from 'vuetable-2'
 import VuetablePagination from
   'vuetable-2/src/components/VuetablePagination'
 import NProgress from 'nprogress'
+import modal from '../../Modal'
 
 export default {
   name: 'OrderList',
   components: {
     Vuetable,
-    VuetablePagination
+    VuetablePagination,
+    modal
   },
   data () {
     return {
@@ -59,9 +78,20 @@ export default {
       classApprove: '',
       classEdit: '',
       classDelete: '',
+      classReject: '',
       paraf: '',
       appendParams: {},
       url: '',
+      showModal: false,
+      msgModal: '',
+      confirmModal: false,
+      rejectModal: false,
+      dataDelete: {},
+      dataReject: {
+        keterangan: '',
+        idAkademi: '',
+        email: ''
+      },
       queryParams: {
         sort: 'sort',
         page: 'page',
@@ -138,23 +168,41 @@ export default {
     },
     indexDeleteOrder () {
       return this.$store.state.indexDeleteOrder
+    },
+    indexRejectOrder () {
+      return this.$store.state.indexRejectOrder
     }
   },
   watch: {
     'indexApprovalOrder': function () {
       if (this.$store.state.oneApprovalOrder.success === true) {
-        alert('Berhasil Approval Order')
+        this.showModal = true
+        this.msgModal = 'Berhasil Approval Order'
       } else {
-        alert(this.$store.state.oneApprovalOrder.message)
+        this.showModal = true
+        this.msgModal = this.$store.state.oneApprovalOrder.message
       }
       this.$refs.vuetable.refresh()
       NProgress.done()
     },
     'indexDeleteOrder': function () {
       if (this.$store.state.deleteOrderData.success === true) {
-        alert('Berhasil Hapus Order')
+        this.showModal = true
+        this.msgModal = 'Berhasil Hapus Order'
       } else {
-        alert(this.$store.state.deleteOrderData.message)
+        this.showModal = true
+        this.msgModal = this.$store.state.deleteOrderData.message
+      }
+      this.$refs.vuetable.refresh()
+      NProgress.done()
+    },
+    'indexRejectOrder': function () {
+      if (this.$store.state.oneRejectOrder.success === true) {
+        this.showModal = true
+        this.msgModal = 'Berhasil Reject Order'
+      } else {
+        this.showModal = true
+        this.msgModal = this.$store.state.oneRejectOrder.message
       }
       this.$refs.vuetable.refresh()
       NProgress.done()
@@ -182,6 +230,11 @@ export default {
       } else {
         this.classDelete = ''
       }
+      if (this.$store.state.permissionData.reject_u === 0) {
+        this.classReject = 'd-none'
+      } else {
+        this.classReject = ''
+      }
     },
     getSortParam: function (sortOrder) {
       this.loaded = false
@@ -202,6 +255,51 @@ export default {
       paginationData.to = paginationData.from * paginationData.numberOfElements - 1
       this.$refs.pagination.setPaginationData(paginationData)
     },
+    deleteFromModal (params) {
+      switch (params) {
+        case 'yes' :
+          if (this.dataDelete.approvalStatus === 1) {
+            this.showModal = false
+            this.failDelete()
+            this.confirmModal = false
+          } else {
+            this.$store.dispatch('deleteOrder', this.dataDelete.idAkademi)
+            this.confirmModal = false
+            this.showModal = false
+          }
+          break
+        case 'no' :
+          this.confirmModal = false
+          this.showModal = false
+          NProgress.done()
+          this.$refs.vuetable.refresh()
+          break
+      }
+    },
+    rejectFromModal (params) {
+      switch (params) {
+        case 'yes' :
+          this.$store.dispatch('rejectOrder', [this.dataReject.idAkademi, this.dataReject.email, this.dataReject.keterangan])
+          this.rejectModal = false
+          this.showModal = false
+          break
+        case 'no' :
+          this.rejectModal = false
+          this.showModal = false
+          NProgress.done()
+          this.$refs.vuetable.refresh()
+          break
+      }
+    },
+    failDelete () {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          this.showModal = true
+          this.msgModal = 'Order Yang Sudah Aktif Tidak Bisa Dihapus'
+          NProgress.done()
+        }, 1000)
+      })
+    },
     onActionClicked (action, data) {
       switch (action) {
         case 'view':
@@ -213,22 +311,37 @@ export default {
         case 'delete':
           NProgress.configure({ showSpinner: false })
           NProgress.start()
-          if (confirm('Apakah Kamu Yakin Ingin Menghapus Order ?')) {
-            if (data.approvalStatus) {
-              alert('Order Yang Sudah Aktif Tidak Bisa Dihapus')
-              NProgress.done()
-            } else {
-              this.$store.dispatch('deleteOrder', data.idAkademi)
-            }
-          } else {
-            this.$refs.vuetable.refresh()
-            NProgress.done()
+          this.dataDelete = {
+            approvalStatus: data.approvalStatus,
+            idAkademi: data.idAkademi
           }
+          this.showModal = true
+          this.confirmModal = true
+          // if (confirm('Apakah Kamu Yakin Ingin Menghapus Order ?')) {
+          //   if (data.approvalStatus === 1) {
+          //     alert('Order Yang Sudah Aktif Tidak Bisa Dihapus')
+          //     NProgress.done()
+          //   } else {
+          //     this.$store.dispatch('deleteOrder', data.idAkademi)
+          //   }
+          // } else {
+          //   this.$refs.vuetable.refresh()
+          //   NProgress.done()
+          // }
+
           break
         case 'approve':
           this.$store.dispatch('approvalOrder', [data.idAkademi, this.objSession.email])
           NProgress.configure({ showSpinner: false })
           NProgress.start()
+          break
+        case 'reject':
+          NProgress.configure({ showSpinner: false })
+          NProgress.start()
+          this.dataReject['idAkademi'] = data.idAkademi
+          this.dataReject['email'] = this.objSession.email
+          this.showModal = true
+          this.rejectModal = true
           break
       }
     },

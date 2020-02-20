@@ -25,6 +25,11 @@ import UniversityDownload from '@/components/university-onboard/university-downl
 import Register2 from '@/components/logon/register2'
 import OrderIndex from '@/components/order-manage'
 import UserIndex from '@/components/user'
+import OrderList from '@/components/order-manage/order-list'
+import OrderAdd from '@/components/order-manage/order-add'
+import OrderView from '@/components/order-manage/order-view'
+import OrderEdit from '@/components/order-manage/order-edit'
+import UserEdit from '@/components/user/user-edit'
 
 import mode from '../prodProperties'
 // import store from '../store'
@@ -187,22 +192,22 @@ let vueRouter = new Router({
           children: [
             {
               path: 'listOrder',
-              component: () => import('@/components/order-manage/order-list'),
+              component: OrderList,
               name: 'OrderList'
             },
             {
               path: 'addOrder/:id',
-              component: () => import('@/components/order-manage/order-add'),
+              component: OrderAdd,
               name: 'OrderAdd'
             },
             {
               path: 'viewOrder/:id',
-              component: () => import('@/components/order-manage/order-view'),
+              component: OrderView,
               name: 'OrderView'
             },
             {
               path: 'editOrder/:id?',
-              component: () => import('@/components/order-manage/order-edit'),
+              component: OrderEdit,
               name: 'OrderEdit'
             }
           ]
@@ -215,7 +220,7 @@ let vueRouter = new Router({
           children: [
             {
               path: 'changePassword',
-              component: () => import('@/components/user/user-edit'),
+              component: UserEdit,
               name: 'UserEdit'
             }
           ]

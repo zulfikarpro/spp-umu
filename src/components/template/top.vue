@@ -1,7 +1,7 @@
 <template>
     <div>
-    <nav class="navbar navbar-expand-lg sticky-top navbar-dark" style="background-image: linear-gradient(180deg, #ff5500, #fc7735); ">
-  <a class="navbar-brand" href="#">
+    <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light shadow" style="background-color: #ffff" >
+  <a class="navbar-brand ml-2" href="#">
      <img :src="logoAkademi === '' ? require('@/assets/logo_umu_orange.png') : ('data:image/jpeg;base64,' + logoAkademi) "  width="50" height="50" alt="Logo" />
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,23 +11,23 @@
   <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item">
-        <router-link active-class="active" to="/admin/beranda" class="nav-link mx-1 px-2 navText text-white">Home</router-link>
+        <router-link active-class="active" to="/admin/beranda" class="nav-link mx-3 px-2 navText text-black">Home</router-link>
       </li>
       <li class="nav-item">
-        <router-link active-class="active" v-if="this.$store.state.permissionData.academy_r" to="/admin/akademi" class="nav-link mx-1 px-2 navText text-white">Informasi Universitas</router-link>
+        <router-link active-class="active" v-if="this.$store.state.permissionData.academy_r" to="/admin/akademi" class="nav-link mx-3 px-2 navText text-black">Informasi Universitas</router-link>
       </li>
       <li class="nav-item">
-        <router-link active-class="active" v-if="this.$store.state.permissionData.student_r" to="/admin/siswa" class="nav-link mx-1 px-2 navText text-white">Kemahasiswaan</router-link>
+        <router-link active-class="active" v-if="this.$store.state.permissionData.student_r" to="/admin/siswa" class="nav-link mx-3 px-2 navText text-black">Kemahasiswaan</router-link>
       </li>
       <li class="nav-item">
-        <router-link active-class="active" v-if="this.$store.state.permissionData.billing_r" to="/admin/tagihan" class="nav-link mx-1 px-2 navText text-white">Pembayaran</router-link>
+        <router-link active-class="active" v-if="this.$store.state.permissionData.billing_r" to="/admin/tagihan" class="nav-link mx-3 px-2 navText text-black">Pembayaran</router-link>
       </li>
       <li class="nav-item">
-        <router-link active-class="active" v-if="this.$store.state.permissionData.order_r"  to="/admin/order" class="nav-link px-2 mx-1 navText text-white">Order</router-link>
+        <router-link active-class="active" v-if="this.$store.state.permissionData.order_r"  to="/admin/order" class="nav-link px-2 mx-3 navText text-black">Order</router-link>
       </li>
     </ul>
     <div class="dropdown mr-5">
-      <button class="btn btn-lg navText dropdown-toggle text-white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <button class="btn btn-lg navText dropdown-toggle text-black" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       {{ objSession.name }}
       </button>
      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

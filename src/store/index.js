@@ -52,6 +52,7 @@ export const state = {
     order_c: 0,
     order_r: 0,
     approval_u: 0,
+    reject_u: 0,
     order_u: 0,
     order_d: 0
   },
@@ -120,6 +121,8 @@ export const state = {
     akademiLogo: '',
     akademiPhone: '',
     akademiEmail: '',
+    akademiWeb: '',
+    jenjang: '',
     akademiBank: '',
     noRekening: '',
     nameRekening: ''
@@ -130,6 +133,8 @@ export const state = {
   saveOrderData: {},
   indexApprovalOrder: 0,
   oneApprovalOrder: {},
+  indexRejectOrder: {},
+  oneRejectOrder: {},
   indexUpdateOrder: 0,
   updateOrderData: {},
   indexGetUpdateOrder: 0,
@@ -235,6 +240,12 @@ export const mutations = {
   },
   respApprovalOrder (state, resp) {
     state.oneApprovalOrder = resp
+  },
+  countRejectOrder (state) {
+    state.indexRejectOrder++
+  },
+  respRejectOrder (state, resp) {
+    state.oneRejectOrder = resp
   },
   countGetPermission (state) {
     state.indexGetPermission++
@@ -497,6 +508,24 @@ export const actions = {
       .then((response) => {
         commit('countApprovalOrder')
         commit('respApprovalOrder', response.data)
+      })
+      .catch((error) => {
+        console.log(error.response)
+        let err = error + ''
+        if (err.includes('Invalid')) {
+          alert('Tidak Dapat Diakses')
+        } else if (err.response.status === '504') {
+          alert('Periksa Koneksi')
+        } else {
+          alert('Terjadi Kesalahan')
+        }
+      })
+  },
+  rejectOrder ({commit}, [x, y, z]) {
+    return Axios.post(baseUrl + '/umu-spp/order/reject?idAkademi=' + x + '&email=' + y + '&keterangan=' + z)
+      .then((response) => {
+        commit('countRejectOrder')
+        commit('respRejectOrder', response.data)
       })
       .catch((error) => {
         console.log(error.response)
