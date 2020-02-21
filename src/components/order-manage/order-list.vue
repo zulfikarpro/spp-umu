@@ -148,6 +148,11 @@ export default {
           sortField: 'akademiEmail'
         },
         {
+          name: 'keterangan',
+          title: 'Keterangan',
+          sortField: 'keterangan'
+        },
+        {
           name: 'approvalStatus',
           title: 'Status',
           sortField: 'status',
