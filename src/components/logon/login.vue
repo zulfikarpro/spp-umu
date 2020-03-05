@@ -62,6 +62,10 @@ export default {
   watch: {
     'indexLoginUser' () {
       if (this.$store.state.oneLoginUser.success === true) {
+        if (this.$store.state.oneLoginUser.data.status !== 'active') {
+          this.showModal = true
+          this.msgModal = 'Akun Tidak Aktif'
+        }
         sessionStorage.setItem('umuSS', JSON.stringify(this.$store.state.oneLoginUser.data))
         this.$store.dispatch('getPermission', this.$store.state.oneLoginUser.data.role)
       } else {

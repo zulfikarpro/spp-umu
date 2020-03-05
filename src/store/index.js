@@ -133,7 +133,7 @@ export const state = {
   saveOrderData: {},
   indexApprovalOrder: 0,
   oneApprovalOrder: {},
-  indexRejectOrder: {},
+  indexRejectOrder: 0,
   oneRejectOrder: {},
   indexUpdateOrder: 0,
   updateOrderData: {},
@@ -141,6 +141,7 @@ export const state = {
   getUpdateOrderData: {},
   deleteOrderData: {},
   indexDeleteOrder: 0,
+  checkApprovalFromView: false,
   // End Order
 
   // Upload University

@@ -308,6 +308,11 @@ export default {
     onActionClicked (action, data) {
       switch (action) {
         case 'view':
+          if (data.approvalStatus === 0) {
+            this.$store.state.checkApprovalFromView = true
+          } else {
+            this.$store.state.checkApprovalFromView = false
+          }
           this.$router.push({ path: `/admin/order/viewOrder/${data.idAkademi}` })
           break
         case 'edit':
