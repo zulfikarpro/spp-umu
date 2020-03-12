@@ -319,11 +319,11 @@ export default {
     uploadGambar (val) {
       let extfile = val.target.files[0].name.substring(val.target.files[0].name.lastIndexOf('.')).toLowerCase()
       console.log(extfile)
-      if (val.target.files[0].size > 250000) {
+      if (val.target.files[0].size > 5000000) {
         alert('Ukuran file terlalu besar')
         this.$refs.fileGambar.value = '' // Reset Input File
       }
-      if (extfile === '.jpg' || extfile === '.png' || extfile === '.jpeg') {
+      if (extfile === '.jpg' || extfile === '.png' || extfile === '.jpeg' || extfile === '.pdf') {
         var reader = new FileReader()
         this.data1.dokumen = val.target.files[0]
         reader.readAsDataURL(val.target.files[0])
@@ -336,7 +336,7 @@ export default {
     uploadLogo (val) {
       let extfile = val.target.files[0].name.substring(val.target.files[0].name.lastIndexOf('.')).toLowerCase()
       console.log(extfile)
-      if (val.target.files[0].size > 250000) {
+      if (val.target.files[0].size > 5000000) {
         alert('Ukuran file terlalu besar')
       }
       if (extfile === '.jpg' || extfile === '.png' || extfile === '.jpeg') {
@@ -370,8 +370,8 @@ export default {
         alert('Semua Data Harus Di Isi')
       } else {
         let dataimage = new FormData()
-        dataimage.append('file', this.data1.akademiLogo === undefined ? null : this.data1.akademiLogo)
-        dataimage.append('file', this.data1.dokumen === undefined ? null : this.data1.dokumen)
+        dataimage.append('logo', this.data1.akademiLogo === undefined ? null : this.data1.akademiLogo)
+        dataimage.append('dokumen', this.data1.dokumen === undefined ? null : this.data1.dokumen)
         let tglLahir = this.changeDateFormat(this.data1.dateOfBirth)
         let readyData = {
         // image: dataimage,
@@ -398,7 +398,7 @@ export default {
           nameRekening: this.data1.nameRekening
         }
         dataimage.append('model', JSON.stringify(readyData))
-        this.$store.dispatch('updateOrder', [this.$route.params.id, dataimage])
+        this.$store.dispatch('updateOrder', [this.$route.params.id, this.objSession.email, dataimage])
         NProgress.configure({ showSpinner: false })
         NProgress.start()
       }

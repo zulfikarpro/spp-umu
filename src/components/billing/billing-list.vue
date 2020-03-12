@@ -52,7 +52,9 @@ import Vuetable from 'vuetable-2'
 import VuetablePagination from
   'vuetable-2/src/components/VuetablePagination'
 import NProgress from 'nprogress'
-// import dayjs from 'dayjs'
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+import Accounting from 'accounting/accounting'
 
 export default {
   name: 'billingList',
@@ -75,9 +77,9 @@ export default {
       },
       sortOrder: [
         {
-          field: 'name',
+          field: 'createDate',
           direction: 'desc',
-          sortField: 'name'
+          sortField: 'createDate'
         }
       ],
       css: {
@@ -136,22 +138,32 @@ export default {
         {
           name: 'amount',
           title: 'Total Tagihan',
-          sortField: 'amount'
+          sortField: 'amount',
+          callback: 'numToCurrency'
         },
         {
           name: 'jumlahTerbayar',
           title: 'Terbayar',
-          sortField: 'jumlahTerbayar'
+          sortField: 'jumlahTerbayar',
+          callback: 'numToCurrency'
         },
         {
           name: 'jumlahSisa',
           title: 'Sisa',
-          sortField: 'jumlahSisa'
+          sortField: 'jumlahSisa',
+          callback: 'numToCurrency'
         },
         {
           name: 'jumlahTerhutang',
           title: 'Tunggakan',
-          sortField: 'jumlahTerhutang'
+          sortField: 'jumlahTerhutang',
+          callback: 'numToCurrency'
+        },
+        {
+          name: 'createDate',
+          title: 'Tanggal Dibuat',
+          sortField: 'createDate',
+          callback: 'tanggalReadHuman|YYYY-MM-DD'
         },
         {
           name: 'jatuhTempo',
@@ -215,7 +227,8 @@ export default {
   methods: {
     init () {
       // const baseUrl = window.location.origin
-      const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
+      // const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
+      const baseUrl = window.location.origin
       this.url = baseUrl + '/umu-spp/tagihan/getAllTagihan?idAkademi=' + this.objSession.idAkademi
     },
     getSortParam: function (sortOrder) {
@@ -254,6 +267,17 @@ export default {
         ? ''
         : value
     },
+    tanggalReadHuman (value) {
+      dayjs.extend(customParseFormat)
+      return (value === null)
+        ? ''
+        : dayjs(value.split(' ')[0], 'DD-MM-YYYY').format('DD-MM-YYYY')
+    },
+    numToCurrency (value) {
+      return (value === null)
+        ? 0
+        : Accounting.formatMoney(value, 'Rp ', 0, '.')
+    },
     tableStatus (value) {
       return (value === 'close')
         ? 'Lunas'
@@ -289,7 +313,8 @@ export default {
     filterSubmit () {
       NProgress.configure({ showSpinner: false })
       NProgress.start()
-      const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
+      // const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
+      const baseUrl = window.location.origin
       this.url = baseUrl + '/umu-spp/tagihan/getAllTagihan?idAkademi=' + this.objSession.idAkademi + '&&nim=' + this.nimFilter + '&&periode=' + this.periodeFilter
       this.$refs.vuetable.refresh()
       NProgress.done()

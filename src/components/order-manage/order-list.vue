@@ -1,7 +1,10 @@
 <template>
 <div class="container-fluid mt-3">
 <div class="mx-3">
-<div class="float-right">
+<div class="float-right form-inline">
+  <div class="form-group mr-3 mb-2">
+    <input @keyup.enter="filterSubmit" type="text" class="form-control" v-model="filterOrder" placeholder="No Order">
+  </div>
   <button @click="critOrder" v-if="this.$store.state.permissionData.order_c" class="btn btn-primary mr-3 mb-2">Buat Order</button>
   <!-- <button class="btn btn-primary mr-3 mb-2" @click="tempExcel">Template Excel</button>
   <button class="btn btn-primary mb-2" @click="uploadExcel">Upload Excel
@@ -25,12 +28,12 @@
       <div slot="numbering" slot-scope="props">
         {{ props.rowIndex + 1}}
       </div>
-      <div slot="actions" slot-scope="props">
-      <button class="btn btn-success" @click="onActionClicked('view', props.rowData)">View</button>
-      <button class="btn btn-primary" :class="classEdit" @click="onActionClicked('edit', props.rowData)">Edit</button>
-      <button class="btn btn-danger" :class="classDelete" v-if="props.rowData.approvalStatus === 0 || props.rowData.approvalStatus === 2" @click="onActionClicked('delete', props.rowData)">Delete</button>
-      <button class="btn btn-primary" :class="classApprove" v-if="props.rowData.approvalStatus === 0" @click="onActionClicked('approve', props.rowData)">Approve</button>
-      <button class="btn btn-danger" :class="classReject" v-if="props.rowData.approvalStatus === 0" @click="onActionClicked('reject', props.rowData)">Reject</button>
+      <div slot="actions" slot-scope="props" class="d-flex">
+      <button class="btn mx-1 btn-success" @click="onActionClicked('view', props.rowData)">View</button>
+      <button class="btn mx-1 btn-primary" :class="classEdit" v-if="props.rowData.approvalStatus === 0 || props.rowData.approvalStatus === 2" @click="onActionClicked('edit', props.rowData)">Edit</button>
+      <button class="btn mx-1 btn-danger" :class="classDelete" v-if="props.rowData.approvalStatus === 0 || props.rowData.approvalStatus === 2" @click="onActionClicked('delete', props.rowData)">Delete</button>
+      <button class="btn mx-1 btn-primary" :class="classApprove" v-if="props.rowData.approvalStatus === 0" @click="onActionClicked('approve', props.rowData)">Approve</button>
+      <button class="btn mx-1 btn-danger" :class="classReject" v-if="props.rowData.approvalStatus === 0" @click="onActionClicked('reject', props.rowData)">Reject</button>
       </div>
       </vuetable>
       </div>
@@ -84,6 +87,8 @@ export default {
       url: '',
       showModal: false,
       msgModal: '',
+      filterOrder: '',
+      countFilter: 0,
       confirmModal: false,
       rejectModal: false,
       dataDelete: {},
@@ -115,7 +120,7 @@ export default {
         pagination: {
           infoClass: 'pull-left',
           wrapperClass: 'vuetable-pagination pull-right',
-          activeClass: 'btn-primary color-light',
+          activeClass: 'btn-primary color-light text-white',
           disabledClass: 'disabled',
           pageClass: 'btn btn-border',
           linkClass: 'btn btn-border',
@@ -176,6 +181,9 @@ export default {
     },
     indexRejectOrder () {
       return this.$store.state.indexRejectOrder
+    },
+    triggerFilterOrder () {
+      return this.countFilter
     }
   },
   watch: {
@@ -211,11 +219,15 @@ export default {
       }
       this.$refs.vuetable.refresh()
       NProgress.done()
+    },
+    'triggerFilterOrder': function () {
+      this.$refs.vuetable.refresh()
     }
   },
   methods: {
     init () {
-      const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
+      // const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
+      const baseUrl = window.location.origin
       this.url = baseUrl + '/umu-spp/order/listData'
       this.showHiddenApprove()
     },
@@ -366,6 +378,12 @@ export default {
         value = 'Ditolak'
       }
       return value
+    },
+    filterSubmit () {
+      // const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
+      const baseUrl = window.location.origin
+      this.url = baseUrl + '/umu-spp/order/listData?noOrder=' + this.filterOrder
+      this.countFilter++
     },
     critOrder () {
       this.$router.push('addOrder/1')

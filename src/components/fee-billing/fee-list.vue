@@ -163,8 +163,9 @@ export default {
   },
   methods: {
     init () {
-      const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
+      // const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
       // const baseUrl = 'http://mumu.hike.id:10015'
+      const baseUrl = window.location.origin
       this.url = baseUrl + '/umu-spp/test/getdata'
     },
     getSortParam: function (sortOrder) {

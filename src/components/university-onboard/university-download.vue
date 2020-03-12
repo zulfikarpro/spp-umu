@@ -3,8 +3,8 @@
     <div class="row">
         <div class="col-sm-12 mx-auto" :style="{backgroundImage: 'url(' + require('@/assets/people-children.png') + ')', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }" >
         <div class="col-sm-12 row mt-4 mx-auto ">
-            <div class="col-md-2 col-5"><img src="../../assets/abyaasia.png" class="img-fluid rounded-pill" width="300" height="80" alt="abyaasia"></div>
-            <div class="offset-md-9 offset-4"></div>
+            <div class="col-md-1 col-3"><img src="../../assets/madina.png" class="img-fluid pull-right" width="90" height="100" alt="madina"></div>
+            <div class="offset-md-10 offset-5"></div>
             <div class="col-md-1 col-3"><img src="../../assets/logo_umu_orange.png" class="img-fluid" width="90" height="100" alt="logoumu"></div>
         </div>
         <div class="col-sm-8 mx-auto text-center mt-7 titletext" style="text-shadow: -1px 0 black;">Selamat Datang di <span style="color:#FF3D12;">UMU</span></div>
@@ -19,7 +19,7 @@
             <div class="col-sm-12 mx-auto row">
                 <div class="col-md-6 col-sm-12 minortext border roundedcust mb-5 py-5 px-4" style="background-color:white;border-color:#d1d1d1!important">
                 <div class="mb-5 font-weight-bold">Caranya GAMPANG, cukup unduh dan isi dokumen dibawah ini, kemudian kirim ke : <span style="color:#FF3D12;"><u>hello@umu.co.id</u></span></div>
-                <div class="col-sm-6 mx-auto text-center">
+                <div class="col-md-6 mx-auto text-center">
                     <div class="btn-group buttonGroup buttonDefault" role="group" aria-label="Basic example">
                         <button type="button" @click="pdfTemp" class="btn " style="background-color:#FF451D;" ><img src="../../assets/downloadformwhite.png" class="img-fluid" alt="dunlud"></button>
                         <button type="button" @click="pdfTemp" class="btn py-2 px-4 minortext" style="background-color:#FF3509;color:white;">Unduh Dokumen</button>
@@ -33,22 +33,25 @@
                     <li>Kode Aktivasi akun sekolah/universitas akan dikirimkan ke email yang didaftarkan</li>
                     </ol>
                 </div>
-                <div class="col-sm-11 mx-auto text-center" style="height:150px;" :style="{backgroundImage: 'url(' + require('@/assets/support-background.png') + ')', backgroundRepeat: 'no-repeat', backgroundSize: 'contain' }">
-                    &nbsp;
-                    <!-- <div class="btn-group buttonGroup" role="group" aria-label="Basic example">
+                <div class="col-sm-11 mx-auto text-center">
+                    <div class="btn-group buttonGroup" role="group" aria-label="Basic example">
                         <button type="button" class="btn px-5" style="background-color:#FF451D;z-index:1;" ><img src="../../assets/onlinesupport.png" class="img-fluid" alt="support"></button>
-                        <button type="button" class="btn minortext " style="background-color:#FF3509;color:white;">Untuk pertanyaan &amp; bantuan, silahkan menghubungi <b>hello@umu.co.id</b></button>
-                    </div> -->
+                        <button type="button" class="btn minortext" style="background-color:#FF3509;color:white;">Untuk pertanyaan &amp; bantuan, silahkan menghubungi <b>hello@umu.co.id</b></button>
+                    </div>
+                </div>
+                <!-- <div class="col-sm-11 mx-auto text-center" style="height:150px;" :style="{backgroundImage: 'url(' + require('@/assets/support-background.png') + ')', backgroundRepeat: 'no-repeat', backgroundSize: 'contain' }"> -->
+                    &nbsp;
+
                     <!-- <div class="d-flex py-3" :style="{backgroundImage: 'url(' + require('@/assets/support-background.png') + ')', backgroundRepeat: 'no-repeat', backgroundSize: 'contain' }">
                       <div class="px-7 py-5" href="mail:hello@umu.co.id">&nbsp;</div>
                     </div> -->
-                </div>
+                <!-- </div> -->
                 </div>
                 <div class="col-md-6 col-sm-12 mt-7 mb-7 text-center"><img src="../../assets/ilustrasi.png" alt="ilustrasi" class="img-fluid"></div>
             </div>
         </div>
     </div>
-</div>
+    </div>
 </template>
 
 <script>
@@ -100,42 +103,42 @@ export default {
 
 /* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) {
-      .titletext{font-size: 40px;}
-      .titletext2{font-size:39px;}
-      .subtext{font-size:15px !important; }
-      .minortext {font-size:16px !important;}
+      .titletext{font-size: 2.5rem;}
+      .titletext2{font-size:2.438rem;}
+      .subtext{font-size:1rem !important; }
+      .minortext {font-size:1rem !important;}
  }
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) and (max-width: 767.98px) {
-      .titletext{font-size: 45px;}
-      .titletext2{font-size:44px;}
-      .subtext{font-size:20px !important; }
-      .minortext {font-size:19px !important;}
+      .titletext{font-size: 2.813rem;}
+      .titletext2{font-size:2.75rem;}
+      .subtext{font-size:1.25rem !important; }
+      .minortext {font-size:1.063rem !important;}
 }
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) and (max-width: 991.98px) {
-    .titletext{font-size: 50px;}
-    .titletext2{font-size:49px;}
-    .subtext{font-size:26px !important;}
-    .minortext {font-size:24px !important;}
+    .titletext{font-size: 3.125rem;}
+    .titletext2{font-size:3.063rem;}
+    .subtext{font-size:1.188rem !important;}
+    .minortext {font-size:1.188rem !important;}
  }
 
 /* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) and (max-width: 1199.98px) {
-    .titletext{font-size: 55px;}
-    .titletext2{font-size:54px;}
-    .subtext{font-size:33px !important;}
-    .minortext {font-size:26px !important;}
+@media (min-width: 992px) and (max-width: 1599.98px) {
+    .titletext{font-size: 4.5rem;}
+    .titletext2{font-size:3.375rem;}
+    .subtext{font-size:1.25rem !important;}
+    .minortext {font-size:1.313rem !important;}
  }
 
 /* Extra large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {
-.titletext{font-size:96px;}
-.titletext2{font-size:64px;}
-.subtext{font-size:36px !important;}
-.minortext {font-size:28px !important;}
+@media (min-width: 1600px) {
+.titletext{font-size:6rem;}
+.titletext2{font-size:4rem;}
+.subtext{font-size:2.25rem !important;}
+.minortext {font-size:1.75rem !important;}
 }
 
 .lineText {

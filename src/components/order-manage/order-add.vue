@@ -202,7 +202,7 @@
         </div>
       <div class="col-sm-8 mx-auto mt-5 text-center">
         <div class="mt-3" style="cursor:pointer;" @click="pilihGambar">
-          <input type="file" ref="fileGambar" class="d-none" @change="uploadGambar" accept="image/*" />
+          <input type="file" ref="fileGambar" class="d-none" @change="uploadGambar" />
           <img src="../../assets/uploadform.png" alt="uploadForm" width="200" height="200">
           <div class="mb-3"> {{ imgName }}</div>
           </div>
@@ -327,11 +327,11 @@ export default {
     uploadGambar (val) {
       let extfile = val.target.files[0].name.substring(val.target.files[0].name.lastIndexOf('.')).toLowerCase()
       console.log(extfile)
-      if (val.target.files[0].size > 250000) {
+      if (val.target.files[0].size > 5000000) {
         alert('Ukuran file terlalu besar')
         this.$refs.fileGambar.value = '' // Reset Input File
       }
-      if (extfile === '.jpg' || extfile === '.png' || extfile === '.jpeg') {
+      if (extfile === '.jpg' || extfile === '.png' || extfile === '.jpeg' || extfile === '.pdf') {
         var reader = new FileReader()
         this.imgFile = val.target.files[0]
         this.imgName = val.target.files[0].name
@@ -349,8 +349,8 @@ export default {
           alert('Semua Form Tidak Boleh Kosong')
         } else {
           let dataimage = new FormData()
-          dataimage.append('file', this.$store.state.orderAkademi.akademiLogo)
-          dataimage.append('file', this.imgFile)
+          dataimage.append('logo', this.$store.state.orderAkademi.akademiLogo)
+          dataimage.append('dokumen', this.imgFile)
           let tglLahir = this.changeDateFormat(this.$store.state.orderPenanggungJawab.dateOfBirth)
           // console.log(this.$store.state.orderPenanggungJawab.dateOfBirth)
           let readyData = {
@@ -390,7 +390,7 @@ export default {
     uploadLogo (val) {
       let extfile = val.target.files[0].name.substring(val.target.files[0].name.lastIndexOf('.')).toLowerCase()
       console.log(extfile)
-      if (val.target.files[0].size > 250000) {
+      if (val.target.files[0].size > 1000000) {
         alert('Ukuran file terlalu besar')
       }
       if (extfile === '.jpg' || extfile === '.png' || extfile === '.jpeg') {

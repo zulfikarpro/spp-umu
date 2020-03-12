@@ -105,6 +105,10 @@ module.exports = {
       '/umu-spp/order/reject': {
         target: 'http://localhost:10015',
         changeOrigin: true
+      },
+      '/umu-spp/order/file/*': {
+        target: 'http://localhost:10015',
+        changeOrigin: true
       }
     },
 

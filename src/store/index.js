@@ -382,8 +382,8 @@ export const actions = {
         }
       })
   },
-  updateOrder ({commit}, [x, y]) {
-    return Axios.post(baseUrl + '/umu-spp/order/edit?idAkademi=' + x, y)
+  updateOrder ({commit}, [x, y, z]) {
+    return Axios.post(baseUrl + '/umu-spp/order/edit?idAkademi=' + x + '&email=' + y, z)
       .then((response) => {
         commit('countUpdateOrder')
         commit('respUpdateOrder', response.data)
@@ -469,7 +469,7 @@ export const actions = {
       })
   },
   loginUser ({commit}, [x, y]) {
-    return Axios.post(baseUrl + '/umu-spp/login/auth?email=' + x + '&password=' + y)
+    return Axios.post(baseUrl + '/umu-spp/login/auth', {email: x, password: y})
       .then((response) => {
         commit('countLoginUser')
         commit('respLoginUser', response.data)

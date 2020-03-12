@@ -192,7 +192,8 @@ export default {
   },
   methods: {
     init () {
-      const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
+      // const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
+      const baseUrl = window.location.origin
       // const baseUrl = 'http://mumu.hike.id:10015'
       this.url = baseUrl + '/umu-spp/siswa/getdata'
       this.appendParams = {

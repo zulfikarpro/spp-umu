@@ -138,7 +138,8 @@
 
             <div class="row col-sm-6">
                 <div class="col-12 mt-5">
-                <img class="rounded-sm text-center mx-auto float-center d-block zoom-image" :src="'data:image/jpeg;base64,' + allData.dokumen"  />
+                <img class="rounded-sm text-center mx-auto float-center d-block zoom-image" v-if="allData.namaFile.includes('png')" :src="'data:image/png;base64,' + allData.dokumen"  />
+                <a :href="`${this.baseUrl}/umu-spp/order/file/` + allData.namaFile" target="_blank" v-else-if="allData.namaFile.includes('pdf')" style="cursor:pointer">Dokumen PDF</a>
                 </div>
             </div>
         </div>
@@ -177,6 +178,8 @@ export default {
   },
   data () {
     return {
+      // baseUrl: process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin,
+      baseUrl: window.location.origin,
       objSession: JSON.parse(sessionStorage.getItem('umuSS')),
       allData: {},
       rejectModal: false,
@@ -233,6 +236,13 @@ export default {
     init () {
       this.$store.dispatch('getOrderOne', this.$route.params.id)
     },
+    // dokumenPdf (pdf) {
+    //   let source = 'data:application/pdf;base64,' + pdf
+    //   let link = document.createElement('a')
+    //   link.href = source
+    //   link.download = this.allData.noOrder + '.pdf'
+    //   link.click()
+    // },
     onClickAction (param) {
       switch (param) {
         case 'approve':

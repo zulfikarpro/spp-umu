@@ -25,7 +25,7 @@
         {{ props.rowIndex + 1}}
       </div>
       <div slot="actions" slot-scope="props">
-      <button @click="onActionClicked('tagihan', props.rowData)">Tagihan</button>
+      <button class="btn btn-primary" @click="onActionClicked('tagihan', props.rowData)">Tagihan</button>
       </div>
       </vuetable>
       </div>
@@ -62,9 +62,9 @@ export default {
       },
       sortOrder: [
         {
-          field: 'name',
-          direction: 'asc',
-          sortField: 'name'
+          field: 'createDate',
+          direction: 'desc',
+          sortField: 'createDate'
         }
       ],
       css: {
@@ -178,7 +178,8 @@ export default {
   },
   methods: {
     init () {
-      const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
+      // const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
+      const baseUrl = window.location.origin
       // const baseUrl = 'http://mumu.hike.id:10015'
       this.url = baseUrl + '/umu-spp/siswa/getdata'
       this.appendParams = {
