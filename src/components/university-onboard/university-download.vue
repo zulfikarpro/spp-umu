@@ -33,7 +33,7 @@
                 <div class="col-sm-11 mx-auto text-center">
                     <div class="btn-group buttonGroup" role="group" aria-label="Basic example">
                         <button type="button" class="btn px-5" style="background-color:#FF451D;z-index:1;" ><img src="../../assets/onlinesupport.png" class="img-fluid" alt="support"></button>
-                        <button type="button" class="btn minortext" style="background-color:#FF3509;color:white;">Untuk pertanyaan &amp; bantuan, silahkan menghubungi <b>hello@umu.co.id</b></button>
+                        <button type="button" class="btn minortext" style="background-color:#FF3509;color:white;">Untuk pertanyaan &amp; bantuan, silahkan menghubungi <b><u>hello@umu.co.id</u></b></button>
                     </div>
                 </div>
                 <!-- <div class="col-sm-11 mx-auto text-center" style="height:150px;" :style="{backgroundImage: 'url(' + require('@/assets/support-background.png') + ')', backgroundRepeat: 'no-repeat', backgroundSize: 'contain' }"> -->
@@ -78,7 +78,7 @@ export default {
       NProgress.done()
     },
     'indexImageSlide' () {
-      setTimeout(() => this.showSlides(), 10000) // Change image every 2 seconds
+      setTimeout(() => this.showSlides(), 10000) // Change image every 10 seconds
     }
   },
   methods: {
@@ -96,18 +96,18 @@ export default {
       }
       if (n === undefined || n === null) {
         this.slideIndex++
-        console.log(this.slideIndex)
+        if (this.slideIndex > slides.length) {
+          this.slideIndex = 1
+        }
+        slides[this.slideIndex - 1].slideActive = true
+        slides[this.slideIndex - 1].dotActive = true
       } else {
-        this.slideIndex = n
+        slides[n].slideActive = true
+        slides[n].dotActive = true
       }
-      if (this.slideIndex > slides.length) {
-        this.slideIndex = 1
-      }
-      slides[this.slideIndex - 1].slideActive = true
-      slides[this.slideIndex - 1].dotActive = true
     },
     currentSlide (param) {
-      this.showSlides(param + 1)
+      this.showSlides(param)
     },
     init () {
       this.showSlides()
@@ -127,6 +127,9 @@ export default {
 }
 .mt-5 {
   margin-top: 5rem !important
+}
+.mt-4 {
+  margin-top: 4rem !important
 }
 .mb-7 {
   margin-bottom: 7rem !important
@@ -229,7 +232,7 @@ export default {
   display: inline-block;
   transition: background-color 0.6s ease;
 }
-.active, .dot:hover, .dotActive {
+.dot:hover, .dotActive {
   background-color: #FF3D12;
 }
 .showSlide {
