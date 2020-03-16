@@ -160,8 +160,8 @@ export default {
     init () {
       // const baseUrl = window.location.origin
       // const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
-      const baseUrl = window.location.origin
-      this.url = baseUrl + '/umu-spp/tagihan/getdata'
+      // const baseUrl = window.location.origin
+      this.url = this.baseUrl + '/umu-spp/tagihan/getdata'
       this.appendParams = {
         idSiswa: this.$route.params.id
       }

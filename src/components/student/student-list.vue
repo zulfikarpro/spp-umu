@@ -42,6 +42,7 @@ import Vuetable from 'vuetable-2'
 import VuetablePagination from
   'vuetable-2/src/components/VuetablePagination'
 import NProgress from 'nprogress'
+import GlobalVar from '../../mixins/global-var'
 
 export default {
   name: 'studentList',
@@ -49,9 +50,9 @@ export default {
     Vuetable,
     VuetablePagination
   },
+  mixins: [GlobalVar],
   data () {
     return {
-      objSession: JSON.parse(sessionStorage.getItem('umuSS')),
       paraf: '',
       appendParams: {},
       url: '',
@@ -179,9 +180,8 @@ export default {
   methods: {
     init () {
       // const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
-      const baseUrl = window.location.origin
       // const baseUrl = 'http://mumu.hike.id:10015'
-      this.url = baseUrl + '/umu-spp/siswa/getdata'
+      this.url = this.baseUrl + '/umu-spp/siswa/getdata'
       this.appendParams = {
         idAkademi: this.objSession.idAkademi
       }
@@ -233,7 +233,7 @@ export default {
         this.file = dataexcel
         var reader = new FileReader()
         reader.readAsDataURL(val.target.files[0])
-        this.$store.dispatch('excelUploadSiswa', [1, this.file])
+        this.$store.dispatch('excelUploadSiswa', [this.objSession.idAkademi, this.file])
       } else {
         this.failedMsg = 'Tipe Excel harus xlsx/xls'
         alert('Tipe Excel harus xlsx/xls')

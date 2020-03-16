@@ -51,6 +51,7 @@ import VuetablePagination from
   'vuetable-2/src/components/VuetablePagination'
 import NProgress from 'nprogress'
 import Datepicker from 'vuejs-datepicker'
+import GlobarVar from '../../mixins/global-var'
 
 export default {
   name: 'AcademyOnboardList',
@@ -59,6 +60,7 @@ export default {
     VuetablePagination,
     Datepicker
   },
+  mixins: [GlobarVar],
   data () {
     return {
       firstDate: '',
@@ -193,9 +195,9 @@ export default {
   methods: {
     init () {
       // const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
-      const baseUrl = window.location.origin
+      // const baseUrl = window.location.origin
       // const baseUrl = 'http://mumu.hike.id:10015'
-      this.url = baseUrl + '/umu-spp/siswa/getdata'
+      this.url = this.baseUrl + '/umu-spp/siswa/getdata'
       this.appendParams = {
         idAkademi: 1
       }

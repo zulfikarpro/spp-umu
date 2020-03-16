@@ -1,15 +1,18 @@
 <template>
 <div class="container-fluid styling">
     <div class="row">
-      <div class="w-100 h-100 mx-auto" >
-        <div class="hiddenSlide fading" v-for="(item, index) in slideImage" :key="index" :class="{showSlide: item.slideActive}" :style="{backgroundImage: 'url(' + require('@/assets/' + item.bg + '.png') + ')', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }" >
-          <InstroPage ></InstroPage>
+        <div class="col-sm-12 mx-auto" :style="{backgroundImage: 'url(' + require('@/assets/people-children.png') + ')', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }" >
+        <div class="col-sm-12 row mt-4 mx-auto ">
+            <div class="col-md-1 col-3"><img src="../../assets/madina.png" class="img-fluid pull-right" width="90" height="100" alt="madina"></div>
+            <div class="offset-md-10 offset-5"></div>
+            <div class="col-md-1 col-3"><img src="../../assets/logo_umu_orange.png" class="img-fluid" width="90" height="100" alt="logoumu"></div>
         </div>
-        <!-- The dots/circles -->
-        <div style="text-align:center;z-index:1;right:0;left:0;margin-top:-70px;position:absolute;display:block;">
-        <span v-for="(item, index) in slideImage" :key="index" class="dot" :class="{dotActive: item.dotActive}" @click="currentSlide(index)"></span>
+        <div class="col-sm-8 mx-auto text-center mt-7 titletext" style="text-shadow: -1px 0 black;">Selamat Datang di <span style="color:#FF3D12;">UMU</span></div>
+        <div class="col-sm-2 mx-auto text-center mb-5"><div class="mt-3 mx-5 lineText"></div></div>
+        <div class="col-sm-12 mx-auto text-center mb-5 subtext"> Nikmati kemudahan pembayaran SPP di Aplikasi UMU.<br/> Kemudahan tak hanya dirasakan oleh Sekolah/Universitas, tetapi juga oleh pelajar/mahasiswa.<br/> Masih belum yakin?? Yuk buktikan dengan daftar Sekolah/Universitas Anda sekarang! </div>
+        <div class="col-md-4 col-sm-6 mx-auto text-center mb-7"><a href="#daftarLink" class="btn btn-lg rounded-pill shadow-lg px-5 py-2 subtext" style="background-color:#FF3D12;color:white;" v-smooth-scroll>Daftar Sekarang</a></div>
+        <div class="mt-7">&nbsp;</div>
         </div>
-      </div>
         <div class="col-sm-12 mx-auto rounded mb-5 " style="color:black;background-color:#E5E5E5;">
             <div class="mt-7 col-md-4 col-sm-6 mx-auto text-center font-weight-bold titletext2" id="daftarLink" >Cara Daftar</div>
             <div class="col-sm-2 mx-auto text-center mb-7"><div class="mt-3 mx-5 lineText"></div></div>
@@ -53,32 +56,20 @@
 
 <script>
 import NProgress from 'nprogress'
-import InstroPage from '../university-onboard/instro-page'
 export default {
   name: 'UniversityDownload',
-  components: {
-    InstroPage
-  },
   data () {
     return {
-      slideIndex: 0,
-      slideImage: [{bg: 'studentphoto', slideActive: false, dotActive: false}, {bg: 'childrenlearn', slideActive: false, dotActive: false}, {bg: 'people-children', slideActive: false, dotActive: false}, {bg: 'studentphoto2', slideActive: false, dotActive: false}]
     }
   },
   computed: {
     indexTemplateUser () {
       return this.$store.state.indexTemplateUser
-    },
-    indexImageSlide () {
-      return this.slideIndex
     }
   },
   watch: {
     'indexTemplateUser' () {
       NProgress.done()
-    },
-    'indexImageSlide' () {
-      setTimeout(() => this.showSlides(), 10000) // Change image every 2 seconds
     }
   },
   methods: {
@@ -87,34 +78,7 @@ export default {
       e.preventDefault()
       NProgress.configure({ showSpinner: false })
       NProgress.start()
-    },
-    showSlides (n) {
-      let slides = this.slideImage
-      for (let i = 0; i < slides.length; i++) {
-        slides[i].slideActive = false
-        slides[i].dotActive = false
-      }
-      if (n === undefined || n === null) {
-        this.slideIndex++
-        console.log(this.slideIndex)
-      } else {
-        this.slideIndex = n
-      }
-      if (this.slideIndex > slides.length) {
-        this.slideIndex = 1
-      }
-      slides[this.slideIndex - 1].slideActive = true
-      slides[this.slideIndex - 1].dotActive = true
-    },
-    currentSlide (param) {
-      this.showSlides(param + 1)
-    },
-    init () {
-      this.showSlides()
     }
-  },
-  mounted () {
-    this.init()
   }
 }
 </script>
@@ -124,9 +88,6 @@ export default {
 
 .mt-7 {
   margin-top: 7rem !important
-}
-.mt-5 {
-  margin-top: 5rem !important
 }
 .mb-7 {
   margin-bottom: 7rem !important
@@ -214,43 +175,6 @@ export default {
 }
 .buttonGroup:not(.buttonDefault) > button {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-/* Fading animation */
-.hiddenSlide {
-  display: none;
-}
-.dot {
-  cursor: pointer;
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #ffff;
-  border-radius: 50%;
-  display: inline-block;
-  transition: background-color 0.6s ease;
-}
-.active, .dot:hover, .dotActive {
-  background-color: #FF3D12;
-}
-.showSlide {
-  display: block !important;
-}
-/* Fading animation */
-.fading {
-  -webkit-animation-name: fade;
-  -webkit-animation-duration: 1.5s;
-  animation-name: fade;
-  animation-duration: 1.5s;
-}
-
-@-webkit-keyframes fade {
-  from {opacity: .4}
-  to {opacity: 1}
-}
-
-@keyframes fade {
-  from {opacity: .4}
-  to {opacity: 1}
 }
 
 </style>

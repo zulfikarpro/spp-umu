@@ -51,6 +51,7 @@ import Vuetable from 'vuetable-2'
 import VuetablePagination from
   'vuetable-2/src/components/VuetablePagination'
 import NProgress from 'nprogress'
+import GlobalVar from '../../mixins/global-var'
 
 export default {
   name: 'billingView',
@@ -58,6 +59,7 @@ export default {
     Vuetable,
     VuetablePagination
   },
+  mixins: [GlobalVar],
   data () {
     return {
       billingData: {},
@@ -201,8 +203,8 @@ export default {
     init () {
       // const baseUrl = window.location.origin
       // const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
-      const baseUrl = window.location.origin
-      this.url = baseUrl + '/umu-spp/tagihan/getdata'
+      // const baseUrl = window.location.origin
+      this.url = this.baseUrl + '/umu-spp/tagihan/getdata'
       this.appendParams = {
         idSiswa: this.$route.params.id
       }

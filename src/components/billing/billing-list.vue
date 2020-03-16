@@ -55,6 +55,7 @@ import NProgress from 'nprogress'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import Accounting from 'accounting/accounting'
+import GlobalVar from '../../mixins/global-var'
 
 export default {
   name: 'billingList',
@@ -62,9 +63,9 @@ export default {
     Vuetable,
     VuetablePagination
   },
+  mixins: [GlobalVar],
   data () {
     return {
-      objSession: JSON.parse(sessionStorage.getItem('umuSS')),
       billingData: {},
       appendParams: {},
       nimFilter: '',
@@ -228,8 +229,8 @@ export default {
     init () {
       // const baseUrl = window.location.origin
       // const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
-      const baseUrl = window.location.origin
-      this.url = baseUrl + '/umu-spp/tagihan/getAllTagihan?idAkademi=' + this.objSession.idAkademi
+      // const baseUrl = window.location.origin
+      this.url = this.baseUrl + '/umu-spp/tagihan/getAllTagihan?idAkademi=' + this.objSession.idAkademi
     },
     getSortParam: function (sortOrder) {
       this.loaded = false
@@ -314,8 +315,8 @@ export default {
       NProgress.configure({ showSpinner: false })
       NProgress.start()
       // const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
-      const baseUrl = window.location.origin
-      this.url = baseUrl + '/umu-spp/tagihan/getAllTagihan?idAkademi=' + this.objSession.idAkademi + '&&nim=' + this.nimFilter + '&&periode=' + this.periodeFilter
+      // const baseUrl = window.location.origin
+      this.url = this.baseUrl + '/umu-spp/tagihan/getAllTagihan?idAkademi=' + this.objSession.idAkademi + '&&nim=' + this.nimFilter + '&&periode=' + this.periodeFilter
       this.$refs.vuetable.refresh()
       NProgress.done()
     }

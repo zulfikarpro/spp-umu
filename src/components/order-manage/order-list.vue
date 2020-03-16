@@ -67,6 +67,7 @@ import VuetablePagination from
   'vuetable-2/src/components/VuetablePagination'
 import NProgress from 'nprogress'
 import modal from '../../Modal'
+import GlobalVar from '../../mixins/global-var'
 
 export default {
   name: 'OrderList',
@@ -75,9 +76,9 @@ export default {
     VuetablePagination,
     modal
   },
+  mixins: [GlobalVar],
   data () {
     return {
-      objSession: JSON.parse(sessionStorage.getItem('umuSS')),
       classApprove: '',
       classEdit: '',
       classDelete: '',
@@ -227,8 +228,8 @@ export default {
   methods: {
     init () {
       // const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
-      const baseUrl = window.location.origin
-      this.url = baseUrl + '/umu-spp/order/listData'
+      // const baseUrl = window.location.origin
+      this.url = this.baseUrl + '/umu-spp/order/listData'
       this.showHiddenApprove()
     },
     showHiddenApprove () {
