@@ -8,6 +8,7 @@ import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Vuelidate from 'vuelidate'
 import vueSmoothScroll from 'vue2-smooth-scroll'
+import 'nprogress/nprogress.css'
 Vue.use(vueSmoothScroll)
 Vue.use(Vuelidate)
 

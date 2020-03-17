@@ -30,14 +30,18 @@
                     :css="css.table"
                     :append-params="appendParams"
                     :load-on-start="false"
-                    pagination-path=""
-                    data-path="content"
+                    :transform="transform"
+                    :reactive-api-url="true"
+                    pagination-path="pagination"
+                    data-path="mydata"
                     noDataTemplate=""
+                    @vuetable:loading="onLoadingData"
+                    @vuetable:load-success="onLoadingSuccess"
                     @vuetable:pagination-data="onPaginationData"
                     >
-                <div slot="numbering" slot-scope="props">
+                <!-- <div slot="numbering" slot-scope="props">
                 {{ props.rowIndex + 1}}
-                </div>
+                </div> -->
                 </vuetable>
                 <div style="clear:both;"></div>
                 <vuetable-pagination  ref="pagination" :css="css.pagination" style="float:right;"
@@ -94,7 +98,7 @@ export default {
         pagination: {
           infoClass: 'pull-left',
           wrapperClass: 'vuetable-pagination pull-right',
-          activeClass: 'btn-primary color-light',
+          activeClass: 'btn-primary color-whitening',
           disabledClass: 'disabled',
           pageClass: 'btn btn-border',
           linkClass: 'btn btn-border',
@@ -108,7 +112,7 @@ export default {
       },
       fields: [
         {
-          name: '__slot:numbering',
+          name: '__sequence',
           title: 'No'
         },
         {
@@ -242,14 +246,41 @@ export default {
     onChangePage (page) {
       this.$refs.vuetable.changePage(page)
     },
+    // onPaginationData (paginationData) {
+    //   paginationData.total = paginationData.totalElements
+    //   paginationData.per_page = paginationData.size
+    //   paginationData.current_page = paginationData.number + 1
+    //   paginationData.last_page = paginationData.totalPages
+    //   paginationData.from = paginationData.number * paginationData.size + 1
+    //   paginationData.to = paginationData.from * paginationData.numberOfElements - 1
+    //   this.$refs.pagination.setPaginationData(paginationData)
+    // },
     onPaginationData (paginationData) {
-      paginationData.total = paginationData.totalElements
-      paginationData.per_page = paginationData.size
-      paginationData.current_page = paginationData.number + 1
-      paginationData.last_page = paginationData.totalPages
-      paginationData.from = paginationData.number * paginationData.size + 1
-      paginationData.to = paginationData.from * paginationData.numberOfElements - 1
       this.$refs.pagination.setPaginationData(paginationData)
+    },
+    transform (data) {
+      let transformed = {}
+
+      transformed.pagination = {
+        total: data.totalElements,
+        per_page: data.size,
+        current_page: data.number + 1,
+        last_page: data.totalPages,
+        next_page_url: this.baseUrl + '/umu-spp/tagihan/getAllTagihan?idAkademi=' + this.objSession.idAkademi + '&page=' + (data.number + 1),
+        prev_page_url: data.first === true ? null : this.baseUrl + '/umu-spp/tagihan/getAllTagihan?idAkademi=' + this.objSession.idAkademi + '&page=' + (data.number - 1),
+        from: data.number * data.size + 1,
+        to: data.number * data.size + 1 * data.numberOfElements - 1
+      }
+
+      transformed.mydata = data.content
+
+      return transformed
+    },
+    onLoadingData () {
+      NProgress.start()
+    },
+    onLoadingSuccess () {
+      NProgress.done()
     },
     tableTempo (value) {
       if (value !== null) {
@@ -328,3 +359,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.color-whitening {
+  color: white !important;
+}
+</style>
