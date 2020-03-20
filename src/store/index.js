@@ -6,12 +6,19 @@ import VueAxios from 'vue-axios'
 Vue.use(Vuex, VueAxios, Axios)
 
 // Production URI
-let baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
+let baseUrl = process.env.NODE_ENV === 'production' ? 'http://' + window.location.hostname + ':30015' : window.location.origin
 
 // Development URI
+// let baseUrl = process.env.NODE_ENV === 'production' ? 'http://' + window.location.hostname + ':10015' : window.location.origin
+
+// Development URI Localhost
 // let baseUrl = window.location.origin
 
 export const state = {
+
+  // BaseUrl Rest API
+  baseUrl: baseUrl,
+  objSession: JSON.parse(sessionStorage.getItem('umuSS')),
 
   // Tagihan
   indexUploadTagihan: 0,

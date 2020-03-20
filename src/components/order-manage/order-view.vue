@@ -139,7 +139,8 @@
             <div class="row col-sm-6">
                 <div class="col-12 mt-5">
                 <img class="rounded-sm text-center mx-auto float-center d-block zoom-image" v-if="allData.namaFile.includes('png')" :src="'data:image/png;base64,' + allData.dokumen"  />
-                <a :href="`${this.baseUrl}/umu-spp/order/file/` + allData.namaFile" target="_blank" v-else-if="allData.namaFile.includes('pdf')" style="cursor:pointer">Dokumen PDF</a>
+                <img class="rounded-sm text-center mx-auto float-center d-block zoom-image" v-else-if="allData.namaFile.includes('jpg')" :src="'data:image/jpg;base64,' + allData.dokumen"  />
+                <a :href="`${this.$store.state.baseUrl}/umu-spp/order/file/` + allData.namaFile" target="_blank" v-else-if="allData.namaFile.includes('pdf')" style="cursor:pointer">Dokumen PDF</a>
                 </div>
             </div>
         </div>
@@ -179,7 +180,7 @@ export default {
   data () {
     return {
       // baseUrl: process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin,
-      baseUrl: window.location.origin,
+      // baseUrl: window.location.origin,
       objSession: JSON.parse(sessionStorage.getItem('umuSS')),
       allData: {},
       rejectModal: false,

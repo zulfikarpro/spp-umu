@@ -46,7 +46,6 @@ import Vuetable from 'vuetable-2'
 import VuetablePagination from
   'vuetable-2/src/components/VuetablePagination'
 import NProgress from 'nprogress'
-import GlobalVar from '../../mixins/global-var'
 
 export default {
   name: 'studentList',
@@ -54,9 +53,9 @@ export default {
     Vuetable,
     VuetablePagination
   },
-  mixins: [GlobalVar],
   data () {
     return {
+      objSession: JSON.parse(sessionStorage.getItem('umuSS')),
       paraf: '',
       appendParams: {},
       url: '',
@@ -185,7 +184,7 @@ export default {
     init () {
       // const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
       // const baseUrl = 'http://mumu.hike.id:10015'
-      this.url = this.baseUrl + '/umu-spp/siswa/getdata'
+      this.url = this.$store.state.baseUrl + '/umu-spp/siswa/getdata'
       this.appendParams = {
         idAkademi: this.objSession.idAkademi
       }
@@ -220,8 +219,8 @@ export default {
         per_page: data.size,
         current_page: data.number + 1,
         last_page: data.totalPages,
-        next_page_url: this.baseUrl + '/umu-spp/siswa/getdata?idAkademi=' + this.objSession.idAkademi + '&page=' + (data.number + 1),
-        prev_page_url: data.first === true ? null : this.baseUrl + '/umu-spp/siswa/getdata?idAkademi=' + this.objSession.idAkademi + '&page=' + (data.number - 1),
+        next_page_url: this.$store.state.baseUrl + '/umu-spp/siswa/getdata?idAkademi=' + this.objSession.idAkademi + '&page=' + (data.number + 1),
+        prev_page_url: data.first === true ? null : this.$store.state.baseUrl + '/umu-spp/siswa/getdata?idAkademi=' + this.objSession.idAkademi + '&page=' + (data.number - 1),
         from: data.number * data.size + 1,
         to: data.number * data.size + 1 * data.numberOfElements - 1
       }

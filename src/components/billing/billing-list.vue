@@ -59,7 +59,6 @@ import NProgress from 'nprogress'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import Accounting from 'accounting/accounting'
-import GlobalVar from '../../mixins/global-var'
 
 export default {
   name: 'billingList',
@@ -67,9 +66,9 @@ export default {
     Vuetable,
     VuetablePagination
   },
-  mixins: [GlobalVar],
   data () {
     return {
+      objSession: JSON.parse(sessionStorage.getItem('umuSS')),
       billingData: {},
       appendParams: {},
       nimFilter: '',
@@ -234,7 +233,7 @@ export default {
       // const baseUrl = window.location.origin
       // const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
       // const baseUrl = window.location.origin
-      this.url = this.baseUrl + '/umu-spp/tagihan/getAllTagihan?idAkademi=' + this.objSession.idAkademi
+      this.url = this.$store.state.baseUrl + '/umu-spp/tagihan/getAllTagihan?idAkademi=' + this.objSession.idAkademi
     },
     getSortParam: function (sortOrder) {
       this.loaded = false
@@ -266,8 +265,8 @@ export default {
         per_page: data.size,
         current_page: data.number + 1,
         last_page: data.totalPages,
-        next_page_url: this.baseUrl + '/umu-spp/tagihan/getAllTagihan?idAkademi=' + this.objSession.idAkademi + '&page=' + (data.number + 1),
-        prev_page_url: data.first === true ? null : this.baseUrl + '/umu-spp/tagihan/getAllTagihan?idAkademi=' + this.objSession.idAkademi + '&page=' + (data.number - 1),
+        next_page_url: this.$store.state.baseUrl + '/umu-spp/tagihan/getAllTagihan?idAkademi=' + this.objSession.idAkademi + '&page=' + (data.number + 1),
+        prev_page_url: data.first === true ? null : this.$store.state.baseUrl + '/umu-spp/tagihan/getAllTagihan?idAkademi=' + this.objSession.idAkademi + '&page=' + (data.number - 1),
         from: data.number * data.size + 1,
         to: data.number * data.size + 1 * data.numberOfElements - 1
       }
@@ -347,7 +346,7 @@ export default {
       NProgress.start()
       // const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
       // const baseUrl = window.location.origin
-      this.url = this.baseUrl + '/umu-spp/tagihan/getAllTagihan?idAkademi=' + this.objSession.idAkademi + '&&nim=' + this.nimFilter + '&&periode=' + this.periodeFilter
+      this.url = this.$store.state.baseUrl + '/umu-spp/tagihan/getAllTagihan?idAkademi=' + this.objSession.idAkademi + '&&nim=' + this.nimFilter + '&&periode=' + this.periodeFilter
       this.$refs.vuetable.refresh()
       NProgress.done()
     }

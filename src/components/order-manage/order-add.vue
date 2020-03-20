@@ -390,7 +390,7 @@ export default {
     uploadLogo (val) {
       let extfile = val.target.files[0].name.substring(val.target.files[0].name.lastIndexOf('.')).toLowerCase()
       console.log(extfile)
-      if (val.target.files[0].size > 1000000) {
+      if (val.target.files[0].size > 5000000) {
         alert('Ukuran file terlalu besar')
       }
       if (extfile === '.jpg' || extfile === '.png' || extfile === '.jpeg') {
