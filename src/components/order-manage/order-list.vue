@@ -67,6 +67,8 @@ import VuetablePagination from
   'vuetable-2/src/components/VuetablePagination'
 import NProgress from 'nprogress'
 import modal from '../../Modal'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 
 export default {
   name: 'OrderList',
@@ -166,7 +168,8 @@ export default {
         {
           name: 'createDate',
           title: 'Tanggal Order',
-          sortField: 'createDate'
+          sortField: 'createDate',
+          callback: 'tanggalReadHuman'
         },
         '__slot:actions'
       ]
@@ -378,6 +381,12 @@ export default {
         value = 'Ditolak'
       }
       return value
+    },
+    tanggalReadHuman (value) {
+      dayjs.extend(utc)
+      return (value === null)
+        ? ''
+        : dayjs.utc(value).local().format('DD-MM-YYYY HH:mm:ss')
     },
     filterSubmit () {
       // const baseUrl = process.env.NODE_ENV === 'production' ? window.location.origin + ':10015' : window.location.origin
