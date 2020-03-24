@@ -43,6 +43,7 @@
         <div class="teks">Upload</div>
         </div>
       </div>
+      <small>Maksimal Ukuran Gambar 1 MB</small>
   </div>
   <div class="col-sm-4 mt-4 mx-auto">
     <button type="submit" @click="submitForm" style="background-color:#ff5500;color:white;" class="btn btn-block py-3">Submit</button>
@@ -117,7 +118,7 @@ export default {
           this.academyData.akademiLogo = base64
         }
         reader.readAsDataURL(val.target.files[0])
-        if (val.target.files[0].size < 250000) {
+        if (val.target.files[0].size < 1048576) {
           this.imgSize = false
         } else {
           this.imgSize = true
