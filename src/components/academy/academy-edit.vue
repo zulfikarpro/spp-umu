@@ -98,16 +98,11 @@ export default {
       this.$refs.fileGambar.click()
     },
     submitForm () {
-      if (this.imgSize === true) {
-        alert('Ukuran Gambar terlalu besar')
-        this.$refs.fileGambar.value = '' // Reset Input File
-        NProgress.configure({ showSpinner: false })
-        NProgress.start()
-      } else {
-        this.academyData.idAkademi = this.objSession.idAkademi
-        this.$store.dispatch('updateAkademi', [this.academyData, this.imgFile])
-        this.$refs.fileGambar.value = '' // Reset Input File
-      }
+      NProgress.configure({ showSpinner: false })
+      NProgress.start()
+      this.academyData.idAkademi = this.objSession.idAkademi
+      this.$store.dispatch('updateAkademi', [this.academyData, this.imgFile])
+      this.$refs.fileGambar.value = '' // Reset Input File
     },
     uploadGambar (val) {
       let dataimage = new FormData()
@@ -166,7 +161,7 @@ export default {
           setTimeout(() => {
             dataUrltoFile()
             NProgress.done()
-          }, 2000)
+          }, 1000)
         }
         reader.readAsDataURL(val.target.files[0])
 
