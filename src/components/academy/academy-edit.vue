@@ -43,7 +43,6 @@
         <div class="teks">Upload</div>
         </div>
       </div>
-      <small>Maksimal Ukuran Gambar 1 MB</small>
   </div>
   <div class="col-sm-4 mt-4 mx-auto">
     <button type="submit" @click="submitForm" style="background-color:#ff5500;color:white;" class="btn btn-block py-3">Submit</button>
@@ -82,9 +81,11 @@ export default {
       console.log(this.$store.state.updateAkademiData)
       if (this.$store.state.updateAkademiData.success === true) {
         alert('Data Berhasil di ubah')
+        NProgress.done()
         this.$router.push('/admin/akademi/')
       } else {
         this.failedMsg = this.$store.state.updateAkademiData.message
+        NProgress.done()
         alert(this.failedMsg == null ? 'Input Data gagal' : this.failedMsg)
       }
     }
@@ -100,6 +101,8 @@ export default {
       if (this.imgSize === true) {
         alert('Ukuran Gambar terlalu besar')
         this.$refs.fileGambar.value = '' // Reset Input File
+        NProgress.configure({ showSpinner: false })
+        NProgress.start()
       } else {
         this.academyData.idAkademi = this.objSession.idAkademi
         this.$store.dispatch('updateAkademi', [this.academyData, this.imgFile])
