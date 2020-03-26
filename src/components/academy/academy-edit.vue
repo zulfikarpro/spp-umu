@@ -182,11 +182,13 @@ export default {
           dataimage.append('file', fileResult)
           this.imgFile = dataimage
         }
-        if (val.target.files[0].size < 1048576) {
-          this.imgSize = false
-        } else {
-          this.imgSize = true
-        }
+        // Batas Ukuran Gambar
+        // if (val.target.files[0].size < 1048576) {
+        //   this.imgSize = false
+        // } else {
+        //   this.imgSize = true
+        // }
+
         // Convert Image to Base64
         // let file = val.target.files[0]
         // var reader = new FileReader()
