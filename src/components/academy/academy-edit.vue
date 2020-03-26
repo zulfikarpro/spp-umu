@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import NProgress from 'nprogress'
 export default {
   name: 'AcademyEdit',
   data () {
@@ -61,7 +62,8 @@ export default {
       academyData: {},
       failedMsg: '',
       imgSize: false,
-      imgFile: ''
+      imgFile: '',
+      resizeImage: ''
     }
   },
   computed: {
@@ -106,18 +108,77 @@ export default {
     },
     uploadGambar (val) {
       let dataimage = new FormData()
-      dataimage.append('file', val.target.files[0])
+      // dataimage.append('file', val.target.files[0])
+      console.log(val.target.files[0])
       let extfile = val.target.files[0].name.substring(val.target.files[0].name.lastIndexOf('.')).toLowerCase()
       console.log(extfile)
       if (extfile === '.jpg' || extfile === '.png' || extfile === '.jpeg') {
         var reader = new FileReader()
-        this.imgFile = dataimage
+        let fileName = val.target.files[0].name
+        let picture = document.createElement('img')
+        let canvas = document.createElement('canvas')
         // this.imgFile = val.target.files[0]
         reader.onload = (val) => {
-          let base64 = val.target.result.substring(val.target.result.indexOf(',', 0) + 1)
-          this.academyData.akademiLogo = base64
+          // View to display web
+          // let base64 = val.target.result.substring(val.target.result.indexOf(',', 0) + 1)
+          // this.academyData.akademiLogo = base64
+          // End Display
+          picture.src = val.target.result
+          console.log(picture.src)
+
+          picture.onload = async () => {
+            await scaleImage()
+          }
+          const scaleImage = () => {
+            let maxWidth = 700
+            let maxHeight = 600
+            let imgWidth = picture.width
+            let imgHeight = picture.height
+            if (imgWidth > imgHeight) {
+              if (imgWidth > maxWidth) {
+                imgHeight *= maxWidth / imgWidth
+                imgWidth = maxWidth
+              }
+            } else {
+              if (imgHeight > maxHeight) {
+                imgWidth *= maxHeight / imgHeight
+                imgHeight = maxHeight
+              }
+            }
+            canvas.width = imgWidth
+            canvas.height = imgHeight
+            console.log(canvas)
+            console.log(imgWidth)
+            console.log(imgHeight)
+            let typeFile = val.target.result.slice(val.target.result.indexOf(':image') + 1, val.target.result.lastIndexOf(';base64'))
+            console.log('typefile: ' + typeFile)
+            let ctx = canvas.getContext('2d')
+            ctx.drawImage(picture, 0, 0, canvas.width, canvas.height)
+            this.resizeImage = canvas.toDataURL(typeFile, 0.5)
+            this.academyData.akademiLogo = this.resizeImage.split(',')[1]
+            NProgress.configure({ showSpinner: false })
+            NProgress.start()
+          }
+
+          setTimeout(() => {
+            dataUrltoFile()
+            NProgress.done()
+          }, 2000)
         }
         reader.readAsDataURL(val.target.files[0])
+
+        const dataUrltoFile = () => {
+          console.log('gambar terkirim')
+          console.log(this.resizeImage)
+          let blobBase64 = atob(this.resizeImage.split(',')[1])
+          let arrBit = []
+          for (let i = 0; i < blobBase64.length; i++) {
+            arrBit.push(blobBase64.charCodeAt(i))
+          }
+          let fileResult = new File([new Blob([new Uint8Array(arrBit)], {type: 'image/png'})], fileName)
+          dataimage.append('file', fileResult)
+          this.imgFile = dataimage
+        }
         if (val.target.files[0].size < 1048576) {
           this.imgSize = false
         } else {
