@@ -308,6 +308,7 @@ export default {
         this.$router.push('../')
       } else {
         alert(this.$store.state.saveOrderData.message)
+        this.$refs.fileGambar.value = ''
       }
       NProgress.done()
     }

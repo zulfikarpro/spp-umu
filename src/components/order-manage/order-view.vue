@@ -36,15 +36,21 @@
             </div>
 
             <div class="form-group col-sm-12">
+            <label class="col-5 col-form-label">No Rekening</label>
+            <label class="offset-1 col-form-label">:</label>
+            <label class="col-5 col-form-label">{{allData.noRekening}}</label>
+            </div>
+
+            <div class="form-group col-sm-12">
             <label class="col-5 col-form-label">Nama Rekening</label>
             <label class="offset-1 col-form-label">:</label>
             <label class="col-5 col-form-label">{{allData.nameRekening}}</label>
             </div>
 
             <div class="form-group col-sm-12">
-            <label class="col-5 col-form-label">No Rekening</label>
+            <label class="col-5 col-form-label">Bank</label>
             <label class="offset-1 col-form-label">:</label>
-            <label class="col-5 col-form-label">{{allData.noRekening}}</label>
+            <label class="col-5 col-form-label">{{allData.akademiBank}}</label>
             </div>
 
             <div class="form-group col-sm-12">
@@ -60,16 +66,16 @@
             <label class="col-5 col-form-label">{{allData.namaPegawai}}</label>
             </div>
 
-            <div class="form-group col-sm-12">
-            <label class="col-5 col-form-label">Jabatan</label>
-            <label class="offset-1 col-form-label" >:</label>
-            <label class="col-5 col-form-label">{{allData.jabatan}}</label>
-            </div>
-
             <div class=" form-group col-sm-12">
             <label class="col-5 col-form-label">NIP</label>
             <label class="offset-1 col-form-label">:</label>
             <label class="col-5 col-form-label">{{allData.nip}}</label>
+            </div>
+
+            <div class="form-group col-sm-12">
+            <label class="col-5 col-form-label">Jabatan</label>
+            <label class="offset-1 col-form-label" >:</label>
+            <label class="col-5 col-form-label">{{allData.jabatan}}</label>
             </div>
 
              <div class=" form-group col-sm-12">
@@ -93,7 +99,7 @@
             <div class="form-group col-sm-12">
             <label class="col-5 col-form-label">Tanggal Lahir</label>
             <label class="offset-1 col-form-label">:</label>
-            <label class="col-5 col-form-label">{{allData.tanggalLahir}}</label>
+            <label class="col-5 col-form-label">{{ tanggalReadHuman(allData.tanggalLahir) }}</label>
             </div>
 
             <div class="form-group col-sm-12">
@@ -171,6 +177,8 @@
 <script>
 import NProgress from 'nprogress'
 import modal from '../../Modal'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 
 export default {
   name: 'OrderView',
@@ -260,6 +268,12 @@ export default {
           this.rejectModal = true
           break
       }
+    },
+    tanggalReadHuman (value) {
+      dayjs.extend(utc)
+      return (value === null)
+        ? ''
+        : dayjs.utc(value).local().format('DD-MM-YYYY')
     },
     redirectToHome () {
       this.showModal = false
