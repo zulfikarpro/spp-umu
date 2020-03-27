@@ -116,7 +116,9 @@ export default {
         let picture = document.createElement('img')
         let canvas = document.createElement('canvas')
         // this.imgFile = val.target.files[0]
-        reader.onload = (val) => {
+
+        reader.readAsDataURL(val.target.files[0])
+        reader.onloadend = async (val) => {
           // View to display web
           // let base64 = val.target.result.substring(val.target.result.indexOf(',', 0) + 1)
           // this.academyData.akademiLogo = base64
@@ -124,8 +126,8 @@ export default {
           picture.src = val.target.result
           console.log(picture.src)
 
-          picture.onload = async () => {
-            await scaleImage()
+          picture.onload = () => {
+            scaleImage()
           }
           const scaleImage = () => {
             let maxWidth = 700
@@ -157,26 +159,25 @@ export default {
             NProgress.configure({ showSpinner: false })
             NProgress.start()
           }
-
-          setTimeout(() => {
-            dataUrltoFile()
-            NProgress.done()
-          }, 1000)
+          dataUrlToFile.then(
+            () => {
+              console.log('gambar terkirim')
+              console.log(this.resizeImage)
+              let blobBase64 = atob(this.resizeImage.split(',')[1])
+              let arrBit = []
+              for (let i = 0; i < blobBase64.length; i++) {
+                arrBit.push(blobBase64.charCodeAt(i))
+              }
+              let fileResult = new File([new Blob([new Uint8Array(arrBit)], {type: 'image/png'})], fileName)
+              dataimage.append('file', fileResult)
+              this.imgFile = dataimage
+              NProgress.done()
+            }
+          )
         }
-        reader.readAsDataURL(val.target.files[0])
-
-        const dataUrltoFile = () => {
-          console.log('gambar terkirim')
-          console.log(this.resizeImage)
-          let blobBase64 = atob(this.resizeImage.split(',')[1])
-          let arrBit = []
-          for (let i = 0; i < blobBase64.length; i++) {
-            arrBit.push(blobBase64.charCodeAt(i))
-          }
-          let fileResult = new File([new Blob([new Uint8Array(arrBit)], {type: 'image/png'})], fileName)
-          dataimage.append('file', fileResult)
-          this.imgFile = dataimage
-        }
+        const dataUrlToFile = new Promise((resolve) => {
+          setTimeout(() => resolve('done'), 200)
+        })
         // Batas Ukuran Gambar
         // if (val.target.files[0].size < 1048576) {
         //   this.imgSize = false

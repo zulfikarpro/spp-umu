@@ -1,18 +1,15 @@
 <template>
     <div>
     <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light shadow" style="background-color: #ffff" >
-  <a class="navbar-brand ml-2" href="#">
+  <router-link class="navbar-brand ml-2" to="/admin/beranda">
      <img :src="logoAkademi === '' ? require('@/assets/logo_umu_orange.png') : ('data:image/jpeg;base64,' + logoAkademi) "  width="50" height="50" alt="Logo" />
-  </a>
+  </router-link>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item">
-        <router-link active-class="active" to="/admin/beranda" class="nav-link mx-3 px-2 navText text-black">Home</router-link>
-      </li>
       <li class="nav-item">
         <router-link active-class="active" v-if="this.$store.state.permissionData.academy_r" to="/admin/akademi" class="nav-link mx-3 px-2 navText text-black">Informasi Universitas</router-link>
       </li>
