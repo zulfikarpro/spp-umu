@@ -27,4 +27,10 @@ npm run e2e
 npm test
 ```
 
+## Keterangan dasar penggunaan UMU-SPP
+# Pengaturan mode Production dan Development, ubah baseUrl yang ada di src/store/index.js
+# Untuk mengubah hasil build config/prodProperties
+# Menambahkan Rest API untuk di Allow Origin saat pengetesan localhost di config/index.js
+
+
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
